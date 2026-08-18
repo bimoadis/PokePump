@@ -1,0 +1,2756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PokéPump — Where Every Reply Creates a Monster</title>
+  <meta name="description" content="PokéPump is a community-driven gaming dashboard where creatures are born from replies on X. Discover, train, and battle in a soft-glass Pokémon universe.">
+  
+  <!-- Typography: Inter + Plus Jakarta Sans for geometric bold headings -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       POKÉPUMP MODERN DESIGN SYSTEM TOKENS
+       ========================================================================== */
+    :root {
+      /* Brand Tokens */
+      --brand-500: #E03F36;
+      --brand-600: #D02B2E;
+      --brand-700: #B32024;
+      --brand-100: #FFEAE8;
+      --brand-50: #FFF5F4;
+
+      /* Neutral Tokens */
+      --neutral-950: #0D0B18;
+      --neutral-900: #181528;
+      --neutral-800: #262238;
+      --neutral-700: #423E56;
+      --neutral-600: #5C5872;
+      --neutral-500: #88849E;
+      --neutral-400: #AEABC0;
+      --neutral-300: #D5D3E2;
+      --neutral-200: #E6E5F0;
+      --neutral-150: #EEEDF5;
+      --neutral-100: #F6F6FA;
+      --white: #FFFFFF;
+      --app-bg: #F8F8FB;
+
+      /* Pokémon Type Tokens (Refined Modern Palette) */
+      --type-fire: #E65A36;
+      --type-fire-soft: #FFF2ED;
+      --type-fire-border: rgba(230, 90, 54, 0.2);
+      
+      --type-water: #3B8AE4;
+      --type-water-soft: #EEF6FF;
+      --type-water-border: rgba(59, 138, 228, 0.2);
+
+      --type-grass: #5EA843;
+      --type-grass-soft: #F0F8EC;
+      --type-grass-border: rgba(94, 168, 67, 0.2);
+
+      --type-electric: #E5A51A;
+      --type-electric-soft: #FFF9E6;
+      --type-electric-border: rgba(229, 165, 26, 0.25);
+
+      --type-ghost: #8043C4;
+      --type-ghost-soft: #F6EEFC;
+      --type-ghost-border: rgba(128, 67, 196, 0.2);
+
+      --type-rock: #857F70;
+      --type-rock-soft: #F4F2EC;
+      --type-rock-border: rgba(133, 127, 112, 0.2);
+
+      --type-psychic: #D14B92;
+      --type-psychic-soft: #FCEDF5;
+      --type-ice: #5DBCCF;
+      --type-ice-soft: #EBF8FA;
+      --type-dark: #433E4D;
+      --type-dark-soft: #ECEAEF;
+
+      /* Semantic Tokens */
+      --semantic-success: #52A638;
+      --semantic-warning: #E5A51A;
+      --semantic-error: #E03F36;
+      --semantic-info: #2B85CC;
+      --semantic-purple: #8043C4;
+
+      /* Modern Refined Radius Tokens (Reduced & Elegant) */
+      --radius-2xs: 3px;
+      --radius-xs: 4px;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 10px;
+      --radius-xl: 12px;
+      --radius-2xl: 14px;
+      --radius-full: 999px;
+
+      /* High-Precision Shadows & Depth */
+      --shadow-1: 0 1px 2px rgba(13, 11, 24, 0.04), 0 2px 6px rgba(13, 11, 24, 0.03);
+      --shadow-2: 0 3px 10px rgba(13, 11, 24, 0.05), 0 1px 3px rgba(13, 11, 24, 0.03);
+      --shadow-3: 0 10px 24px -2px rgba(13, 11, 24, 0.08), 0 2px 6px rgba(13, 11, 24, 0.04);
+      --shadow-brand-glow: 0 4px 16px rgba(224, 63, 54, 0.24);
+      --shadow-card-hover: 0 12px 28px -4px rgba(13, 11, 24, 0.09), 0 0 0 1px rgba(224, 63, 54, 0.18);
+
+      /* Typography Scale */
+      --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+      /* Spacing Scale (4px Base Unit) */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-24: 96px;
+
+      /* Container */
+      --container-max: 1440px;
+    }
+
+    /* ==========================================================================
+       RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--app-bg);
+      color: var(--neutral-800);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Sleek Ambient Atmospheric Lighting */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle at 70% 20%, rgba(224, 63, 54, 0.05) 0%, rgba(128, 67, 196, 0.04) 40%, transparent 70%);
+      filter: blur(80px);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      bottom: 5%;
+      left: -50px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(59, 138, 228, 0.04) 0%, rgba(94, 168, 67, 0.03) 45%, transparent 75%);
+      filter: blur(80px);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      color: var(--neutral-950);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+
+    p {
+      color: var(--neutral-600);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    button, input, select {
+      font-family: inherit;
+    }
+
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding-left: clamp(20px, 4vw, 48px);
+      padding-right: clamp(20px, 4vw, 48px);
+    }
+
+    /* ==========================================================================
+       SURFACE SYSTEM & CARDS (ELEGANT REDUCED RADIUS & BALANCED SPACING)
+       ========================================================================== */
+    .surface-card {
+      background: var(--white);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-1);
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .surface-card:hover {
+      border-color: var(--neutral-300);
+      box-shadow: var(--shadow-2);
+    }
+
+    .surface-card-feature {
+      background: var(--white);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-xl);
+      padding: clamp(24px, 3.5vw, 36px);
+      box-shadow: var(--shadow-1);
+      position: relative;
+    }
+
+    .surface-glass {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: var(--shadow-2);
+    }
+
+    .surface-soft {
+      background: var(--neutral-100);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    /* ==========================================================================
+       BUTTON SYSTEM
+       ========================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-weight: 600;
+      font-size: 13.5px;
+      line-height: 1;
+      height: 42px;
+      padding: 0 20px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .btn:active {
+      transform: scale(0.985);
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #E8453C 0%, #D02B2E 100%);
+      color: var(--white);
+      border-color: #BD2226;
+      box-shadow: 0 1px 2px rgba(13, 11, 24, 0.08), 0 4px 14px rgba(224, 63, 54, 0.26);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(180deg, #ED524A 0%, #D93135 100%);
+      border-color: #CE282C;
+      box-shadow: 0 2px 4px rgba(13, 11, 24, 0.1), 0 6px 20px rgba(224, 63, 54, 0.32);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--neutral-800);
+      border: 1px solid var(--neutral-300);
+      box-shadow: var(--shadow-1);
+    }
+
+    .btn-secondary:hover {
+      background: var(--neutral-100);
+      border-color: var(--neutral-400);
+      color: var(--neutral-950);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-2);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--neutral-800);
+      border: 1px solid transparent;
+    }
+
+    .btn-ghost:hover {
+      background: var(--neutral-100);
+      color: var(--neutral-950);
+    }
+
+    .btn-outline {
+      width: 100%;
+      background: var(--white);
+      border: 1px solid var(--neutral-200);
+      color: var(--neutral-700);
+      border-radius: var(--radius-sm);
+      padding: 11px 16px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      box-shadow: var(--shadow-1);
+    }
+
+    .btn-outline:hover {
+      background: var(--neutral-100);
+      color: var(--neutral-950);
+      border-color: var(--neutral-300);
+      box-shadow: var(--shadow-2);
+    }
+
+    /* ==========================================================================
+       BADGE & RARITY SYSTEM (MODERN SHARP TECH FINISH)
+       ========================================================================== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      height: 22px;
+      padding: 0 8px;
+      border-radius: var(--radius-xs);
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+
+    .badge-new {
+      background: var(--brand-500);
+      color: var(--white);
+    }
+
+    .badge-common {
+      background: var(--semantic-success);
+      color: var(--white);
+    }
+
+    .badge-rare {
+      background: #3B82F6;
+      color: var(--white);
+    }
+
+    .badge-epic {
+      background: var(--semantic-purple);
+      color: var(--white);
+    }
+
+    .badge-legendary {
+      background: linear-gradient(135deg, #F59E0B 0%, var(--brand-500) 100%);
+      color: var(--white);
+      box-shadow: 0 2px 8px rgba(224, 63, 54, 0.35);
+    }
+
+    .badge-live {
+      background: var(--brand-500);
+      color: var(--white);
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: var(--radius-xs);
+      letter-spacing: 0.06em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+      }
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 5px rgba(255, 255, 255, 0);
+      }
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+      }
+    }
+
+    /* Type Pill Badges */
+    .type-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--neutral-800);
+      background: var(--neutral-100);
+      border: 1px solid var(--neutral-200);
+      padding: 3.5px 9px;
+      border-radius: var(--radius-xs);
+      margin: 4px 0 12px;
+      letter-spacing: 0.02em;
+      width: fit-content;
+    }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(230, 232, 245, 0.7);
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--neutral-950);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .logo-saw-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 5px rgba(13, 11, 24, 0.15));
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo:hover .logo-saw-icon {
+      transform: rotate(20deg) scale(1.08);
+    }
+
+    .brand-logo-text {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 21px;
+      letter-spacing: -0.03em;
+      color: #0F0C1B;
+    }
+
+    .brand-logo-text span.brand-red {
+      color: var(--brand-500);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(16px, 2.2vw, 32px);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--neutral-600);
+      position: relative;
+      padding: 6px 0;
+      text-decoration: none;
+      transition: color 0.18s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--neutral-950);
+    }
+
+    .nav-links a.active {
+      color: var(--neutral-950);
+      font-weight: 700;
+    }
+
+    .nav-links a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -4px;
+      height: 2.5px;
+      background: var(--brand-500);
+      border-radius: 2px;
+    }
+
+    .follow-x-btn {
+      background: linear-gradient(180deg, #E8453C 0%, #D02B2E 100%);
+      color: var(--white);
+      padding: 0 18px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 13.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #BD2226;
+      box-shadow: 0 2px 10px rgba(224, 63, 54, 0.25);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .follow-x-btn:hover {
+      background: linear-gradient(180deg, #ED524A 0%, #D93135 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(224, 63, 54, 0.35);
+    }
+
+    /* ==========================================================================
+       HERO SYSTEM (WITH BG-POKEPUMP BACKDROP)
+       ========================================================================== */
+    .hero-section {
+      position: relative;
+      min-height: 640px;
+      display: flex;
+      align-items: center;
+      padding-top: clamp(32px, 4.5vw, 64px);
+      padding-bottom: clamp(36px, 5vw, 72px);
+      background-color: #F8F8FC;
+      background-image: url('bg-pokepump.png');
+      background-repeat: no-repeat;
+      background-position: right center;
+      background-size: cover;
+      overflow: hidden;
+    }
+
+    /* Soft ambient gradient overlay on left to guarantee text crispness */
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(248, 248, 252, 0.96) 0%, rgba(248, 248, 252, 0.88) 38%, rgba(248, 248, 252, 0.25) 65%, transparent 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-section .container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(24px, 4vw, 56px);
+      align-items: center;
+      min-height: 520px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(38px, 4.3vw, 56px);
+      line-height: 1.12;
+      font-weight: 800;
+      color: #111827;
+      letter-spacing: -0.035em;
+    }
+
+    .hero-content h1 .accent {
+      color: var(--brand-500);
+    }
+
+    .hero-content h1 .period {
+      color: var(--brand-500);
+    }
+
+    .hero-content p {
+      margin-top: 18px;
+      font-size: clamp(15px, 1.2vw, 16.5px);
+      line-height: 1.6;
+      color: #4B5563;
+      max-width: 500px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .hero-actions .btn-primary {
+      height: 46px;
+      padding: 0 24px;
+      font-size: 14.5px;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+    }
+
+    .hero-actions .btn-secondary {
+      height: 46px;
+      padding: 0 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(209, 213, 219, 0.8);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .hero-actions .btn-secondary:hover {
+      background: #FFFFFF;
+      border-color: #9CA3AF;
+    }
+
+    /* Stat Summary Frosted Glass Card */
+    .hero-stats-card {
+      margin-top: 36px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-xl);
+      padding: 16px 22px;
+      box-shadow: 0 10px 30px rgba(15, 12, 27, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 530px;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stat-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--white);
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    }
+
+    .stat-meta b {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .stat-meta span {
+      color: #6B7280;
+      font-size: 11px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* Hero Right Visual Space - allows background artwork to shine */
+    .hero-visual-wrap {
+      position: relative;
+      height: 100%;
+      min-height: 440px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       SECTION COMMONS
+       ========================================================================== */
+    .section-wrap {
+      padding-top: var(--space-8);
+      padding-bottom: var(--space-10);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .section-header h2 {
+      font-size: clamp(24px, 2.4vw, 30px);
+      font-weight: 800;
+      color: var(--neutral-950);
+      line-height: 1.15;
+    }
+
+    .section-header p {
+      color: var(--neutral-600);
+      margin-top: 6px;
+      font-size: 14.5px;
+    }
+
+    .link-action {
+      color: var(--brand-500);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13.5px;
+      white-space: nowrap;
+    }
+
+    .link-action:hover {
+      color: var(--brand-600);
+      transform: translateX(3px);
+    }
+
+    /* ==========================================================================
+       ABOUT SYSTEM / HOW IT WORKS (SHARP FLOW CARDS)
+       ========================================================================== */
+    .about-flow-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      align-items: stretch;
+      margin-top: 28px;
+    }
+
+    .flow-step-card {
+      text-align: center;
+      padding: 24px 16px 20px;
+      background: var(--neutral-100);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--neutral-200);
+      position: relative;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .flow-step-card:hover {
+      background: var(--white);
+      border-color: var(--neutral-300);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-2);
+    }
+
+    .step-icon-bubble {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: var(--shadow-1);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .flow-step-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--neutral-950);
+    }
+
+    .flow-step-card p {
+      font-size: 12.5px;
+      color: var(--neutral-600);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       POKÉMON CARD SYSTEM (MODERN SLEEK RADIUS)
+       ========================================================================== */
+    .pokemon-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
+    }
+
+    .pokemon-card {
+      background: var(--white);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-1);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .pokemon-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card-hover);
+      border-color: rgba(224, 63, 54, 0.3);
+    }
+
+    .pokemon-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      z-index: 2;
+    }
+
+    .pokemon-card-num {
+      font-size: 11.5px;
+      color: var(--neutral-500);
+      font-weight: 700;
+      font-family: var(--font-heading);
+    }
+
+    .pokemon-card-image-area {
+      height: 148px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 14px;
+      transition: transform 0.22s ease;
+    }
+
+    .pokemon-card:hover .pokemon-card-image-area svg {
+      transform: scale(1.06);
+    }
+
+    .pokemon-card-image-area svg {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: drop-shadow(0 6px 12px rgba(13, 11, 24, 0.08));
+    }
+
+    .pokemon-card-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .pokemon-card-title-row h3 {
+      font-size: 17.5px;
+      font-weight: 800;
+      color: var(--neutral-950);
+      letter-spacing: -0.02em;
+    }
+
+    .pokemon-card-title-row .lvl-tag {
+      color: var(--neutral-600);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* Stat Bar Component */
+    .stat-bars-group {
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .stat-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+
+    .stat-bar-row .stat-label {
+      width: 24px;
+      color: var(--neutral-500);
+    }
+
+    .stat-bar-track {
+      flex: 1;
+      height: 5px;
+      background: var(--neutral-150);
+      border-radius: var(--radius-xs);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stat-bar-fill {
+      height: 100%;
+      border-radius: var(--radius-xs);
+      transition: width 0.5s ease;
+    }
+
+    .stat-bar-row .stat-val {
+      width: 22px;
+      text-align: right;
+      color: var(--neutral-700);
+      font-family: var(--font-heading);
+      font-size: 10.5px;
+    }
+
+    .pokemon-card-footer {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--neutral-150);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11.5px;
+      color: var(--neutral-500);
+    }
+
+    .pokemon-card-footer b {
+      color: var(--neutral-900);
+      font-weight: 600;
+    }
+
+    /* Card Background Variants (Type-Soft) */
+    .bg-fire-soft { background: var(--type-fire-soft); }
+    .bg-water-soft { background: var(--type-water-soft); }
+    .bg-grass-soft { background: var(--type-grass-soft); }
+    .bg-electric-soft { background: var(--type-electric-soft); }
+    .bg-ghost-soft { background: var(--type-ghost-soft); }
+    .bg-rock-soft { background: var(--type-rock-soft); }
+
+    /* ==========================================================================
+       COLLECTION & FILTER SYSTEM
+       ========================================================================== */
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-input-wrap {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+
+    .filter-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 var(--space-4) 0 40px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--neutral-300);
+      background: var(--white);
+      font-size: 13.5px;
+      color: var(--neutral-800);
+      outline: none;
+      transition: all 0.18s ease;
+      box-shadow: var(--shadow-1);
+    }
+
+    .filter-input:focus {
+      border-color: var(--brand-500);
+      box-shadow: 0 0 0 3px rgba(224, 63, 54, 0.12);
+    }
+
+    .filter-input::placeholder {
+      color: var(--neutral-500);
+    }
+
+    .filter-search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--neutral-500);
+      pointer-events: none;
+    }
+
+    .filter-select {
+      height: 44px;
+      padding: 0 var(--space-4);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--neutral-300);
+      background: var(--white);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--neutral-800);
+      cursor: pointer;
+      outline: none;
+      transition: all 0.18s ease;
+      box-shadow: var(--shadow-1);
+    }
+
+    .filter-select:focus {
+      border-color: var(--brand-500);
+      box-shadow: 0 0 0 3px rgba(224, 63, 54, 0.12);
+    }
+
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+    }
+
+    .mini-card {
+      background: var(--white);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-md);
+      padding: 14px 14px 12px;
+      position: relative;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      cursor: pointer;
+      box-shadow: var(--shadow-1);
+    }
+
+    .mini-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-2);
+      border-color: var(--neutral-300);
+    }
+
+    .mini-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .mini-card .art-container {
+      height: 84px;
+      border-radius: var(--radius-xs);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 0 10px;
+    }
+
+    .mini-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2px;
+    }
+
+    .mini-card-meta h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--neutral-950);
+    }
+
+    .mini-card-meta .lv {
+      color: var(--neutral-600);
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       BATTLE ARENA & UPCOMING MATCHES (SLEEK PANELS)
+       ========================================================================== */
+    .battle-layout-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .battle-arena-card {
+      background: var(--white);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .arena-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .vs-arena-stage {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 18px 0 16px;
+      position: relative;
+    }
+
+    .fighter-box {
+      text-align: center;
+      width: 36%;
+    }
+
+    .fighter-art-wrap {
+      height: 110px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .fighter-box h4 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--neutral-950);
+      margin-bottom: 2px;
+    }
+
+    .fighter-box .fighter-sub {
+      font-size: 11.5px;
+      color: var(--neutral-500);
+      margin-top: 2px;
+    }
+
+    .fighter-box .fighter-power {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--neutral-950);
+      margin-top: 4px;
+      letter-spacing: -0.02em;
+    }
+
+    .vs-brand-center {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--brand-500);
+      background: var(--brand-50);
+      width: 46px;
+      height: 46px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--brand-100);
+      box-shadow: var(--shadow-1);
+    }
+
+    .power-comparison-bar {
+      display: flex;
+      height: 7px;
+      border-radius: var(--radius-xs);
+      overflow: hidden;
+      margin: 18px 0 16px;
+      background: var(--neutral-200);
+    }
+
+    .power-comparison-bar .bar-fire {
+      background: var(--type-fire);
+    }
+
+    .power-comparison-bar .bar-water {
+      background: var(--type-water);
+    }
+
+    .arena-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--neutral-150);
+    }
+
+    .spectator-count {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--neutral-600);
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+
+    /* Upcoming Matches Column */
+    .schedule-card {
+      background: var(--white);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .match-row-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--neutral-150);
+      min-height: 74px;
+    }
+
+    .match-row-item:last-of-type {
+      border-bottom: none;
+    }
+
+    .match-time-col {
+      width: 68px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 13.5px;
+      color: var(--neutral-950);
+    }
+
+    .match-time-col span {
+      display: block;
+      color: var(--neutral-500);
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 11.5px;
+    }
+
+    .match-fighter-side {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex: 1;
+    }
+
+    .avatar-sm {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      background: var(--neutral-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      border: 1px solid var(--neutral-200);
+      box-shadow: var(--shadow-1);
+      flex-shrink: 0;
+    }
+
+    .match-fighter-info h5 {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--neutral-950);
+      line-height: 1.2;
+    }
+
+    .match-fighter-info span {
+      color: var(--neutral-500);
+      font-size: 11px;
+    }
+
+    .match-vs-divider {
+      color: var(--brand-500);
+      font-weight: 800;
+      font-size: 11.5px;
+      padding: 0 4px;
+    }
+
+    .status-pill {
+      background: var(--neutral-100);
+      color: var(--neutral-600);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: var(--radius-xs);
+      white-space: nowrap;
+      border: 1px solid var(--neutral-200);
+    }
+
+    /* ==========================================================================
+       LEADERBOARD, ACTIVITY & COMMUNITY CTA (CLEAN TILES)
+       ========================================================================== */
+    .community-layout-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.05fr;
+      gap: 24px;
+    }
+
+    .panel-card {
+      background: var(--white);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-xl);
+      padding: 26px 24px;
+      box-shadow: var(--shadow-1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Tabs Component */
+    .panel-tabs {
+      display: flex;
+      gap: 20px;
+      border-bottom: 1px solid var(--neutral-200);
+      margin: 14px 0 12px;
+    }
+
+    .tab-button {
+      padding-bottom: 8px;
+      font-weight: 600;
+      font-size: 13.5px;
+      color: var(--neutral-500);
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.18s ease;
+    }
+
+    .tab-button:hover {
+      color: var(--neutral-950);
+    }
+
+    .tab-button.active {
+      color: var(--brand-500);
+      font-weight: 700;
+    }
+
+    .tab-button.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: var(--brand-500);
+      border-radius: var(--radius-xs);
+    }
+
+    .rank-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 6px;
+      margin-bottom: 2px;
+      border-radius: var(--radius-xs);
+      transition: background 0.15s ease;
+    }
+
+    .rank-row:hover {
+      background: var(--neutral-100);
+    }
+
+    .rank-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-xs);
+      background: var(--neutral-100);
+      border: 1px solid var(--neutral-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--neutral-600);
+      font-family: var(--font-heading);
+    }
+
+    .rank-row.top-1 .rank-badge {
+      background: var(--semantic-warning);
+      color: var(--white);
+      border-color: #D69711;
+      box-shadow: 0 2px 6px rgba(229, 165, 26, 0.3);
+    }
+
+    .rank-row h5 {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--neutral-950);
+      flex: 1;
+    }
+
+    .rank-row .score-val {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 12.5px;
+      color: var(--neutral-700);
+    }
+
+    /* Live Activity Stream */
+    .activity-item {
+      display: flex;
+      gap: 12px;
+      padding: 9px 6px;
+      margin-bottom: 2px;
+      border-bottom: 1px solid var(--neutral-150);
+      border-radius: var(--radius-xs);
+      transition: background 0.15s ease;
+    }
+
+    .activity-item:hover {
+      background: var(--neutral-100);
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-icon-bubble {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      background: var(--neutral-100);
+      border: 1px solid var(--neutral-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .activity-content h5 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--neutral-950);
+      margin-bottom: 1px;
+    }
+
+    .activity-content p {
+      font-size: 12px;
+      color: var(--neutral-600);
+      line-height: 1.4;
+    }
+
+    .activity-time-stamp {
+      margin-left: auto;
+      color: var(--neutral-400);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    /* Join CTA Gradient Panel (Modern Deep Theme) */
+    .community-cta-card {
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, #18152B 0%, #262145 50%, #151226 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 32px 28px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 12px 32px rgba(13, 11, 24, 0.16);
+    }
+
+    .community-cta-card h2 {
+      color: var(--white);
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.025em;
+    }
+
+    .community-cta-card p {
+      color: rgba(255, 255, 255, 0.82);
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .cta-social-btn {
+      margin-top: 28px;
+      background: linear-gradient(180deg, #E8453C 0%, #D02B2E 100%);
+      color: var(--white);
+      padding: 0 20px;
+      height: 42px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 13.5px;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      width: fit-content;
+      border: 1px solid #BD2226;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .cta-social-btn:hover {
+      background: linear-gradient(180deg, #ED524A 0%, #D93135 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.32);
+    }
+
+    .cta-decor-monsters {
+      position: absolute;
+      bottom: -15px;
+      right: -10px;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       FOOTER SYSTEM
+       ========================================================================== */
+    .site-footer {
+      border-top: 1px solid var(--neutral-200);
+      background: var(--white);
+      margin-top: var(--space-12);
+      padding-top: var(--space-10);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: var(--space-8);
+    }
+
+    .footer-brand-col p {
+      color: var(--neutral-600);
+      font-size: 13.5px;
+      margin-top: var(--space-4);
+      line-height: 1.6;
+      max-width: 300px;
+    }
+
+    .footer-links-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--neutral-950);
+      margin-bottom: var(--space-4);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .footer-links-col a {
+      display: block;
+      color: var(--neutral-600);
+      font-size: 13.5px;
+      margin-bottom: var(--space-3);
+    }
+
+    .footer-links-col a:hover {
+      color: var(--brand-500);
+      transform: translateX(2px);
+    }
+
+    .footer-bottom-bar {
+      border-top: 1px solid var(--neutral-200);
+      margin-top: var(--space-8);
+      padding: var(--space-5) 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--neutral-500);
+      font-size: 12.5px;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1200px) {
+      .pokemon-cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .collection-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .community-layout-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .community-cta-card {
+        grid-column: span 2;
+        min-height: 220px;
+      }
+      .about-flow-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-section {
+        background-position: center top;
+        padding-top: 40px;
+      }
+      .hero-section::before {
+        background: linear-gradient(180deg, rgba(248, 248, 252, 0.95) 0%, rgba(248, 248, 252, 0.85) 55%, rgba(248, 248, 252, 0.4) 100%);
+      }
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        min-height: auto;
+      }
+      .hero-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-actions {
+        justify-content: center;
+      }
+      .hero-stats-card {
+        grid-template-columns: repeat(2, 1fr);
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-visual-wrap {
+        min-height: 240px;
+      }
+      .battle-layout-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .pokemon-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .collection-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .about-flow-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .community-layout-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .community-cta-card {
+        grid-column: span 1;
+        padding: 24px 20px;
+      }
+      .surface-card-feature {
+        padding: 20px 16px;
+      }
+      .battle-arena-card, .schedule-card, .panel-card {
+        padding: 20px 18px;
+      }
+      .hero-stats-card {
+        grid-template-columns: 1fr;
+        padding: 16px 18px;
+        gap: 14px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-bottom-bar {
+        flex-direction: column;
+        gap: var(--space-2);
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       NAVIGATION BAR
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="navbar" aria-label="Main Navigation">
+        <a href="#" class="brand-logo" id="nav-brand-logo">
+          <div class="logo-saw-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Saw Teeth Outer Blade -->
+              <polygon points="50,2 57.6,11.8 68.4,5.7 71.7,17.6 83.9,16.1 82.4,28.3 94.3,31.6 88.3,42.4 98,50 88.3,57.6 94.3,68.4 82.4,71.7 83.9,83.9 71.7,82.4 68.4,94.3 57.6,88.3 50,98 42.4,88.3 31.6,94.3 28.3,82.4 16.1,83.9 17.6,71.7 5.7,68.4 11.8,57.6 2,50 11.8,42.4 5.7,31.6 17.6,28.3 16.1,16.1 28.3,17.6 31.6,5.7 42.4,11.8" fill="#181528" stroke="#181528" stroke-width="2" stroke-linejoin="round"/>
+              <!-- Outer Shading Ring -->
+              <circle cx="50" cy="50" r="38" fill="#E6E5F0" stroke="#181528" stroke-width="3"/>
+              <!-- Top Red Half Dome -->
+              <path d="M14 50 A36 36 0 0 1 86 50 Z" fill="#E03F36" stroke="#181528" stroke-width="4"/>
+              <!-- Bottom White Half Dome -->
+              <path d="M14 50 A36 36 0 0 0 86 50 Z" fill="#FFFFFF" stroke="#181528" stroke-width="4"/>
+              <!-- Center Divider Band -->
+              <line x1="12" y1="50" x2="88" y2="50" stroke="#181528" stroke-width="6"/>
+              <!-- Center Button Outer Ring -->
+              <circle cx="50" cy="50" r="14" fill="#FFFFFF" stroke="#181528" stroke-width="5"/>
+              <!-- Center Button Inner Circle -->
+              <circle cx="50" cy="50" r="7" fill="#FFFFFF" stroke="#181528" stroke-width="3"/>
+            </svg>
+          </div>
+          <span class="brand-logo-text">POKE<span class="brand-red">PUMP</span></span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#" class="active" id="nav-link-home">Home</a></li>
+          <li><a href="#collection" id="nav-link-pokemon">Pokémon</a></li>
+          <li><a href="#born" id="nav-link-born">Born From X</a></li>
+          <li><a href="#battles" id="nav-link-battles">Battles</a></li>
+          <li><a href="#schedule" id="nav-link-schedule">Schedule</a></li>
+          <li><a href="#leaderboard" id="nav-link-leaderboard">Leaderboard</a></li>
+        </ul>
+
+        <a class="follow-x-btn" href="https://x.com" target="_blank" rel="noopener noreferrer" id="nav-follow-btn">
+          <span>Follow on X</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       HERO SECTION (WITH 3D CREATURES BACKDROP)
+       ========================================================================== -->
+  <main>
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-grid">
+          
+          <!-- Hero Copy & CTAs -->
+          <div class="hero-content">
+            <h1>Where Every <span class="accent">Reply</span> Creates a Pokémon<span class="period">.</span></h1>
+            <p>PokéPump is a community-driven universe where Pokémon are born from replies on X. Discover them, train them, and watch them battle to become the strongest!</p>
+            
+            <div class="hero-actions">
+              <a href="#collection" class="btn btn-primary" id="hero-cta-explore">
+                Explore Pokémon →
+              </a>
+              <a href="#schedule" class="btn btn-secondary" id="hero-cta-matches">
+                View Upcoming Matches 📅
+              </a>
+            </div>
+
+            <!-- Floating Frosted Stats Row -->
+            <div class="hero-stats-card">
+              <div class="stat-item">
+                <div class="stat-icon" style="background: var(--brand-500);">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="3" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="21" y2="12"/></svg>
+                </div>
+                <div class="stat-meta">
+                  <b>12,842</b>
+                  <span>Pokémon Born</span>
+                </div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-icon" style="background: #2563EB;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div class="stat-meta">
+                  <b>8,421</b>
+                  <span>Trainers</span>
+                </div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-icon" style="background: #EAB308;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+                <div class="stat-meta">
+                  <b>3,215</b>
+                  <span>Battles Held</span>
+                </div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-icon" style="background: #8B5CF6;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <div class="stat-meta">
+                  <b>67,892</b>
+                  <span>Replies Pumped</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Right Visual Area (Clean transparent zone for bg artwork) -->
+          <div class="hero-visual-wrap" aria-hidden="true"></div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         ABOUT POKÉPUMP SECTION (THE COMMUNITY FLOW)
+         ========================================================================== -->
+    <section class="section-wrap">
+      <div class="container">
+        <div class="surface-card-feature">
+          <h2>About PokéPump</h2>
+          <p style="margin-top: 8px; font-size: 15px;">PokéPump turns community interaction into a living monster universe. Reply to @PokePump on X and you might be the reason a new creature is born!</p>
+          
+          <div class="about-flow-grid">
+            <div class="flow-step-card">
+              <div class="step-icon-bubble" style="background: var(--type-water-soft); color: var(--type-water);">💬</div>
+              <h3>1. Reply</h3>
+              <p>Reply to @PokePump on X to ignite the spark.</p>
+            </div>
+
+            <div class="flow-step-card">
+              <div class="step-icon-bubble" style="background: var(--brand-100); color: var(--brand-500);">🥚</div>
+              <h3>2. Monster Born</h3>
+              <p>A brand new creature hatches directly from your post.</p>
+            </div>
+
+            <div class="flow-step-card">
+              <div class="step-icon-bubble" style="background: var(--type-grass-soft); color: var(--type-grass);">📈</div>
+              <h3>3. Stats</h3>
+              <p>Generated with unique types, base stats, and rarity.</p>
+            </div>
+
+            <div class="flow-step-card">
+              <div class="step-icon-bubble" style="background: var(--type-electric-soft); color: var(--type-electric);">⚔️</div>
+              <h3>4. Battle</h3>
+              <p>Enters the automatic battle arena for community matches.</p>
+            </div>
+
+            <div class="flow-step-card">
+              <div class="step-icon-bubble" style="background: var(--type-ghost-soft); color: var(--type-ghost);">👑</div>
+              <h3>5. Champion</h3>
+              <p>Climb leaderboard ranks and earn legendary status.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         BORN FROM X (POKÉMON CARDS WITH STAT BARS)
+         ========================================================================== -->
+    <section class="section-wrap" id="born">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Born From X</h2>
+            <p>Every reply has a chance to create something legendary.</p>
+          </div>
+          <a class="link-action" href="#collection" id="btn-view-all-born">View All →</a>
+        </div>
+
+        <div class="pokemon-cards-grid">
+          
+          <!-- Card 1: Fire Flarecub -->
+          <div class="pokemon-card">
+            <div class="pokemon-card-head">
+              <span class="badge badge-new">NEW</span>
+              <span class="pokemon-card-num">#01284</span>
+            </div>
+            
+            <div class="pokemon-card-image-area bg-fire-soft">
+              <svg width="110" height="110" viewBox="0 0 100 100">
+                <ellipse cx="50" cy="65" rx="30" ry="24" fill="#E86B42"/>
+                <circle cx="50" cy="38" r="24" fill="#FFA573"/>
+                <circle cx="40" cy="34" r="5" fill="#0F0C1B"/>
+                <circle cx="60" cy="34" r="5" fill="#0F0C1B"/>
+                <circle cx="42" cy="32" r="1.5" fill="#FFFFFF"/>
+                <circle cx="62" cy="32" r="1.5" fill="#FFFFFF"/>
+                <path d="M30 18 Q38 30 24 32 Z" fill="#E86B42"/>
+                <path d="M70 18 Q62 30 76 32 Z" fill="#E86B42"/>
+              </svg>
+            </div>
+
+            <div class="pokemon-card-title-row">
+              <h3>Flarecub</h3>
+              <span class="lvl-tag">Lv. 5</span>
+            </div>
+            <div class="type-pill">🔥 FIRE</div>
+
+            <!-- Stat Bar System -->
+            <div class="stat-bars-group">
+              <div class="stat-bar-row">
+                <span class="stat-label">HP</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 45%; background: var(--type-fire);"></div></div>
+                <span class="stat-val">45</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">ATK</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 62%; background: var(--type-fire);"></div></div>
+                <span class="stat-val">62</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">DEF</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 48%; background: var(--type-fire);"></div></div>
+                <span class="stat-val">48</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">SPD</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 66%; background: var(--type-fire);"></div></div>
+                <span class="stat-val">66</span>
+              </div>
+            </div>
+
+            <div class="pokemon-card-footer">
+              <span>Born from <b>@Handle</b></span>
+              <span>2m ago</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Grass Leafin -->
+          <div class="pokemon-card">
+            <div class="pokemon-card-head">
+              <span class="badge badge-new">NEW</span>
+              <span class="pokemon-card-num">#01283</span>
+            </div>
+            
+            <div class="pokemon-card-image-area bg-grass-soft">
+              <svg width="110" height="110" viewBox="0 0 100 100">
+                <circle cx="50" cy="55" r="28" fill="#70B957"/>
+                <path d="M30 35 Q20 15 35 20 Z" fill="#4E9935"/>
+                <path d="M70 35 Q80 15 65 20 Z" fill="#4E9935"/>
+                <circle cx="40" cy="50" r="5" fill="#0F0C1B"/>
+                <circle cx="60" cy="50" r="5" fill="#0F0C1B"/>
+                <circle cx="42" cy="48" r="1.5" fill="#FFFFFF"/>
+                <circle cx="62" cy="48" r="1.5" fill="#FFFFFF"/>
+              </svg>
+            </div>
+
+            <div class="pokemon-card-title-row">
+              <h3>Leafin</h3>
+              <span class="lvl-tag">Lv. 7</span>
+            </div>
+            <div class="type-pill">🌿 GRASS</div>
+
+            <div class="stat-bars-group">
+              <div class="stat-bar-row">
+                <span class="stat-label">HP</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 60%; background: var(--type-grass);"></div></div>
+                <span class="stat-val">60</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">ATK</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 55%; background: var(--type-grass);"></div></div>
+                <span class="stat-val">55</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">DEF</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 58%; background: var(--type-grass);"></div></div>
+                <span class="stat-val">58</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">SPD</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 72%; background: var(--type-grass);"></div></div>
+                <span class="stat-val">72</span>
+              </div>
+            </div>
+
+            <div class="pokemon-card-footer">
+              <span>Born from <b>@PlantLover</b></span>
+              <span>5m ago</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Water Aquadot -->
+          <div class="pokemon-card">
+            <div class="pokemon-card-head">
+              <span class="badge badge-rare">RARE</span>
+              <span class="pokemon-card-num">#01282</span>
+            </div>
+            
+            <div class="pokemon-card-image-area bg-water-soft">
+              <svg width="110" height="110" viewBox="0 0 100 100">
+                <ellipse cx="50" cy="58" rx="28" ry="24" fill="#4A9FE8"/>
+                <circle cx="40" cy="50" r="5" fill="#0F0C1B"/>
+                <circle cx="60" cy="50" r="5" fill="#0F0C1B"/>
+                <ellipse cx="50" cy="78" rx="18" ry="7" fill="#DCD3B0"/>
+              </svg>
+            </div>
+
+            <div class="pokemon-card-title-row">
+              <h3>Aquadot</h3>
+              <span class="lvl-tag">Lv. 6</span>
+            </div>
+            <div class="type-pill">💧 WATER</div>
+
+            <div class="stat-bars-group">
+              <div class="stat-bar-row">
+                <span class="stat-label">HP</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 52%; background: var(--type-water);"></div></div>
+                <span class="stat-val">52</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">ATK</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 50%; background: var(--type-water);"></div></div>
+                <span class="stat-val">50</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">DEF</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 53%; background: var(--type-water);"></div></div>
+                <span class="stat-val">53</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">SPD</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 60%; background: var(--type-water);"></div></div>
+                <span class="stat-val">60</span>
+              </div>
+            </div>
+
+            <div class="pokemon-card-footer">
+              <span>Born from <b>@AquaGuy</b></span>
+              <span>8m ago</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Electric Sparkit -->
+          <div class="pokemon-card">
+            <div class="pokemon-card-head">
+              <span class="badge badge-epic">EPIC</span>
+              <span class="pokemon-card-num">#01281</span>
+            </div>
+            
+            <div class="pokemon-card-image-area bg-electric-soft">
+              <svg width="110" height="110" viewBox="0 0 100 100">
+                <circle cx="50" cy="55" r="26" fill="#ECB130"/>
+                <circle cx="40" cy="48" r="5" fill="#0F0C1B"/>
+                <circle cx="60" cy="48" r="5" fill="#0F0C1B"/>
+                <circle cx="30" cy="62" r="6" fill="#E03F36"/>
+                <circle cx="70" cy="62" r="6" fill="#E03F36"/>
+                <path d="M30 25 L38 38 L22 40 Z" fill="#0F0C1B"/>
+                <path d="M70 25 L62 38 L78 40 Z" fill="#0F0C1B"/>
+              </svg>
+            </div>
+
+            <div class="pokemon-card-title-row">
+              <h3>Sparkit</h3>
+              <span class="lvl-tag">Lv. 4</span>
+            </div>
+            <div class="type-pill">⚡ ELECTRIC</div>
+
+            <div class="stat-bars-group">
+              <div class="stat-bar-row">
+                <span class="stat-label">HP</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 40%; background: var(--type-electric);"></div></div>
+                <span class="stat-val">40</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">ATK</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 63%; background: var(--type-electric);"></div></div>
+                <span class="stat-val">63</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">DEF</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 40%; background: var(--type-electric);"></div></div>
+                <span class="stat-val">40</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">SPD</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 76%; background: var(--type-electric);"></div></div>
+                <span class="stat-val">76</span>
+              </div>
+            </div>
+
+            <div class="pokemon-card-footer">
+              <span>Born from <b>@VoltReply</b></span>
+              <span>12m ago</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Ghost Shadowisp -->
+          <div class="pokemon-card">
+            <div class="pokemon-card-head">
+              <span class="badge badge-legendary">LEGENDARY</span>
+              <span class="pokemon-card-num">#01260</span>
+            </div>
+            
+            <div class="pokemon-card-image-area bg-ghost-soft">
+              <svg width="110" height="110" viewBox="0 0 100 100">
+                <path d="M50 20 L58 38 L78 34 L66 50 L82 62 L60 62 L64 82 L50 68 L36 82 L40 62 L18 62 L34 50 L22 34 L42 38 Z" fill="#8B4DCC"/>
+                <circle cx="42" cy="55" r="5" fill="#FFFFFF"/>
+                <circle cx="58" cy="55" r="5" fill="#FFFFFF"/>
+                <circle cx="43" cy="54" r="2" fill="#0F0C1B"/>
+                <circle cx="59" cy="54" r="2" fill="#0F0C1B"/>
+              </svg>
+            </div>
+
+            <div class="pokemon-card-title-row">
+              <h3>Shadowisp</h3>
+              <span class="lvl-tag">Lv. 5</span>
+            </div>
+            <div class="type-pill">👻 GHOST</div>
+
+            <div class="stat-bars-group">
+              <div class="stat-bar-row">
+                <span class="stat-label">HP</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 55%; background: var(--type-ghost);"></div></div>
+                <span class="stat-val">55</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">ATK</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 70%; background: var(--type-ghost);"></div></div>
+                <span class="stat-val">70</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">DEF</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 40%; background: var(--type-ghost);"></div></div>
+                <span class="stat-val">40</span>
+              </div>
+              <div class="stat-bar-row">
+                <span class="stat-label">SPD</span>
+                <div class="stat-bar-track"><div class="stat-bar-fill" style="width: 70%; background: var(--type-ghost);"></div></div>
+                <span class="stat-val">70</span>
+              </div>
+            </div>
+
+            <div class="pokemon-card-footer">
+              <span>Born from <b>@SpecterX</b></span>
+              <span>15m ago</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         COLLECTION & FILTER SECTION
+         ========================================================================== -->
+    <section class="section-wrap" id="collection">
+      <div class="container">
+        <div class="surface-card-feature">
+          
+          <div class="section-header">
+            <div>
+              <h2>Pokémon Collection</h2>
+              <p>Explore all creatures born from the PokéPump community.</p>
+            </div>
+            <a class="link-action" href="#" id="btn-sort-collection">Sort by: Newest ▾</a>
+          </div>
+
+          <!-- Filters -->
+          <div class="filter-bar">
+            <div class="filter-input-wrap">
+              <svg class="filter-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" class="filter-input" id="search-monsters" placeholder="Search Pokémon...">
+            </div>
+            <select class="filter-select" id="filter-type">
+              <option value="all">All Types</option>
+              <option value="fire">Fire</option>
+              <option value="water">Water</option>
+              <option value="grass">Grass</option>
+              <option value="electric">Electric</option>
+              <option value="ghost">Ghost</option>
+              <option value="rock">Rock</option>
+            </select>
+            <select class="filter-select" id="filter-rarity">
+              <option value="all">All Rarities</option>
+              <option value="new">New</option>
+              <option value="common">Common</option>
+              <option value="rare">Rare</option>
+              <option value="epic">Epic</option>
+              <option value="legendary">Legendary</option>
+            </select>
+            <select class="filter-select" id="filter-status">
+              <option value="all">All Status</option>
+              <option value="ready">Ready to Battle</option>
+              <option value="live">In Battle</option>
+              <option value="champion">Champion</option>
+            </select>
+            <select class="filter-select" id="filter-levels">
+              <option value="all">All Levels</option>
+              <option value="1-5">Lv. 1 - 5</option>
+              <option value="6-10">Lv. 6 - 10</option>
+              <option value="10+">Lv. 10+</option>
+            </select>
+          </div>
+
+          <!-- Mini Cards Grid -->
+          <div class="collection-grid" id="collection-cards-grid">
+            
+            <div class="mini-card" data-name="flarejob" data-type="fire">
+              <div class="mini-card-head">
+                <span class="badge badge-new">NEW</span>
+              </div>
+              <div class="art-container bg-fire-soft">
+                <svg width="65" height="65" viewBox="0 0 100 100">
+                  <ellipse cx="50" cy="65" rx="26" ry="20" fill="#E86B42"/>
+                  <circle cx="50" cy="40" r="20" fill="#FFA573"/>
+                </svg>
+              </div>
+              <div class="mini-card-meta">
+                <h4>Flarejob</h4>
+                <span class="lv">🔥 Lv. 6</span>
+              </div>
+            </div>
+
+            <div class="mini-card" data-name="leafin" data-type="grass">
+              <div class="mini-card-head">
+                <span class="badge badge-common">GRASS</span>
+              </div>
+              <div class="art-container bg-grass-soft">
+                <svg width="65" height="65" viewBox="0 0 100 100">
+                  <circle cx="50" cy="55" r="24" fill="#70B957"/>
+                  <path d="M32 38 Q24 22 36 26 Z" fill="#4E9935"/>
+                </svg>
+              </div>
+              <div class="mini-card-meta">
+                <h4>Leafin</h4>
+                <span class="lv">🌿 Lv. 7</span>
+              </div>
+            </div>
+
+            <div class="mini-card" data-name="aquadot" data-type="water">
+              <div class="mini-card-head">
+                <span class="badge badge-rare">RARE</span>
+              </div>
+              <div class="art-container bg-water-soft">
+                <svg width="65" height="65" viewBox="0 0 100 100">
+                  <ellipse cx="50" cy="58" rx="24" ry="20" fill="#4A9FE8"/>
+                </svg>
+              </div>
+              <div class="mini-card-meta">
+                <h4>Aquadot</h4>
+                <span class="lv">💧 Lv. 5</span>
+              </div>
+            </div>
+
+            <div class="mini-card" data-name="sparkit" data-type="electric">
+              <div class="mini-card-head">
+                <span class="badge badge-epic">EPIC</span>
+              </div>
+              <div class="art-container bg-electric-soft">
+                <svg width="65" height="65" viewBox="0 0 100 100">
+                  <circle cx="50" cy="55" r="22" fill="#ECB130"/>
+                </svg>
+              </div>
+              <div class="mini-card-meta">
+                <h4>Sparkit</h4>
+                <span class="lv">⚡ Lv. 4</span>
+              </div>
+            </div>
+
+            <div class="mini-card" data-name="shadowisp" data-type="ghost">
+              <div class="mini-card-head">
+                <span class="badge badge-epic">GHOST</span>
+              </div>
+              <div class="art-container bg-ghost-soft">
+                <svg width="65" height="65" viewBox="0 0 100 100">
+                  <path d="M50 25 L58 40 L74 38 L64 50 L76 60 L58 60 L60 76 L50 66 L40 76 L42 60 L24 60 L36 50 L26 38 L42 40 Z" fill="#8B4DCC"/>
+                </svg>
+              </div>
+              <div class="mini-card-meta">
+                <h4>Shadowisp</h4>
+                <span class="lv">👻 Lv. 5</span>
+              </div>
+            </div>
+
+            <div class="mini-card" data-name="bubblin" data-type="water">
+              <div class="mini-card-head">
+                <span class="badge badge-common">WATER</span>
+              </div>
+              <div class="art-container bg-water-soft">
+                <svg width="65" height="65" viewBox="0 0 100 100">
+                  <circle cx="50" cy="55" r="24" fill="#65B6FF"/>
+                  <circle cx="42" cy="48" r="4" fill="#0F0C1B"/>
+                  <circle cx="58" cy="48" r="4" fill="#0F0C1B"/>
+                </svg>
+              </div>
+              <div class="mini-card-meta">
+                <h4>Bubblin</h4>
+                <span class="lv">💧 Lv. 3</span>
+              </div>
+            </div>
+
+            <div class="mini-card" data-name="reeko" data-type="rock">
+              <div class="mini-card-head">
+                <span class="badge" style="background: var(--type-rock); color: white;">ROCK</span>
+              </div>
+              <div class="art-container bg-rock-soft">
+                <svg width="65" height="65" viewBox="0 0 100 100">
+                  <ellipse cx="50" cy="58" rx="24" ry="20" fill="#8F8A7A"/>
+                  <circle cx="42" cy="52" r="4" fill="#0F0C1B"/>
+                  <circle cx="58" cy="52" r="4" fill="#0F0C1B"/>
+                </svg>
+              </div>
+              <div class="mini-card-meta">
+                <h4>Reeko</h4>
+                <span class="lv">🪨 Lv. 6</span>
+              </div>
+            </div>
+
+            <div class="mini-card" data-name="cindertail" data-type="fire">
+              <div class="mini-card-head">
+                <span class="badge badge-rare">RARE</span>
+              </div>
+              <div class="art-container bg-fire-soft">
+                <svg width="65" height="65" viewBox="0 0 100 100">
+                  <circle cx="50" cy="55" r="24" fill="#E86B42"/>
+                  <path d="M68 45 Q85 30 78 60 Z" fill="#FFA573"/>
+                </svg>
+              </div>
+              <div class="mini-card-meta">
+                <h4>Cindertail</h4>
+                <span class="lv">🔥 Lv. 8</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         BATTLE ARENA & UPCOMING MATCHES
+         ========================================================================== -->
+    <section class="section-wrap" id="battles">
+      <div class="container">
+        <div class="battle-layout-grid">
+          
+          <!-- Battle Arena (Live Stage) -->
+          <div class="battle-arena-card">
+            <div>
+              <div class="arena-top-row">
+                <div>
+                  <h2 style="font-size: 24px;">Battle Arena</h2>
+                  <p style="font-size: 14px; margin-top: 4px;">Only the strongest survive.</p>
+                </div>
+                <span class="badge-live">
+                  <span class="pulse-dot"></span>
+                  LIVE
+                </span>
+              </div>
+
+              <!-- VS Matchup -->
+              <div class="vs-arena-stage">
+                <!-- Fighter 1 -->
+                <div class="fighter-box">
+                  <div class="fighter-art-wrap bg-fire-soft">
+                    <svg width="85" height="85" viewBox="0 0 100 100">
+                      <ellipse cx="50" cy="65" rx="28" ry="22" fill="#E86B42"/>
+                      <circle cx="50" cy="38" r="22" fill="#FFA573"/>
+                      <circle cx="42" cy="35" r="4" fill="#0F0C1B"/>
+                      <circle cx="58" cy="35" r="4" fill="#0F0C1B"/>
+                    </svg>
+                  </div>
+                  <h4>Flarecub</h4>
+                  <div class="fighter-sub">#01284 🔥 Lv. 12</div>
+                  <div class="fighter-power">1,245</div>
+                </div>
+
+                <div class="vs-brand-center">VS</div>
+
+                <!-- Fighter 2 -->
+                <div class="fighter-box">
+                  <div class="fighter-art-wrap bg-water-soft">
+                    <svg width="85" height="85" viewBox="0 0 100 100">
+                      <ellipse cx="50" cy="58" rx="28" ry="24" fill="#4A9FE8"/>
+                      <circle cx="42" cy="50" r="4" fill="#0F0C1B"/>
+                      <circle cx="58" cy="50" r="4" fill="#0F0C1B"/>
+                    </svg>
+                  </div>
+                  <h4>Aquadot</h4>
+                  <div class="fighter-sub">#01382 💧 Lv. 11</div>
+                  <div class="fighter-power">1,187</div>
+                </div>
+              </div>
+
+              <!-- Power Comparison Bar -->
+              <div class="power-comparison-bar">
+                <div class="bar-fire" style="width: 52%;"></div>
+                <div class="bar-water" style="width: 48%;"></div>
+              </div>
+            </div>
+
+            <div class="arena-footer-row">
+              <div class="spectator-count">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <span>1,248 Spectators</span>
+              </div>
+              <button class="btn btn-primary" id="btn-watch-live">Watch Live</button>
+            </div>
+          </div>
+
+          <!-- Upcoming Matches Schedule -->
+          <div class="schedule-card" id="schedule">
+            <div>
+              <div class="arena-top-row">
+                <div>
+                  <h2 style="font-size: 24px;">Upcoming Matches</h2>
+                  <p style="font-size: 14px; margin-top: 4px;">Scheduled clashes in the arena.</p>
+                </div>
+                <a class="link-action" href="#" id="btn-view-schedule">Full Schedule →</a>
+              </div>
+
+              <!-- Match Rows -->
+              <div style="margin-top: var(--space-3);">
+                
+                <div class="match-row-item">
+                  <div class="match-time-col">
+                    19:00
+                    <span>Today</span>
+                  </div>
+                  <div class="match-fighter-side">
+                    <div class="avatar-sm">⚡</div>
+                    <div class="match-fighter-info">
+                      <h5>Sparkit <span style="color: var(--neutral-500); font-weight: 500;">#0025</span></h5>
+                      <span>Lv. 10</span>
+                    </div>
+                  </div>
+                  <span class="match-vs-divider">VS</span>
+                  <div class="match-fighter-side" style="justify-content: flex-end; text-align: right;">
+                    <div class="match-fighter-info">
+                      <h5>Flarecub <span style="color: var(--neutral-500); font-weight: 500;">#0004</span></h5>
+                      <span>Lv. 9</span>
+                    </div>
+                    <div class="avatar-sm">🔥</div>
+                  </div>
+                  <span class="status-pill">⏱ Upcoming</span>
+                </div>
+
+                <div class="match-row-item">
+                  <div class="match-time-col">
+                    21:30
+                    <span>Today</span>
+                  </div>
+                  <div class="match-fighter-side">
+                    <div class="avatar-sm">💧</div>
+                    <div class="match-fighter-info">
+                      <h5>Bubblin <span style="color: var(--neutral-500); font-weight: 500;">#0007</span></h5>
+                      <span>Lv. 8</span>
+                    </div>
+                  </div>
+                  <span class="match-vs-divider">VS</span>
+                  <div class="match-fighter-side" style="justify-content: flex-end; text-align: right;">
+                    <div class="match-fighter-info">
+                      <h5>Leafin <span style="color: var(--neutral-500); font-weight: 500;">#0133</span></h5>
+                      <span>Lv. 7</span>
+                    </div>
+                    <div class="avatar-sm">🌿</div>
+                  </div>
+                  <span class="status-pill">⏱ Upcoming</span>
+                </div>
+
+                <div class="match-row-item">
+                  <div class="match-time-col">
+                    18:00
+                    <span>Tomorrow</span>
+                  </div>
+                  <div class="match-fighter-side">
+                    <div class="avatar-sm">🌿</div>
+                    <div class="match-fighter-info">
+                      <h5>Leafin <span style="color: var(--neutral-500); font-weight: 500;">#0001</span></h5>
+                      <span>Lv. 8</span>
+                    </div>
+                  </div>
+                  <span class="match-vs-divider">VS</span>
+                  <div class="match-fighter-side" style="justify-content: flex-end; text-align: right;">
+                    <div class="match-fighter-info">
+                      <h5>Reeko <span style="color: var(--neutral-500); font-weight: 500;">#0052</span></h5>
+                      <span>Lv. 7</span>
+                    </div>
+                    <div class="avatar-sm">🪨</div>
+                  </div>
+                  <span class="status-pill">⏱ Upcoming</span>
+                </div>
+
+              </div>
+            </div>
+
+            <button class="btn-outline" style="margin-top: var(--space-4);" id="btn-full-schedule">View All Schedule</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         LEADERBOARD, ACTIVITY & COMMUNITY CTA
+         ========================================================================== -->
+    <section class="section-wrap" id="leaderboard">
+      <div class="container">
+        <div class="community-layout-grid">
+          
+          <!-- Column 1: Leaderboard with Interactive Tabs -->
+          <div class="panel-card">
+            <div>
+              <h2 style="font-size: 20px;">Top Trainers & Pokémon</h2>
+              
+              <div class="panel-tabs">
+                <button class="tab-button active" id="tab-top-monsters">Top Pokémon</button>
+                <button class="tab-button" id="tab-top-creators">Top Creators</button>
+              </div>
+
+              <!-- Leaderboard List -->
+              <div id="leaderboard-monsters-list">
+                <div class="rank-row top-1">
+                  <div class="rank-badge">🏆</div>
+                  <div class="avatar-sm">⚡</div>
+                  <h5>Sparkit #0031</h5>
+                  <span class="score-val">24 Wins</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-badge">2</div>
+                  <div class="avatar-sm">🔥</div>
+                  <h5>Flarezard #0006</h5>
+                  <span class="score-val">21 Wins</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-badge">3</div>
+                  <div class="avatar-sm">👻</div>
+                  <h5>Shadowisp #0094</h5>
+                  <span class="score-val">18 Wins</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-badge">4</div>
+                  <div class="avatar-sm">🐉</div>
+                  <h5>Dracono #0149</h5>
+                  <span class="score-val">15 Wins</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-badge">5</div>
+                  <div class="avatar-sm">🐾</div>
+                  <h5>Aurabeast #0448</h5>
+                  <span class="score-val">13 Wins</span>
+                </div>
+              </div>
+
+              <div id="leaderboard-creators-list" style="display: none;">
+                <div class="rank-row top-1">
+                  <div class="rank-badge">🏆</div>
+                  <div class="avatar-sm">👑</div>
+                  <h5>@ThunderReply</h5>
+                  <span class="score-val">142 Born</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-badge">2</div>
+                  <div class="avatar-sm">🌟</div>
+                  <h5>@PokeMasterX</h5>
+                  <span class="score-val">119 Born</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-badge">3</div>
+                  <div class="avatar-sm">💎</div>
+                  <h5>@GreenThumb</h5>
+                  <span class="score-val">98 Born</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-badge">4</div>
+                  <div class="avatar-sm">🔥</div>
+                  <h5>@FlamePump</h5>
+                  <span class="score-val">84 Born</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-badge">5</div>
+                  <div class="avatar-sm">⚡</div>
+                  <h5>@VoltMaster</h5>
+                  <span class="score-val">76 Born</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-outline" style="margin-top: var(--space-4);" id="btn-view-leaderboard">View Leaderboard</button>
+          </div>
+
+          <!-- Column 2: Live Activity Feed -->
+          <div class="panel-card">
+            <div>
+              <h2 style="font-size: 20px;">Live Activity</h2>
+              <p style="font-size: 13px; margin-top: 4px; margin-bottom: var(--space-4);">Real-time events from the PokéPump universe.</p>
+
+              <div>
+                <div class="activity-item">
+                  <div class="activity-icon-bubble" style="background: var(--type-electric-soft); color: var(--type-electric);">⚡</div>
+                  <div class="activity-content">
+                    <h5>New Pokémon Born</h5>
+                    <p>Sparkit #01302 hatched from @ThunderReply!</p>
+                  </div>
+                  <span class="activity-time-stamp">Just now</span>
+                </div>
+
+                <div class="activity-item">
+                  <div class="activity-icon-bubble" style="background: var(--brand-50); color: var(--brand-500);">⚔️</div>
+                  <div class="activity-content">
+                    <h5>Battle Completed</h5>
+                    <p>Flarecub #01264 defeated Aquadot #01882</p>
+                  </div>
+                  <span class="activity-time-stamp">2m ago</span>
+                </div>
+
+                <div class="activity-item">
+                  <div class="activity-icon-bubble" style="background: var(--type-fire-soft); color: var(--type-fire);">👑</div>
+                  <div class="activity-content">
+                    <h5>New Champion</h5>
+                    <p>Sparkit #0031 ascended to Rank #1</p>
+                  </div>
+                  <span class="activity-time-stamp">5m ago</span>
+                </div>
+
+                <div class="activity-item">
+                  <div class="activity-icon-bubble" style="background: var(--type-grass-soft); color: var(--type-grass);">🌱</div>
+                  <div class="activity-content">
+                    <h5>New Pokémon Born</h5>
+                    <p>Leafin #01803 hatched from @GreenThumb</p>
+                  </div>
+                  <span class="activity-time-stamp">6m ago</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-outline" style="margin-top: var(--space-4);" id="btn-view-activity">View All Activity</button>
+          </div>
+
+          <!-- Column 3: Join PokéPump CTA Banner -->
+          <div class="community-cta-card">
+            <div>
+              <h2>Join the PokéPump Universe</h2>
+              <p>Reply. Pump. Battle. Repeat.<br>Be the reason the next legendary creature is born.</p>
+            </div>
+
+            <a class="cta-social-btn" href="https://x.com" target="_blank" rel="noopener noreferrer" id="btn-cta-x-follow">
+              <span>Follow @PokePump on X</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+
+            <!-- Dreamy Ambient Decorative Shapes -->
+            <div class="cta-decor-monsters">
+              <svg width="220" height="130" viewBox="0 0 220 130">
+                <circle cx="50" cy="85" r="32" fill="#FDE047" opacity="0.9"/>
+                <circle cx="115" cy="75" r="36" fill="#F87171" opacity="0.95"/>
+                <ellipse cx="180" cy="88" rx="32" ry="28" fill="#60A5FA" opacity="0.9"/>
+              </svg>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <!-- Brand Info -->
+        <div class="footer-brand-col">
+          <div class="brand-logo">
+            <div class="logo-ball" aria-hidden="true"></div>
+            Poké<span class="pump">Pump</span>
+          </div>
+          <p>A playful, community-driven monster ecosystem born from replies on X. Built with clean soft-glass aesthetics and high visual hierarchy.</p>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="footer-links-col">
+          <h4>Explore</h4>
+          <a href="#collection">Pokémon Collection</a>
+          <a href="#born">Born From X</a>
+          <a href="#battles">Battle Arena</a>
+          <a href="#schedule">Match Schedule</a>
+        </div>
+
+        <!-- Community Links -->
+        <div class="footer-links-col">
+          <h4>Community</h4>
+          <a href="#leaderboard">Leaderboard</a>
+          <a href="#leaderboard">Top Creators</a>
+          <a href="#leaderboard">Live Activity</a>
+          <a href="https://x.com" target="_blank" rel="noopener noreferrer">Official X (Twitter)</a>
+        </div>
+
+        <!-- Support / About -->
+        <div class="footer-links-col">
+          <h4>Support</h4>
+          <a href="#">About System</a>
+          <a href="#">Documentation</a>
+          <a href="#">Design System Tokens</a>
+          <a href="#">Terms & Privacy</a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <span>© 2026 PokéPump Universe. All rights reserved.</span>
+        <span>Crafted with Soft Glass & Pokémon Identity</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       LIGHTWEIGHT JAVASCRIPT INTERACTIONS
+       ========================================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Leaderboard Tab Switcher
+      const tabMonsters = document.getElementById('tab-top-monsters');
+      const tabCreators = document.getElementById('tab-top-creators');
+      const listMonsters = document.getElementById('leaderboard-monsters-list');
+      const listCreators = document.getElementById('leaderboard-creators-list');
+
+      if (tabMonsters && tabCreators) {
+        tabMonsters.addEventListener('click', () => {
+          tabMonsters.classList.add('active');
+          tabCreators.classList.remove('active');
+          listMonsters.style.display = 'block';
+          listCreators.style.display = 'none';
+        });
+
+        tabCreators.addEventListener('click', () => {
+          tabCreators.classList.add('active');
+          tabMonsters.classList.remove('active');
+          listMonsters.style.display = 'none';
+          listCreators.style.display = 'block';
+        });
+      }
+
+      // 2. Client-side Search & Filter
+      const searchInput = document.getElementById('search-monsters');
+      const filterType = document.getElementById('filter-type');
+      const miniCards = document.querySelectorAll('.mini-card');
+
+      function filterCards() {
+        const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+        const selectedType = filterType ? filterType.value.toLowerCase() : 'all';
+
+        miniCards.forEach(card => {
+          const name = card.getAttribute('data-name') || '';
+          const type = card.getAttribute('data-type') || '';
+
+          const matchesQuery = !query || name.includes(query);
+          const matchesType = selectedType === 'all' || type === selectedType;
+
+          if (matchesQuery && matchesType) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      if (searchInput) searchInput.addEventListener('input', filterCards);
+      if (filterType) filterType.addEventListener('change', filterCards);
+    });
+  </script>
+</body>
+</html>

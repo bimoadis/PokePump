@@ -1,0 +1,148 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum PokemonType {
+  normal
+  fighting
+  flying
+  poison
+  ground
+  rock
+  bug
+  ghost
+  steel
+  fire
+  water
+  grass
+  electric
+  psychic
+  ice
+  dragon
+  dark
+  fairy
+}
+
+enum RarityGrade {
+  COMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
+
+enum MatchStatus {
+  SCHEDULED
+  LIVE
+  COMPLETED
+}
+
+enum ActivityType {
+  born
+  battle_win
+  level_up
+  rank_up
+}
+
+model User {
+  id            String    @id @default(uuid())
+  twitterHandle String    @unique
+  twitterId     String?   @unique
+  avatarUrl     String?
+  role          String    @default("TRAINER")
+  pokemons      Pokemon[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([twitterHandle])
+}
+
+model Pokemon {
+  id              String       @id @default(uuid())
+  pokedexId       Int
+  number          String
+  name            String
+  species         String
+  type            PokemonType
+  secondaryType   PokemonType?
+  level           Int          @default(1)
+  exp             Int          @default(0)
+  
+  hp              Int          @default(50)
+  attack          Int          @default(50)
+  defense         Int          @default(50)
+  specialAttack   Int          @default(50)
+  specialDefense  Int          @default(50)
+  speed           Int          @default(50)
+  
+  powerScore      Int          @default(100)
+  rarity          RarityGrade  @default(COMMON)
+  tweetId         String       @unique
+  replyPrompt     String?
+  artworkUrl      String
+  spriteUrl       String?
+  showdownUrl     String?
+  cryUrl          String?
+  height          Int?
+  weight          Int?
+  baseExperience  Int?
+  
+  ownerId         String
+  owner           User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  fighter1Matches BattleMatch[] @relation("Fighter1")
+  fighter2Matches BattleMatch[] @relation("Fighter2")
+  wonMatches      BattleMatch[] @relation("Winner")
+
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([ownerId])
+  @@index([pokedexId])
+  @@index([type, level])
+  @@index([powerScore(sort: Desc)])
+  @@index([rarity])
+}
+
+model BattleMatch {
+  id              String      @id @default(uuid())
+  fighter1Id      String
+  fighter1        Pokemon     @relation("Fighter1", fields: [fighter1Id], references: [id], onDelete: Cascade)
+  fighter2Id      String
+  fighter2        Pokemon     @relation("Fighter2", fields: [fighter2Id], references: [id], onDelete: Cascade)
+  
+  winnerId        String?
+  winner          Pokemon?    @relation("Winner", fields: [winnerId], references: [id])
+  
+  power1          Int
+  power2          Int
+  status          MatchStatus @default(SCHEDULED)
+  scheduledTime   DateTime    @default(now())
+  spectatorsCount Int         @default(0)
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([status, scheduledTime])
+}
+
+model ActivityLog {
+  id          String       @id @default(uuid())
+  type        ActivityType
+  title       String
+  description String
+  icon        String?
+  metadata    Json?
+  createdAt   DateTime     @default(now())
+
+  @@index([createdAt(sort: Desc)])
+}
+
+model IdempotencyKey {
+  key         String   @id
+  processedAt DateTime @default(now())
+}

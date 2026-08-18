@@ -1,0 +1,27 @@
+{
+  "name": "pokepump",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PokéPump — Where Every Reply Creates a Monster",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev:web",
+    "dev:web": "npm --workspace=apps/web run dev",
+    "dev:api": "npm --workspace=apps/api run dev",
+    "build": "npm run build:shared && npm run build:db && npm run build:renderer && npm run build:api && npm run build:web",
+    "build:shared": "npm --workspace=packages/shared run build",
+    "build:db": "npm --workspace=packages/database run build",
+    "build:renderer": "npm --workspace=packages/renderer run build",
+    "build:web": "npm --workspace=apps/web run build",
+    "build:api": "npm --workspace=apps/api run build",
+    "db:generate": "npm --workspace=packages/database run db:generate",
+    "db:push": "npm --workspace=packages/database run db:push",
+    "db:seed": "npm --workspace=packages/database run db:seed"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
