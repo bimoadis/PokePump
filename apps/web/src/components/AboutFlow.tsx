@@ -1,55 +1,180 @@
+'use client';
+
 import React from 'react';
 
 export const AboutFlow: React.FC = () => {
   return (
-    <section className="section-wrap">
+    <section className="section-wrap" id="about">
       <div className="container">
-        <div className="surface-card-feature">
-          <h2>About PokéPump</h2>
-          <p style={{ marginTop: '8px', fontSize: '15px' }}>
-            PokéPump turns community interaction into a living monster universe. Reply to @PokePump on X and you might be the reason a new creature is born!
-          </p>
+        <div className="about-hero-card">
+          <div className="about-content-left">
+            <h2 className="about-title">About PokéPump</h2>
+            <p className="about-desc">
+              PokéPump turns community interaction into a living Pokémon universe.<br className="desktop-br" />
+              Reply to @PokePump on X and you might be the reason<br className="desktop-br" />
+              a new Pokémon is born!
+            </p>
 
-          <div className="about-flow-grid">
-            <div className="flow-step-card">
-              <div className="step-icon-bubble" style={{ background: 'var(--type-water-soft)', color: 'var(--type-water)' }}>
-                💬
+            <div className="about-horizontal-flow">
+              {/* Step 1: Reply */}
+              <div className="flow-node">
+                <div className="flow-circle-icon icon-reply">
+                  <svg width="38" height="38" viewBox="0 0 42 42" fill="none">
+                    <defs>
+                      <linearGradient id="chatGrad" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#3B82F6" />
+                        <stop offset="1" stopColor="#2563EB" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M21 7C12.7157 7 6 12.82 6 20C6 23.715 7.79979 27.054 10.742 29.406L9.5 35.375L15.939 32.548C17.514 32.845 19.215 33 21 33C29.2843 33 36 27.18 36 20C36 12.82 29.2843 7 21 7Z"
+                      fill="url(#chatGrad)"
+                    />
+                    <circle cx="14.5" cy="20" r="2.2" fill="#FFFFFF" />
+                    <circle cx="21" cy="20" r="2.2" fill="#FFFFFF" />
+                    <circle cx="27.5" cy="20" r="2.2" fill="#FFFFFF" />
+                  </svg>
+                </div>
+                <h4 className="flow-step-title">Reply</h4>
+                <p className="flow-step-sub">
+                  Reply to<br />@PokePump on X
+                </p>
               </div>
-              <h3>1. Reply</h3>
-              <p>Reply to @PokePump on X to ignite the spark.</p>
-            </div>
 
-            <div className="flow-step-card">
-              <div className="step-icon-bubble" style={{ background: 'var(--brand-100)', color: 'var(--brand-500)' }}>
-                🥚
-              </div>
-              <h3>2. Monster Born</h3>
-              <p>A brand new creature hatches directly from your post.</p>
-            </div>
+              <div className="flow-arrow" aria-hidden="true">→</div>
 
-            <div className="flow-step-card">
-              <div className="step-icon-bubble" style={{ background: 'var(--type-grass-soft)', color: 'var(--type-grass)' }}>
-                📈
+              {/* Step 2: Pokémon Born */}
+              <div className="flow-node">
+                <div className="flow-circle-icon icon-born">
+                  <svg width="38" height="38" viewBox="0 0 42 42" fill="none">
+                    <defs>
+                      <linearGradient id="eggGrad" x1="21" y1="6" x2="21" y2="36" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#FB7185" />
+                        <stop offset="1" stopColor="#E11D48" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M21 6C14 6 9.5 15.5 9.5 24C9.5 30.627 14.649 36 21 36C27.351 36 32.5 30.627 32.5 24C32.5 15.5 28 6 21 6Z"
+                      fill="url(#eggGrad)"
+                    />
+                    <circle cx="21" cy="27" r="4.2" fill="#9F1239" />
+                    <ellipse cx="16" cy="13" rx="1.8" ry="3.5" transform="rotate(-25 16 13)" fill="#FFFFFF" opacity="0.45" />
+                  </svg>
+                </div>
+                <h4 className="flow-step-title">Pokémon Born</h4>
+                <p className="flow-step-sub">
+                  A brand new Pokémon<br />is born from your reply!
+                </p>
               </div>
-              <h3>3. Stats</h3>
-              <p>Generated with unique types, base stats, and rarity.</p>
-            </div>
 
-            <div className="flow-step-card">
-              <div className="step-icon-bubble" style={{ background: 'var(--type-electric-soft)', color: 'var(--type-electric)' }}>
-                ⚔️
-              </div>
-              <h3>4. Battle</h3>
-              <p>Enters the automatic battle arena for community matches.</p>
-            </div>
+              <div className="flow-arrow" aria-hidden="true">→</div>
 
-            <div className="flow-step-card">
-              <div className="step-icon-bubble" style={{ background: 'var(--type-ghost-soft)', color: 'var(--type-ghost)' }}>
-                👑
+              {/* Step 3: Stats */}
+              <div className="flow-node">
+                <div className="flow-circle-icon icon-stats">
+                  <svg width="38" height="38" viewBox="0 0 42 42" fill="none">
+                    <defs>
+                      <linearGradient id="barGrad1" x1="0" y1="0" x2="0" y2="42" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#86EFAC" />
+                        <stop offset="1" stopColor="#22C55E" />
+                      </linearGradient>
+                      <linearGradient id="barGrad2" x1="0" y1="0" x2="0" y2="42" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#4ADE80" />
+                        <stop offset="1" stopColor="#16A34A" />
+                      </linearGradient>
+                    </defs>
+                    <rect x="9" y="23" width="6" height="11" rx="2" fill="url(#barGrad1)" />
+                    <rect x="18" y="16" width="6" height="18" rx="2" fill="url(#barGrad2)" />
+                    <rect x="27" y="9" width="6" height="25" rx="2" fill="url(#barGrad2)" />
+                  </svg>
+                </div>
+                <h4 className="flow-step-title">Stats</h4>
+                <p className="flow-step-sub">
+                  It comes with unique<br />stats and abilities.
+                </p>
               </div>
-              <h3>5. Champion</h3>
-              <p>Climb leaderboard ranks and earn legendary status.</p>
+
+              <div className="flow-arrow" aria-hidden="true">→</div>
+
+              {/* Step 4: Battle */}
+              <div className="flow-node">
+                <div className="flow-circle-icon icon-battle">
+                  <svg width="38" height="38" viewBox="0 0 42 42" fill="none">
+                    <defs>
+                      <linearGradient id="swGrad" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#F87171" />
+                        <stop offset="1" stopColor="#DC2626" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M11 31L27.5 14.5M27.5 14.5L25.5 12.5L20 18L24 22Z"
+                      stroke="url(#swGrad)"
+                      strokeWidth="3.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      fill="url(#swGrad)"
+                    />
+                    <line x1="8.5" y1="33.5" x2="13.5" y2="28.5" stroke="url(#swGrad)" strokeWidth="3" strokeLinecap="round" />
+                    <line x1="12" y1="26" x2="17" y2="31" stroke="url(#swGrad)" strokeWidth="2.5" strokeLinecap="round" />
+
+                    <path
+                      d="M31 31L14.5 14.5M14.5 14.5L16.5 12.5L22 18L18 22Z"
+                      stroke="url(#swGrad)"
+                      strokeWidth="3.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      fill="url(#swGrad)"
+                    />
+                    <line x1="33.5" y1="33.5" x2="28.5" y2="28.5" stroke="url(#swGrad)" strokeWidth="3" strokeLinecap="round" />
+                    <line x1="30" y1="26" x2="25" y2="31" stroke="url(#swGrad)" strokeWidth="2.5" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <h4 className="flow-step-title">Battle</h4>
+                <p className="flow-step-sub">
+                  Your Pokémon enters<br />the arena to battle.
+                </p>
+              </div>
+
+              <div className="flow-arrow" aria-hidden="true">→</div>
+
+              {/* Step 5: Champion */}
+              <div className="flow-node">
+                <div className="flow-circle-icon icon-champion">
+                  <svg width="38" height="38" viewBox="0 0 42 42" fill="none">
+                    <defs>
+                      <linearGradient id="crGrad" x1="0" y1="8" x2="0" y2="34" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#FBBF24" />
+                        <stop offset="1" stopColor="#EA580C" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M8 28L10.5 14L16.5 20.5L21 11L25.5 20.5L31.5 14L34 28Z"
+                      fill="url(#crGrad)"
+                      stroke="#CA8A04"
+                      strokeWidth="1.2"
+                      strokeLinejoin="round"
+                    />
+                    <rect x="8" y="28" width="26" height="3.5" rx="1.5" fill="#D97706" />
+                    <circle cx="21" cy="10" r="1.8" fill="#FEF08A" />
+                    <circle cx="10.5" cy="13" r="1.5" fill="#FEF08A" />
+                    <circle cx="31.5" cy="13" r="1.5" fill="#FEF08A" />
+                  </svg>
+                </div>
+                <h4 className="flow-step-title">Champion</h4>
+                <p className="flow-step-sub">
+                  Only the strongest<br />become legends!
+                </p>
+              </div>
             </div>
+          </div>
+
+          {/* Right Side Glowing Incubator Visual */}
+          <div className="about-incubator-right">
+            <img
+              src="/about-incubator.png"
+              alt="Incubating Pokémon Egg"
+              className="incubator-graphic-img"
+            />
           </div>
         </div>
       </div>
