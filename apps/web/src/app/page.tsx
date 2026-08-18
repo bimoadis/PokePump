@@ -2,6 +2,7 @@ import React from 'react';
 import { Header } from '@/components/Header';
 import { HeroSection } from '@/components/HeroSection';
 import { AboutFlow } from '@/components/AboutFlow';
+import { PikachuAirdropBanner } from '@/components/PikachuAirdropBanner';
 import { BornFromXGrid } from '@/components/BornFromXGrid';
 import { CollectionGrid } from '@/components/CollectionGrid';
 import { BattleArena } from '@/components/BattleArena';
@@ -15,6 +16,7 @@ export default function HomePage() {
       <main>
         <HeroSection />
         <AboutFlow />
+        <PikachuAirdropBanner />
         <BornFromXGrid />
         <CollectionGrid />
         <BattleArena />
