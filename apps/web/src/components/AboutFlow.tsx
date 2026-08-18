@@ -22,17 +22,17 @@ export const AboutFlow: React.FC = () => {
                   <svg width="38" height="38" viewBox="0 0 42 42" fill="none">
                     <defs>
                       <linearGradient id="chatGrad" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#3B82F6" />
-                        <stop offset="1" stopColor="#2563EB" />
+                        <stop stopColor="var(--pp-info)" />
+                        <stop offset="1" stopColor="var(--pp-gradient-end)" />
                       </linearGradient>
                     </defs>
                     <path
                       d="M21 7C12.7157 7 6 12.82 6 20C6 23.715 7.79979 27.054 10.742 29.406L9.5 35.375L15.939 32.548C17.514 32.845 19.215 33 21 33C29.2843 33 36 27.18 36 20C36 12.82 29.2843 7 21 7Z"
                       fill="url(#chatGrad)"
                     />
-                    <circle cx="14.5" cy="20" r="2.2" fill="#FFFFFF" />
-                    <circle cx="21" cy="20" r="2.2" fill="#FFFFFF" />
-                    <circle cx="27.5" cy="20" r="2.2" fill="#FFFFFF" />
+                    <circle cx="14.5" cy="20" r="2.2" fill="var(--pp-text-inverse)" />
+                    <circle cx="21" cy="20" r="2.2" fill="var(--pp-text-inverse)" />
+                    <circle cx="27.5" cy="20" r="2.2" fill="var(--pp-text-inverse)" />
                   </svg>
                 </div>
                 <h4 className="flow-step-title">Reply</h4>
@@ -49,16 +49,16 @@ export const AboutFlow: React.FC = () => {
                   <svg width="38" height="38" viewBox="0 0 42 42" fill="none">
                     <defs>
                       <linearGradient id="eggGrad" x1="21" y1="6" x2="21" y2="36" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#FB7185" />
-                        <stop offset="1" stopColor="#E11D48" />
+                        <stop stopColor="var(--pp-type-fairy)" />
+                        <stop offset="1" stopColor="var(--pp-red)" />
                       </linearGradient>
                     </defs>
                     <path
                       d="M21 6C14 6 9.5 15.5 9.5 24C9.5 30.627 14.649 36 21 36C27.351 36 32.5 30.627 32.5 24C32.5 15.5 28 6 21 6Z"
                       fill="url(#eggGrad)"
                     />
-                    <circle cx="21" cy="27" r="4.2" fill="#9F1239" />
-                    <ellipse cx="16" cy="13" rx="1.8" ry="3.5" transform="rotate(-25 16 13)" fill="#FFFFFF" opacity="0.45" />
+                    <circle cx="21" cy="27" r="4.2" fill="var(--pp-red-active)" />
+                    <ellipse cx="16" cy="13" rx="1.8" ry="3.5" transform="rotate(-25 16 13)" fill="var(--pp-text-inverse)" opacity="0.45" />
                   </svg>
                 </div>
                 <h4 className="flow-step-title">Pokémon Born</h4>
@@ -75,12 +75,12 @@ export const AboutFlow: React.FC = () => {
                   <svg width="38" height="38" viewBox="0 0 42 42" fill="none">
                     <defs>
                       <linearGradient id="barGrad1" x1="0" y1="0" x2="0" y2="42" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#86EFAC" />
-                        <stop offset="1" stopColor="#22C55E" />
+                        <stop stopColor="var(--pp-type-grass)" />
+                        <stop offset="1" stopColor="var(--pp-success)" />
                       </linearGradient>
                       <linearGradient id="barGrad2" x1="0" y1="0" x2="0" y2="42" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#4ADE80" />
-                        <stop offset="1" stopColor="#16A34A" />
+                        <stop stopColor="var(--pp-type-grass)" />
+                        <stop offset="1" stopColor="var(--pp-success)" />
                       </linearGradient>
                     </defs>
                     <rect x="9" y="23" width="6" height="11" rx="2" fill="url(#barGrad1)" />
@@ -102,8 +102,8 @@ export const AboutFlow: React.FC = () => {
                   <svg width="38" height="38" viewBox="0 0 42 42" fill="none">
                     <defs>
                       <linearGradient id="swGrad" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#F87171" />
-                        <stop offset="1" stopColor="#DC2626" />
+                        <stop stopColor="var(--pp-type-fighting)" />
+                        <stop offset="1" stopColor="var(--pp-danger)" />
                       </linearGradient>
                     </defs>
                     <path
@@ -143,21 +143,21 @@ export const AboutFlow: React.FC = () => {
                   <svg width="38" height="38" viewBox="0 0 42 42" fill="none">
                     <defs>
                       <linearGradient id="crGrad" x1="0" y1="8" x2="0" y2="34" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#FBBF24" />
-                        <stop offset="1" stopColor="#EA580C" />
+                        <stop stopColor="var(--pp-type-electric)" />
+                        <stop offset="1" stopColor="var(--pp-warning)" />
                       </linearGradient>
                     </defs>
                     <path
                       d="M8 28L10.5 14L16.5 20.5L21 11L25.5 20.5L31.5 14L34 28Z"
                       fill="url(#crGrad)"
-                      stroke="#CA8A04"
+                      stroke="var(--pp-warning)"
                       strokeWidth="1.2"
                       strokeLinejoin="round"
                     />
-                    <rect x="8" y="28" width="26" height="3.5" rx="1.5" fill="#D97706" />
-                    <circle cx="21" cy="10" r="1.8" fill="#FEF08A" />
-                    <circle cx="10.5" cy="13" r="1.5" fill="#FEF08A" />
-                    <circle cx="31.5" cy="13" r="1.5" fill="#FEF08A" />
+                    <rect x="8" y="28" width="26" height="3.5" rx="1.5" fill="var(--pp-warning)" />
+                    <circle cx="21" cy="10" r="1.8" fill="var(--pp-text-inverse)" />
+                    <circle cx="10.5" cy="13" r="1.5" fill="var(--pp-text-inverse)" />
+                    <circle cx="31.5" cy="13" r="1.5" fill="var(--pp-text-inverse)" />
                   </svg>
                 </div>
                 <h4 className="flow-step-title">Champion</h4>

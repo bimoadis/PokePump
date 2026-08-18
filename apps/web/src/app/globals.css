@@ -1,92 +1,264 @@
 /* ==========================================================================
-   POKÉPUMP MODERN DESIGN SYSTEM TOKENS (18 POKÉMON TYPES INTEGRATION)
+   PokéPump — Design Tokens
+   "Where Every Reply Creates a Pokémon"
    ========================================================================== */
-:root {
-  /* Brand Tokens */
-  --brand-500: #E03F36;
-  --brand-600: #D02B2E;
-  --brand-700: #B32024;
-  --brand-100: #FFEAE8;
-  --brand-50: #FFF5F4;
 
-  /* Neutral Tokens */
-  --neutral-950: #0D0B18;
+:root {
+  /* ---- Brand / Primary ---- */
+  --pp-red: #E4292F;
+  --pp-red-hover: #C71F25;
+  --pp-red-active: #A81A1F;
+  --pp-ink: #16171D;
+
+  /* ---- Surfaces / Neutrals ---- */
+  --pp-bg-page: #F6F5FB;          /* soft lavender page background */
+  --pp-bg-surface: #FFFFFF;       /* card / panel background */
+  --pp-bg-surface-alt: #FAFAFD;   /* subtle alt surface, e.g. table stripe */
+  --pp-border: #EDEBF5;
+  --pp-border-strong: #DCD9EA;
+
+  /* ---- Text ---- */
+  --pp-text-primary: #16171D;
+  --pp-text-secondary: #6B7280;
+  --pp-text-muted: #9CA3AF;
+  --pp-text-inverse: #FFFFFF;
+
+  /* ---- Rarity tags ---- */
+  --pp-rarity-new: #22C55E;
+  --pp-rarity-new-bg: #E9FBF0;
+  --pp-rarity-rare: #3B82F6;
+  --pp-rarity-rare-bg: #EAF2FE;
+  --pp-rarity-epic: #8B5FE0;
+  --pp-rarity-epic-bg: #F2EDFC;
+  --pp-rarity-legendary: #DC2626;
+  --pp-rarity-legendary-bg: #FDEBEB;
+
+  /* ---- Pokémon type accents ----
+     each type = base icon/dot color + text (AA-readable) + bg (pale tint) */
+  --pp-type-fire: #F97316;      --pp-type-fire-text: #C2410C;      --pp-type-fire-bg: #FFF1E6;
+  --pp-type-water: #38BDF8;     --pp-type-water-text: #0369A1;     --pp-type-water-bg: #E7F6FE;
+  --pp-type-grass: #4ADE80;     --pp-type-grass-text: #16A34A;     --pp-type-grass-bg: #EAFBF0;
+  --pp-type-electric: #FACC15;  --pp-type-electric-text: #A16207;  --pp-type-electric-bg: #FEFAE6;
+  --pp-type-ghost: #7C3AED;     --pp-type-ghost-text: #6D28D9;     --pp-type-ghost-bg: #F3EEFD;
+  --pp-type-psychic: #EC4899;   --pp-type-psychic-text: #BE185D;   --pp-type-psychic-bg: #FDEEF5;
+  --pp-type-dragon: #6366F1;    --pp-type-dragon-text: #4338CA;    --pp-type-dragon-bg: #EEEFFD;
+  --pp-type-dark: #4B5563;      --pp-type-dark-text: #374151;      --pp-type-dark-bg: #F1F2F4;
+  --pp-type-normal: #9CA3AF;    --pp-type-normal-text: #6B7280;    --pp-type-normal-bg: #F4F4F5;
+  --pp-type-fighting: #EF4444;  --pp-type-fighting-text: #B91C1C;  --pp-type-fighting-bg: #FDECEC;
+  --pp-type-flying: #93C5FD;    --pp-type-flying-text: #2563EB;    --pp-type-flying-bg: #EAF2FE;
+  --pp-type-poison: #A855F7;    --pp-type-poison-text: #7E22CE;    --pp-type-poison-bg: #F6EEFD;
+  --pp-type-ground: #D97706;    --pp-type-ground-text: #B45309;    --pp-type-ground-bg: #FEF3E2;
+  --pp-type-rock: #A8A29E;      --pp-type-rock-text: #78716C;      --pp-type-rock-bg: #F5F4F2;
+  --pp-type-bug: #84CC16;       --pp-type-bug-text: #4D7C0F;       --pp-type-bug-bg: #F3FBE6;
+  --pp-type-steel: #94A3B8;     --pp-type-steel-text: #475569;     --pp-type-steel-bg: #EEF2F6;
+  --pp-type-ice: #67E8F9;       --pp-type-ice-text: #0E7490;       --pp-type-ice-bg: #E6FBFD;
+  --pp-type-fairy: #F9A8D4;     --pp-type-fairy-text: #DB2777;     --pp-type-fairy-bg: #FDF0F7;
+
+  /* ---- Semantic states ---- */
+  --pp-success: #22C55E;
+  --pp-warning: #F59E0B;
+  --pp-danger: #DC2626;
+  --pp-info: #3B82F6;
+  --pp-live: #E4292F;
+
+  /* ---- Gradient (CTA sections only) ---- */
+  --pp-gradient-start: #6D28D9;
+  --pp-gradient-end: #2563EB;
+  --pp-gradient-cta: linear-gradient(135deg, var(--pp-gradient-start), var(--pp-gradient-end));
+
+  /* ---- Radius ---- */
+  --pp-radius-sm: 8px;
+  --pp-radius-md: 12px;
+  --pp-radius-lg: 20px;
+  --pp-radius-pill: 999px;
+
+  /* ---- Shadow ---- */
+  --pp-shadow-sm: 0 2px 8px rgba(20, 20, 40, 0.04);
+  --pp-shadow-md: 0 8px 24px rgba(20, 20, 40, 0.06);
+  --pp-shadow-lg: 0 16px 40px rgba(20, 20, 40, 0.10);
+
+  /* ---- Spacing scale ---- */
+  --pp-space-xs: 4px;
+  --pp-space-sm: 8px;
+  --pp-space-md: 16px;
+  --pp-space-lg: 24px;
+  --pp-space-xl: 40px;
+
+  /* ---- Typography ---- */
+  --pp-font-sans: "Inter", "Poppins", system-ui, -apple-system, sans-serif;
+  --pp-font-size-xs: 12px;
+  --pp-font-size-sm: 14px;
+  --pp-font-size-md: 16px;
+  --pp-font-size-lg: 20px;
+  --pp-font-size-xl: 28px;
+  --pp-font-size-2xl: 40px;
+
+  /* Backward Compatibility Token Aliases */
+  --brand-500: var(--pp-red);
+  --brand-600: var(--pp-red-hover);
+  --brand-700: var(--pp-red-active);
+  --brand-100: var(--pp-rarity-legendary-bg);
+  --brand-50: var(--pp-rarity-legendary-bg);
+  --white: var(--pp-bg-surface);
+  --app-bg: var(--pp-bg-page);
+  --neutral-950: var(--pp-text-primary);
   --neutral-900: #181528;
   --neutral-800: #262238;
   --neutral-700: #423E56;
-  --neutral-600: #5C5872;
-  --neutral-500: #88849E;
+  --neutral-600: var(--pp-text-secondary);
+  --neutral-500: var(--pp-text-muted);
   --neutral-400: #AEABC0;
-  --neutral-300: #D5D3E2;
-  --neutral-200: #E6E5F0;
+  --neutral-300: var(--pp-border-strong);
+  --neutral-200: var(--pp-border);
   --neutral-150: #EEEDF5;
-  --neutral-100: #F6F6FA;
-  --white: #FFFFFF;
-  --app-bg: #F8F8FB;
-
-  /* 18 Official Pokémon Type Tokens */
-  --type-normal: #9FA19F;
-  --type-normal-soft: #F4F4F4;
-  --type-fighting: #E03020;
-  --type-fighting-soft: #FDEEEB;
-  --type-flying: #82A5F5;
-  --type-flying-soft: #F0F4FE;
-  --type-poison: #9241CC;
-  --type-poison-soft: #F5ECFA;
-  --type-ground: #9E6D38;
-  --type-ground-soft: #F7F1EB;
-  --type-rock: #857F70;
-  --type-rock-soft: #F4F2EC;
-  --type-bug: #91A119;
-  --type-bug-soft: #F4F6E8;
-  --type-ghost: #8043C4;
-  --type-ghost-soft: #F6EEFC;
-  --type-steel: #60A1B8;
-  --type-steel-soft: #EEF6F8;
-  --type-fire: #E65A36;
-  --type-fire-soft: #FFF2ED;
-  --type-water: #3B8AE4;
-  --type-water-soft: #EEF6FF;
-  --type-grass: #5EA843;
-  --type-grass-soft: #F0F8EC;
-  --type-electric: #E5A51A;
-  --type-electric-soft: #FFF9E6;
-  --type-psychic: #D14B92;
-  --type-psychic-soft: #FCEDF5;
-  --type-ice: #5DBCCF;
-  --type-ice-soft: #EBF8FA;
-  --type-dragon: #5060E1;
-  --type-dragon-soft: #EEF0FD;
-  --type-dark: #433E4D;
-  --type-dark-soft: #ECEAEF;
-  --type-fairy: #EE70AC;
-  --type-fairy-soft: #FDF0F6;
-
-  /* Semantic Tokens */
-  --semantic-success: #52A638;
-  --semantic-warning: #E5A51A;
-  --semantic-error: #E03F36;
-  --semantic-info: #2B85CC;
-
-  /* Modern Refined Radius Tokens */
-  --radius-2xs: 3px;
-  --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 10px;
-  --radius-xl: 12px;
-  --radius-2xl: 14px;
-  --radius-full: 999px;
-
-  /* High-Precision Shadows & Depth */
-  --shadow-1: 0 1px 2px rgba(13, 11, 24, 0.04), 0 2px 6px rgba(13, 11, 24, 0.03);
-  --shadow-2: 0 3px 10px rgba(13, 11, 24, 0.05), 0 1px 3px rgba(13, 11, 24, 0.03);
-  --shadow-3: 0 10px 24px -2px rgba(13, 11, 24, 0.08), 0 2px 6px rgba(13, 11, 24, 0.04);
-  --shadow-card-hover: 0 12px 28px -4px rgba(13, 11, 24, 0.09), 0 0 0 1px rgba(224, 63, 54, 0.18);
-
-  /* Typography Scale */
+  --neutral-100: var(--pp-bg-surface-alt);
+  --shadow-1: var(--pp-shadow-sm);
+  --shadow-2: var(--pp-shadow-md);
+  --shadow-3: var(--pp-shadow-lg);
+  --shadow-card-hover: 0 12px 28px -4px rgba(20, 20, 40, 0.09), 0 0 0 1px rgba(228, 41, 47, 0.18);
   --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: var(--pp-font-sans);
+  --radius-xs: var(--pp-radius-sm);
+  --radius-sm: var(--pp-radius-sm);
+  --radius-md: var(--pp-radius-md);
+  --radius-lg: var(--pp-radius-lg);
+  --radius-xl: var(--pp-radius-lg);
+  --radius-2xl: 20px;
+  --radius-full: var(--pp-radius-pill);
+
+  /* Soft Background Variants */
+  --type-normal-soft: var(--pp-type-normal-bg);
+  --type-fighting-soft: var(--pp-type-fighting-bg);
+  --type-flying-soft: var(--pp-type-flying-bg);
+  --type-poison-soft: var(--pp-type-poison-bg);
+  --type-ground-soft: var(--pp-type-ground-bg);
+  --type-rock-soft: var(--pp-type-rock-bg);
+  --type-bug-soft: var(--pp-type-bug-bg);
+  --type-ghost-soft: var(--pp-type-ghost-bg);
+  --type-steel-soft: var(--pp-type-steel-bg);
+  --type-fire-soft: var(--pp-type-fire-bg);
+  --type-water-soft: var(--pp-type-water-bg);
+  --type-grass-soft: var(--pp-type-grass-bg);
+  --type-electric-soft: var(--pp-type-electric-bg);
+  --type-psychic-soft: var(--pp-type-psychic-bg);
+  --type-ice-soft: var(--pp-type-ice-bg);
+  --type-dragon-soft: var(--pp-type-dragon-bg);
+  --type-dark-soft: var(--pp-type-dark-bg);
+  --type-fairy-soft: var(--pp-type-fairy-bg);
+}
+
+/* ==========================================================================
+   Dark mode (optional — flip surfaces/text, keep brand + rarity + type hues)
+   ========================================================================== */
+[data-theme="dark"] {
+  --pp-bg-page: #101014;
+  --pp-bg-surface: #17171D;
+  --pp-bg-surface-alt: #1D1D24;
+  --pp-border: #2A2A33;
+  --pp-border-strong: #3A3A45;
+
+  --pp-text-primary: #F5F5F7;
+  --pp-text-secondary: #A1A1AA;
+  --pp-text-muted: #71717A;
+  --pp-text-inverse: #16171D;
+
+  --pp-rarity-new-bg: #12291C;
+  --pp-rarity-rare-bg: #10203A;
+  --pp-rarity-epic-bg: #241A3D;
+  --pp-rarity-legendary-bg: #331414;
+
+  --pp-type-fire-bg: #2E1A0E;      --pp-type-fire-text: #FB923C;
+  --pp-type-water-bg: #0E2433;     --pp-type-water-text: #7DD3FC;
+  --pp-type-grass-bg: #10281A;     --pp-type-grass-text: #86EFAC;
+  --pp-type-electric-bg: #2E2708;  --pp-type-electric-text: #FDE047;
+  --pp-type-ghost-bg: #211533;     --pp-type-ghost-text: #C4B5FD;
+  --pp-type-psychic-bg: #2E1424;   --pp-type-psychic-text: #F9A8D4;
+  --pp-type-dragon-bg: #1B1B3A;    --pp-type-dragon-text: #A5B4FC;
+  --pp-type-dark-bg: #202226;      --pp-type-dark-text: #D1D5DB;
+  --pp-type-normal-bg: #232326;    --pp-type-normal-text: #D4D4D8;
+  --pp-type-fighting-bg: #331313;  --pp-type-fighting-text: #FCA5A5;
+  --pp-type-flying-bg: #131E33;    --pp-type-flying-text: #BFDBFE;
+  --pp-type-poison-bg: #2A1533;    --pp-type-poison-text: #D8B4FE;
+  --pp-type-ground-bg: #2E2008;    --pp-type-ground-text: #FBBF24;
+  --pp-type-rock-bg: #262421;      --pp-type-rock-text: #D6D3D1;
+  --pp-type-bug-bg: #1E2A0A;       --pp-type-bug-text: #BEF264;
+  --pp-type-steel-bg: #1E252E;     --pp-type-steel-text: #CBD5E1;
+  --pp-type-ice-bg: #0E2C31;       --pp-type-ice-text: #A5F3FC;
+  --pp-type-fairy-bg: #331A28;     --pp-type-fairy-text: #F9A8D4;
+
+  --pp-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.30);
+  --pp-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --pp-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* ==========================================================================
+   PokéPump — Clean Faded Pill Type Tag Component
+   ========================================================================== */
+
+.pp-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: var(--pp-radius-pill);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  border: none;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.pp-tag:hover {
+  filter: brightness(0.96);
+}
+
+.pp-tag__dot {
+  display: none !important;
+}
+
+/* Compact variant */
+.pp-tag--dot-only {
+  padding: 3px 9px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+/* ---- 18 Pokémon Type Modifiers (Bold Hue on Soft Faded Tint) ---- */
+.pp-tag--fire      { color: var(--pp-type-fire-text);      background: var(--pp-type-fire-bg); }
+.pp-tag--water     { color: var(--pp-type-water-text);     background: var(--pp-type-water-bg); }
+.pp-tag--grass     { color: var(--pp-type-grass-text);     background: var(--pp-type-grass-bg); }
+.pp-tag--electric  { color: var(--pp-type-electric-text);  background: var(--pp-type-electric-bg); }
+.pp-tag--ghost     { color: var(--pp-type-ghost-text);     background: var(--pp-type-ghost-bg); }
+.pp-tag--psychic   { color: var(--pp-type-psychic-text);   background: var(--pp-type-psychic-bg); }
+.pp-tag--dragon    { color: var(--pp-type-dragon-text);    background: var(--pp-type-dragon-bg); }
+.pp-tag--dark      { color: var(--pp-type-dark-text);      background: var(--pp-type-dark-bg); }
+.pp-tag--normal    { color: var(--pp-type-normal-text);    background: var(--pp-type-normal-bg); }
+.pp-tag--fighting  { color: var(--pp-type-fighting-text);  background: var(--pp-type-fighting-bg); }
+.pp-tag--flying    { color: var(--pp-type-flying-text);    background: var(--pp-type-flying-bg); }
+.pp-tag--poison    { color: var(--pp-type-poison-text);    background: var(--pp-type-poison-bg); }
+.pp-tag--ground    { color: var(--pp-type-ground-text);    background: var(--pp-type-ground-bg); }
+.pp-tag--rock      { color: var(--pp-type-rock-text);      background: var(--pp-type-rock-bg); }
+.pp-tag--bug       { color: var(--pp-type-bug-text);       background: var(--pp-type-bug-bg); }
+.pp-tag--steel     { color: var(--pp-type-steel-text);     background: var(--pp-type-steel-bg); }
+.pp-tag--ice       { color: var(--pp-type-ice-text);       background: var(--pp-type-ice-bg); }
+.pp-tag--fairy     { color: var(--pp-type-fairy-text);     background: var(--pp-type-fairy-bg); }
+
+/* ---- Rarity Tags ---- */
+.pp-tag--common     { color: var(--pp-text-secondary);     background: var(--pp-bg-surface-alt); border: 1px solid var(--pp-border); }
+.pp-tag--new        { color: var(--pp-rarity-new);        background: var(--pp-rarity-new-bg); }
+.pp-tag--rare       { color: var(--pp-rarity-rare);       background: var(--pp-rarity-rare-bg); }
+.pp-tag--epic       { color: var(--pp-rarity-epic);       background: var(--pp-rarity-epic-bg); }
+.pp-tag--legendary  { color: var(--pp-rarity-legendary);  background: var(--pp-rarity-legendary-bg); }
+
+/* Dual-type card: two tags side by side */
+.pp-tag-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 /* Base Styles */
@@ -703,149 +875,270 @@ a {
   }
 }
 
-/* Pokémon Cards Grid */
-.pokemon-cards-grid {
+/* ==========================================================================
+   Born From X Section & Creature Card Component Styles
+   ========================================================================== */
+
+.born-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.born-title {
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-weight: 800;
+  color: var(--pp-text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.born-subtitle {
+  color: var(--pp-text-secondary);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.born-view-all-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--pp-text-secondary);
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+.born-view-all-link:hover {
+  color: var(--pp-red);
+  transform: translateX(2px);
+}
+
+.born-cards-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 18px;
+  gap: 16px;
 }
 
-.pokemon-card {
-  background: var(--white);
-  border: 1px solid var(--neutral-200);
-  border-radius: var(--radius-lg);
-  padding: 18px;
+.born-creature-card {
+  background: var(--pp-bg-surface);
+  border: 1px solid var(--pp-border);
+  border-radius: var(--pp-radius-md);
+  padding: 14px 14px 12px;
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-1);
+  box-shadow: var(--pp-shadow-sm);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+  cursor: pointer;
 }
 
-.pokemon-card:hover {
+.born-creature-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-card-hover);
-  border-color: rgba(224, 63, 54, 0.3);
+  box-shadow: var(--pp-shadow-md);
+  border-color: var(--pp-border-strong);
 }
 
-.pokemon-card-head {
+.born-card-top-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
-  z-index: 2;
+  margin-bottom: 6px;
 }
 
-.pokemon-card-num {
-  font-size: 11.5px;
-  color: var(--neutral-500);
-  font-weight: 700;
+.born-badge-pill {
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: var(--pp-radius-pill);
+  letter-spacing: 0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.badge-new-red {
+  background: var(--pp-red);
+  color: var(--pp-text-inverse);
+}
+
+.badge-new-green {
+  background: var(--pp-success);
+  color: var(--pp-text-inverse);
+}
+
+.badge-rare {
+  background: var(--pp-info);
+  color: var(--pp-text-inverse);
+}
+
+.badge-epic {
+  background: var(--pp-type-ghost);
+  color: var(--pp-text-inverse);
+}
+
+.badge-legendary {
+  background: var(--pp-danger);
+  color: var(--pp-text-inverse);
+}
+
+.born-card-number {
+  font-size: 11px;
+  color: var(--pp-text-muted);
+  font-weight: 600;
   font-family: var(--font-heading);
 }
 
-.pokemon-card-image-area {
-  height: 154px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(0, 0, 0, 0.04);
+.born-artwork-stage {
+  height: 135px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  margin-bottom: 14px;
-  transition: transform 0.22s ease;
-  overflow: hidden;
+  margin: 4px 0 8px;
 }
 
-.pokemon-artwork-img {
-  width: 120px;
-  height: 120px;
+.born-creature-img {
+  width: 95px;
+  height: 95px;
   object-fit: contain;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.08));
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.pokemon-card:hover .pokemon-artwork-img {
-  transform: scale(1.12) translateY(-2px);
+.born-creature-card:hover .born-creature-img {
+  transform: scale(1.12);
 }
 
-.pokemon-card-title-row {
+.born-name-row {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
-.pokemon-card-title-row h3 {
-  font-size: 17.5px;
+.born-creature-name {
+  font-family: var(--font-heading);
+  font-size: 15px;
   font-weight: 800;
-  color: var(--neutral-950);
-  letter-spacing: -0.02em;
+  color: var(--pp-text-primary);
+  letter-spacing: -0.01em;
 }
 
-.pokemon-card-title-row .lvl-tag {
-  color: var(--neutral-600);
-  font-size: 12px;
-  font-weight: 700;
+.born-creature-level {
+  color: var(--pp-text-muted);
+  font-size: 11px;
+  font-weight: 600;
 }
 
-.stat-bars-group {
-  margin-top: 4px;
+.born-type-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.born-type-symbol {
+  font-size: 11px;
+}
+
+.born-type-text {
+  line-height: 1;
+}
+
+.born-stats-block {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 5px;
+  margin-bottom: 12px;
 }
 
-.stat-bar-row {
+.born-stat-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
 }
 
-.stat-bar-row .stat-label {
-  width: 24px;
-  color: var(--neutral-500);
+.born-stat-label {
+  width: 22px;
+  font-size: 9.5px;
+  color: var(--pp-text-muted);
+  font-weight: 700;
 }
 
-.stat-bar-track {
+.born-stat-bar-track {
   flex: 1;
-  height: 5px;
-  background: var(--neutral-150);
-  border-radius: var(--radius-xs);
+  height: 3.5px;
+  background: var(--pp-border);
+  border-radius: 2px;
   overflow: hidden;
   position: relative;
 }
 
-.stat-bar-fill {
+.born-stat-bar-fill {
   height: 100%;
-  border-radius: var(--radius-xs);
-  transition: width 0.5s ease;
+  border-radius: 2px;
+  transition: width 0.4s ease;
 }
 
-.stat-bar-row .stat-val {
-  width: 22px;
+.born-stat-value {
+  width: 18px;
   text-align: right;
-  color: var(--neutral-700);
-  font-family: var(--font-heading);
-  font-size: 10.5px;
+  font-size: 10px;
+  color: var(--pp-text-primary);
+  font-weight: 700;
 }
 
-.pokemon-card-footer {
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid var(--neutral-150);
+.born-card-footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-size: 11.5px;
-  color: var(--neutral-500);
+  align-items: flex-end;
+  padding-top: 8px;
+  border-top: 1px solid var(--pp-border);
 }
 
-.pokemon-card-footer b {
-  color: var(--neutral-900);
-  font-weight: 600;
+.born-creator-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.born-creator-name {
+  font-size: 10.5px;
+  color: var(--pp-text-secondary);
+}
+
+.born-creator-name b {
+  color: var(--pp-text-primary);
+  font-weight: 700;
+}
+
+.born-time-dim {
+  font-size: 9.5px;
+  color: var(--pp-text-muted);
+}
+
+.born-x-logo {
+  color: var(--pp-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.18s ease;
+}
+
+.born-creature-card:hover .born-x-logo {
+  color: var(--pp-text-primary);
 }
 
 /* 18 Pokémon Background Variants */
@@ -868,133 +1161,234 @@ a {
 .bg-dark-soft { background: var(--type-dark-soft); }
 .bg-fairy-soft { background: var(--type-fairy-soft); }
 
-/* Filter & Collection */
-.filter-bar {
+/* ==========================================================================
+   Pokémon Collection Feature & Filter Component Styles
+   ========================================================================== */
+
+.collection-feature-container {
+  background: var(--pp-bg-surface);
+  border: 1px solid var(--pp-border);
+  border-radius: var(--pp-radius-2xl);
+  padding: clamp(24px, 3vw, 36px);
+  box-shadow: var(--pp-shadow-sm);
+}
+
+.collection-header-row {
   display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
-.filter-input-wrap {
-  flex: 1;
-  min-width: 200px;
+.collection-main-title {
+  font-size: clamp(22px, 2.2vw, 26px);
+  font-weight: 800;
+  color: var(--pp-text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.collection-main-subtitle {
+  color: var(--pp-text-secondary);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.collection-sort-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.sort-btn-pill {
+  background: var(--pp-bg-surface);
+  color: var(--pp-red);
+  border: 1px solid rgba(228, 41, 47, 0.4);
+  border-radius: var(--pp-radius-sm);
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.sort-btn-pill:hover {
+  background: var(--pp-rarity-legendary-bg);
+  border-color: var(--pp-red);
+}
+
+/* Filter Toolbar */
+.collection-filters-toolbar {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0 24px;
+  flex-wrap: wrap;
+}
+
+.filter-search-box {
+  flex: 1.4;
+  min-width: 180px;
   position: relative;
 }
 
-.filter-input {
+.filter-search-field {
   width: 100%;
-  height: 44px;
-  padding: 0 16px 0 40px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--neutral-300);
-  background: var(--white);
-  font-size: 13.5px;
-  color: var(--neutral-800);
+  height: 38px;
+  padding: 0 34px 0 14px;
+  border-radius: var(--pp-radius-sm);
+  border: 1px solid var(--pp-border-strong);
+  background: var(--pp-bg-surface);
+  font-size: 13px;
+  color: var(--pp-text-primary);
   outline: none;
   transition: all 0.18s ease;
-  box-shadow: var(--shadow-1);
 }
 
-.filter-input:focus {
-  border-color: var(--brand-500);
-  box-shadow: 0 0 0 3px rgba(224, 63, 54, 0.12);
+.filter-search-field:focus {
+  border-color: var(--pp-red);
+  box-shadow: 0 0 0 2.5px rgba(228, 41, 47, 0.12);
 }
 
-.filter-search-icon {
+.search-field-icon {
   position: absolute;
-  left: 14px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--neutral-500);
+  color: var(--pp-text-muted);
   pointer-events: none;
+  display: flex;
+  align-items: center;
 }
 
-.filter-select {
-  height: 44px;
-  padding: 0 16px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--neutral-300);
-  background: var(--white);
-  font-size: 13.5px;
+.filter-dropdown-select {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: var(--pp-radius-sm);
+  border: 1px solid var(--pp-border-strong);
+  background: var(--pp-bg-surface);
+  font-size: 13px;
   font-weight: 500;
-  color: var(--neutral-800);
+  color: var(--pp-text-secondary);
   cursor: pointer;
   outline: none;
   transition: all 0.18s ease;
-  box-shadow: var(--shadow-1);
 }
 
-.collection-grid {
+.filter-dropdown-select:focus {
+  border-color: var(--pp-red);
+  color: var(--pp-text-primary);
+}
+
+/* 7-Column Creature Cards Grid */
+.collection-cards-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
 }
 
-.mini-card {
-  background: var(--white);
-  border: 1px solid var(--neutral-200);
-  border-radius: var(--radius-md);
-  padding: 14px 14px 12px;
-  position: relative;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-  cursor: pointer;
-  box-shadow: var(--shadow-1);
-}
-
-.mini-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-2);
-  border-color: var(--neutral-300);
-}
-
-.mini-card-head {
+.collection-creature-card {
+  background: var(--pp-bg-surface);
+  border: 1px solid var(--pp-border);
+  border-radius: var(--pp-radius-md);
+  padding: 10px 10px 12px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.mini-card .art-container {
-  height: 90px;
-  border-radius: var(--radius-xs);
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0 10px;
+  box-shadow: var(--pp-shadow-sm);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  position: relative;
   overflow: hidden;
 }
 
-.mini-card .art-container img {
-  width: 72px;
-  height: 72px;
-  object-fit: contain;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.1));
-  transition: transform 0.2s ease;
+.collection-creature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--pp-shadow-md);
+  border-color: var(--pp-border-strong);
 }
 
-.mini-card:hover .art-container img {
+.creature-card-badge-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 18px;
+}
+
+.card-badge-pill {
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: var(--pp-radius-sm);
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.badge-pill-red {
+  background: var(--pp-red);
+  color: var(--pp-text-inverse);
+}
+
+.badge-pill-green {
+  background: var(--pp-success);
+  color: var(--pp-text-inverse);
+}
+
+.creature-card-art-stage {
+  height: 105px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0 6px;
+  position: relative;
+}
+
+.creature-artwork-image {
+  width: 78px;
+  height: 78px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.collection-creature-card:hover .creature-artwork-image {
   transform: scale(1.12);
 }
 
-.mini-card-meta {
+.creature-card-meta-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 4px;
+}
+
+.creature-name-text {
+  font-family: var(--font-heading);
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--pp-text-primary);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.creature-sub-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2px;
+  font-size: 11px;
 }
 
-.mini-card-meta h4 {
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--neutral-950);
-}
-
-.mini-card-meta .lv {
-  color: var(--neutral-600);
-  font-size: 11.5px;
+.creature-level-label {
+  color: var(--pp-text-secondary);
   font-weight: 600;
+}
+
+.creature-number-dim {
+  color: var(--pp-text-muted);
+  font-weight: 500;
+  font-size: 10.5px;
 }
 
 /* Battle Arena & Schedule */
@@ -1517,10 +1911,10 @@ a {
   .about-incubator-right {
     margin-top: 16px;
   }
-  .pokemon-cards-grid {
+  .born-cards-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-  .collection-grid {
+  .collection-cards-grid {
     grid-template-columns: repeat(4, 1fr);
   }
   .community-layout-grid {
@@ -1574,11 +1968,11 @@ a {
 }
 
 @media (max-width: 640px) {
-  .pokemon-cards-grid {
+  .born-cards-grid {
     grid-template-columns: 1fr;
     gap: 14px;
   }
-  .collection-grid {
+  .collection-cards-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }

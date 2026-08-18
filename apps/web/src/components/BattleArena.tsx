@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { IconEye, IconChatBubble } from './icons/CustomIcons';
 
 export const BattleArena: React.FC = () => {
   return (
@@ -63,11 +64,13 @@ export const BattleArena: React.FC = () => {
             </div>
 
             <div className="arena-footer-row">
-              <div className="spectator-count">
-                <span>👁️</span> 1,420 Spectators
+              <div className="spectator-count" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <IconEye size={16} color="var(--neutral-600)" />
+                <span>1,420 Spectators</span>
               </div>
               <button className="btn btn-primary" style={{ height: '36px', padding: '0 16px', fontSize: '12.5px' }}>
-                Cheer with Reply 💬
+                <span>Cheer with Reply</span>
+                <IconChatBubble size={14} color="#FFFFFF" />
               </button>
             </div>
           </div>

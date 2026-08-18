@@ -1,6 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
+import {
+  IconCrown,
+  IconMedalSilver,
+  IconMedalBronze,
+  IconEggHatch,
+  IconSwords,
+  IconLevelUp,
+  IconSparkle
+} from './icons/CustomIcons';
 
 export const LeaderboardPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'trainers' | 'monsters'>('trainers');
@@ -14,7 +23,7 @@ export const LeaderboardPanel: React.FC = () => {
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h3 style={{ fontSize: '18px', fontWeight: 800 }}>Leaderboard</h3>
-                <span style={{ fontSize: '12px', color: 'var(--brand-500)', fontWeight: 700 }}>Season 1</span>
+                <span style={{ fontSize: '12px', color: 'var(--pp-red)', fontWeight: 700 }}>Season 1</span>
               </div>
 
               <div className="panel-tabs">
@@ -36,8 +45,8 @@ export const LeaderboardPanel: React.FC = () => {
                 <div className="rank-list">
                   <div className="rank-row top-1">
                     <span className="rank-badge">1</span>
-                    <div className="avatar-sm" style={{ background: '#FFF9E6', color: '#E5A51A' }}>
-                      👑
+                    <div className="avatar-sm" style={{ background: 'var(--type-electric-soft)', color: 'var(--pp-warning)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <IconCrown size={18} color="var(--pp-warning)" />
                     </div>
                     <h5>@volt_trainer</h5>
                     <span className="score-val">14,890 PTS</span>
@@ -45,28 +54,36 @@ export const LeaderboardPanel: React.FC = () => {
 
                   <div className="rank-row">
                     <span className="rank-badge">2</span>
-                    <div className="avatar-sm">🥈</div>
+                    <div className="avatar-sm" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <IconMedalSilver size={18} />
+                    </div>
                     <h5>@cryptomaster</h5>
                     <span className="score-val">12,450 PTS</span>
                   </div>
 
                   <div className="rank-row">
                     <span className="rank-badge">3</span>
-                    <div className="avatar-sm">🥉</div>
+                    <div className="avatar-sm" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <IconMedalBronze size={18} />
+                    </div>
                     <h5>@phantom_x</h5>
                     <span className="score-val">10,920 PTS</span>
                   </div>
 
                   <div className="rank-row">
                     <span className="rank-badge">4</span>
-                    <div className="avatar-sm">👤</div>
+                    <div className="avatar-sm" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--pp-text-secondary)', fontSize: '12px', fontWeight: 'bold' }}>
+                      4
+                    </div>
                     <h5>@psychic_king</h5>
                     <span className="score-val">9,340 PTS</span>
                   </div>
 
                   <div className="rank-row">
                     <span className="rank-badge">5</span>
-                    <div className="avatar-sm">👤</div>
+                    <div className="avatar-sm" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--pp-text-secondary)', fontSize: '12px', fontWeight: 'bold' }}>
+                      5
+                    </div>
                     <h5>@flora_dev</h5>
                     <span className="score-val">8,710 PTS</span>
                   </div>
@@ -131,13 +148,13 @@ export const LeaderboardPanel: React.FC = () => {
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                 <h3 style={{ fontSize: '18px', fontWeight: 800 }}>Live Activity</h3>
-                <span style={{ fontSize: '12px', color: 'var(--semantic-success)', fontWeight: 700 }}>● Live Stream</span>
+                <span style={{ fontSize: '12px', color: 'var(--pp-success)', fontWeight: 700 }}>● Live Stream</span>
               </div>
 
               <div className="activity-list">
                 <div className="activity-item">
-                  <div className="activity-icon-bubble" style={{ color: 'var(--brand-500)', background: 'var(--brand-50)' }}>
-                    🥚
+                  <div className="activity-icon-bubble" style={{ color: 'var(--pp-red)', background: 'var(--pp-rarity-legendary-bg)' }}>
+                    <IconEggHatch size={18} color="var(--pp-red)" />
                   </div>
                   <div className="activity-content">
                     <h5>New Pokémon Born!</h5>
@@ -149,8 +166,8 @@ export const LeaderboardPanel: React.FC = () => {
                 </div>
 
                 <div className="activity-item">
-                  <div className="activity-icon-bubble" style={{ color: 'var(--type-water)', background: 'var(--type-water-soft)' }}>
-                    ⚔️
+                  <div className="activity-icon-bubble" style={{ color: 'var(--pp-type-water)', background: 'var(--pp-rarity-rare-bg)' }}>
+                    <IconSwords size={18} color="var(--pp-type-water)" />
                   </div>
                   <div className="activity-content">
                     <h5>Battle Victory</h5>
@@ -162,8 +179,8 @@ export const LeaderboardPanel: React.FC = () => {
                 </div>
 
                 <div className="activity-item">
-                  <div className="activity-icon-bubble" style={{ color: 'var(--type-electric)', background: 'var(--type-electric-soft)' }}>
-                    📈
+                  <div className="activity-icon-bubble" style={{ color: 'var(--pp-type-electric)', background: 'var(--pp-rarity-new-bg)' }}>
+                    <IconLevelUp size={18} color="var(--pp-success)" />
                   </div>
                   <div className="activity-content">
                     <h5>Level Up</h5>
@@ -175,8 +192,8 @@ export const LeaderboardPanel: React.FC = () => {
                 </div>
 
                 <div className="activity-item">
-                  <div className="activity-icon-bubble" style={{ color: 'var(--type-psychic)', background: 'var(--type-psychic-soft)' }}>
-                    👑
+                  <div className="activity-icon-bubble" style={{ color: 'var(--pp-type-psychic)', background: 'var(--pp-rarity-epic-bg)' }}>
+                    <IconSparkle size={18} color="var(--pp-type-psychic)" />
                   </div>
                   <div className="activity-content">
                     <h5>Legendary Discovered</h5>
@@ -197,7 +214,7 @@ export const LeaderboardPanel: React.FC = () => {
           {/* Community Call to Action Card */}
           <div className="community-cta-card">
             <div>
-              <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.7)', fontWeight: 800 }}>
+              <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--pp-text-muted)', fontWeight: 800 }}>
                 COMMUNITY DRIVEN
               </span>
               <h2 style={{ marginTop: '8px' }}>

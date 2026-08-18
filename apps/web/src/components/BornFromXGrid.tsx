@@ -1,206 +1,243 @@
 'use client';
 
 import React from 'react';
-import { PokemonEntity } from '@pokepump/shared';
+import { PokemonType, RarityGrade } from '@pokepump/shared';
 
-interface BornFromXGridProps {
-  pokemons?: PokemonEntity[];
+interface BornCreature {
+  id: string;
+  number: string;
+  name: string;
+  type: PokemonType;
+  level: number;
+  badgeText: string;
+  badgeType: 'new-red' | 'new-green' | 'rare' | 'epic' | 'legendary';
+  stats: {
+    hp: number;
+    atk: number;
+    def: number;
+    spd: number;
+  };
+  creatorHandle: string;
+  timeAgo: string;
+  artworkUrl: string;
 }
 
-const AUTHENTIC_POKEMON_DEFAULTS: PokemonEntity[] = [
+const BORN_CREATURES_DATA: BornCreature[] = [
   {
-    id: 'p-006',
-    pokedexId: 6,
-    number: '#0006',
-    name: 'Charizard',
-    species: 'charizard',
+    id: 'b-1',
+    number: '#01284',
+    name: 'Flarecub',
     type: 'fire',
-    secondaryType: 'flying',
-    level: 36,
-    exp: 4800,
-    stats: { hp: 78, attack: 84, defense: 78, specialAttack: 109, specialDefense: 85, speed: 100 },
-    powerScore: 2890,
-    rarity: 'EPIC',
-    tweetId: 'tw-184201',
-    creatorHandle: 'cryptomaster',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
-    showdownUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/6.gif',
-    createdAt: new Date().toISOString(),
+    level: 5,
+    badgeText: 'NEW',
+    badgeType: 'new-red',
+    stats: { hp: 45, atk: 62, def: 48, spd: 66 },
+    creatorHandle: 'PokeMaster',
+    timeAgo: '2m ago',
+    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
   },
   {
-    id: 'p-025',
-    pokedexId: 25,
-    number: '#0025',
-    name: 'Pikachu',
-    species: 'pikachu',
+    id: 'b-2',
+    number: '#01283',
+    name: 'Leafin',
+    type: 'grass',
+    level: 7,
+    badgeText: 'NEW',
+    badgeType: 'new-green',
+    stats: { hp: 60, atk: 55, def: 58, spd: 72 },
+    creatorHandle: 'TrainerD',
+    timeAgo: '5m ago',
+    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
+  },
+  {
+    id: 'b-3',
+    number: '#01282',
+    name: 'Aquadot',
+    type: 'water',
+    level: 6,
+    badgeText: 'RARE',
+    badgeType: 'rare',
+    stats: { hp: 52, atk: 50, def: 53, spd: 60 },
+    creatorHandle: 'PokeFan',
+    timeAgo: '8m ago',
+    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png',
+  },
+  {
+    id: 'b-4',
+    number: '#01281',
+    name: 'Sparkit',
     type: 'electric',
-    secondaryType: null,
-    level: 25,
-    exp: 2400,
-    stats: { hp: 35, attack: 55, defense: 40, specialAttack: 50, specialDefense: 50, speed: 90 },
-    powerScore: 1850,
-    rarity: 'RARE',
-    tweetId: 'tw-184202',
-    creatorHandle: 'volt_trainer',
+    level: 4,
+    badgeText: 'EPIC',
+    badgeType: 'epic',
+    stats: { hp: 40, atk: 63, def: 40, spd: 76 },
+    creatorHandle: 'VoltReply',
+    timeAgo: '12m ago',
     artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
-    showdownUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/25.gif',
-    createdAt: new Date().toISOString(),
   },
   {
-    id: 'p-094',
-    pokedexId: 94,
-    number: '#0094',
-    name: 'Gengar',
-    species: 'gengar',
+    id: 'b-5',
+    number: '#01280',
+    name: 'Shadowisp',
     type: 'ghost',
-    secondaryType: 'poison',
-    level: 32,
-    exp: 3900,
-    stats: { hp: 60, attack: 65, defense: 60, specialAttack: 130, specialDefense: 75, speed: 110 },
-    powerScore: 2750,
-    rarity: 'EPIC',
-    tweetId: 'tw-184203',
-    creatorHandle: 'phantom_x',
+    level: 5,
+    badgeText: 'LEGENDARY',
+    badgeType: 'legendary',
+    stats: { hp: 55, atk: 70, def: 40, spd: 70 },
+    creatorHandle: 'NightOwl',
+    timeAgo: '15m ago',
     artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png',
-    showdownUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/94.gif',
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: 'p-150',
-    pokedexId: 150,
-    number: '#0150',
-    name: 'Mewtwo',
-    species: 'mewtwo',
-    type: 'psychic',
-    secondaryType: null,
-    level: 70,
-    exp: 15000,
-    stats: { hp: 106, attack: 110, defense: 90, specialAttack: 154, specialDefense: 90, speed: 130 },
-    powerScore: 3950,
-    rarity: 'LEGENDARY',
-    tweetId: 'tw-184204',
-    creatorHandle: 'psychic_king',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png',
-    showdownUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/150.gif',
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: 'p-448',
-    pokedexId: 448,
-    number: '#0448',
-    name: 'Lucario',
-    species: 'lucario',
-    type: 'fighting',
-    secondaryType: 'steel',
-    level: 38,
-    exp: 5100,
-    stats: { hp: 70, attack: 110, defense: 70, specialAttack: 115, specialDefense: 70, speed: 90 },
-    powerScore: 2820,
-    rarity: 'EPIC',
-    tweetId: 'tw-184205',
-    creatorHandle: 'flora_dev',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png',
-    showdownUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/448.gif',
-    createdAt: new Date().toISOString(),
   },
 ];
 
-export const BornFromXGrid: React.FC<BornFromXGridProps> = ({
-  pokemons = AUTHENTIC_POKEMON_DEFAULTS,
-}) => {
+const TYPE_DOT_ICONS: Record<PokemonType, string> = {
+  fire: '🔥',
+  water: '💧',
+  grass: '🌿',
+  electric: '⚡',
+  ghost: '🔮',
+  psychic: '✨',
+  dragon: '🐉',
+  dark: '🌑',
+  normal: '⚪',
+  fighting: '🥊',
+  flying: '🦅',
+  poison: '☠️',
+  ground: '🏜️',
+  rock: '🪨',
+  bug: '🐛',
+  steel: '⚙️',
+  ice: '❄️',
+  fairy: '🌸',
+};
+
+export const BornFromXGrid: React.FC = () => {
   return (
     <section className="section-wrap" id="born">
       <div className="container">
-        <div className="section-header">
+        {/* Section Header */}
+        <div className="born-section-header">
           <div>
-            <h2>Born From X</h2>
-            <p>Authentic Pokémon generated directly from community replies on X via PokéAPI.</p>
+            <h2 className="born-title">Born From X</h2>
+            <p className="born-subtitle">
+              Every reply has a chance to create something legendary.
+            </p>
           </div>
-          <a href="#collection" className="link-action">
-            View All Born Pokémon →
+          <a href="#collection" className="born-view-all-link">
+            <span>View All</span>
+            <span aria-hidden="true">→</span>
           </a>
         </div>
 
-        <div className="pokemon-cards-grid">
-          {pokemons.map((pokemon) => {
-            const bgClass = `bg-${pokemon.type}-soft`;
+        {/* 5-Card Grid matching reference design */}
+        <div className="born-cards-grid">
+          {BORN_CREATURES_DATA.map((creature) => {
             return (
-              <div key={pokemon.id} className="pokemon-card">
-                <div className="pokemon-card-head">
-                  <span className="pokemon-card-num">{pokemon.number}</span>
-                  <span className={`badge badge-${pokemon.rarity.toLowerCase()}`}>{pokemon.rarity}</span>
+              <div key={creature.id} className="born-creature-card">
+                {/* Header: Badge & Number */}
+                <div className="born-card-top-row">
+                  <span className={`born-badge-pill badge-${creature.badgeType}`}>
+                    {creature.badgeText}
+                  </span>
+                  <span className="born-card-number">{creature.number}</span>
                 </div>
 
-                <div className={`pokemon-card-image-area ${bgClass}`}>
+                {/* Main Artwork Stage */}
+                <div className="born-artwork-stage">
                   <img
-                    src={pokemon.artworkUrl}
-                    alt={pokemon.name}
-                    className="pokemon-artwork-img"
+                    src={creature.artworkUrl}
+                    alt={creature.name}
+                    className="born-creature-img"
                     loading="lazy"
                   />
                 </div>
 
-                <div className="pokemon-card-title-row">
-                  <h3>{pokemon.name}</h3>
-                  <span className="lvl-tag">Lv. {pokemon.level}</span>
+                {/* Name & Level */}
+                <div className="born-name-row">
+                  <h3 className="born-creature-name">{creature.name}</h3>
+                  <span className="born-creature-level">Lv. {creature.level}</span>
                 </div>
 
-                <div className="type-pill-group">
-                  <div className="type-pill">
-                    <span>●</span> {pokemon.type.toUpperCase()}
-                  </div>
-                  {pokemon.secondaryType && (
-                    <div className="type-pill" style={{ opacity: 0.9 }}>
-                      <span>●</span> {pokemon.secondaryType.toUpperCase()}
-                    </div>
-                  )}
+                {/* Type Label with Icon */}
+                <div className="born-type-row" style={{ color: `var(--pp-type-${creature.type}-text)` }}>
+                  <span className="born-type-symbol">{TYPE_DOT_ICONS[creature.type] || '●'}</span>
+                  <span className="born-type-text">{creature.type.toUpperCase()}</span>
                 </div>
 
-                <div className="stat-bars-group">
-                  <div className="stat-bar-row">
-                    <span className="stat-label">HP</span>
-                    <div className="stat-bar-track">
-                      <div className="stat-bar-fill" style={{ width: `${Math.min(100, (pokemon.stats.hp / 140) * 100)}%`, background: '#22C55E' }} />
+                {/* 4 Themed Stat Bars (HP, ATK, DEF, SPD) */}
+                <div className="born-stats-block">
+                  {/* HP */}
+                  <div className="born-stat-item">
+                    <span className="born-stat-label">HP</span>
+                    <div className="born-stat-bar-track">
+                      <div
+                        className="born-stat-bar-fill"
+                        style={{
+                          width: `${Math.min(100, (creature.stats.hp / 80) * 100)}%`,
+                          background: `var(--pp-type-${creature.type})`,
+                        }}
+                      />
                     </div>
-                    <span className="stat-val">{pokemon.stats.hp}</span>
+                    <span className="born-stat-value">{creature.stats.hp}</span>
                   </div>
 
-                  <div className="stat-bar-row">
-                    <span className="stat-label">ATK</span>
-                    <div className="stat-bar-track">
-                      <div className="stat-bar-fill" style={{ width: `${Math.min(100, (pokemon.stats.attack / 140) * 100)}%`, background: '#EF4444' }} />
+                  {/* ATK */}
+                  <div className="born-stat-item">
+                    <span className="born-stat-label">ATK</span>
+                    <div className="born-stat-bar-track">
+                      <div
+                        className="born-stat-bar-fill"
+                        style={{
+                          width: `${Math.min(100, (creature.stats.atk / 80) * 100)}%`,
+                          background: `var(--pp-type-${creature.type})`,
+                        }}
+                      />
                     </div>
-                    <span className="stat-val">{pokemon.stats.attack}</span>
+                    <span className="born-stat-value">{creature.stats.atk}</span>
                   </div>
 
-                  <div className="stat-bar-row">
-                    <span className="stat-label">DEF</span>
-                    <div className="stat-bar-track">
-                      <div className="stat-bar-fill" style={{ width: `${Math.min(100, (pokemon.stats.defense / 140) * 100)}%`, background: '#3B82F6' }} />
+                  {/* DEF */}
+                  <div className="born-stat-item">
+                    <span className="born-stat-label">DEF</span>
+                    <div className="born-stat-bar-track">
+                      <div
+                        className="born-stat-bar-fill"
+                        style={{
+                          width: `${Math.min(100, (creature.stats.def / 80) * 100)}%`,
+                          background: `var(--pp-type-${creature.type})`,
+                        }}
+                      />
                     </div>
-                    <span className="stat-val">{pokemon.stats.defense}</span>
+                    <span className="born-stat-value">{creature.stats.def}</span>
                   </div>
 
-                  <div className="stat-bar-row">
-                    <span className="stat-label">SpA</span>
-                    <div className="stat-bar-track">
-                      <div className="stat-bar-fill" style={{ width: `${Math.min(100, (pokemon.stats.specialAttack / 140) * 100)}%`, background: '#A855F7' }} />
+                  {/* SPD */}
+                  <div className="born-stat-item">
+                    <span className="born-stat-label">SPD</span>
+                    <div className="born-stat-bar-track">
+                      <div
+                        className="born-stat-bar-fill"
+                        style={{
+                          width: `${Math.min(100, (creature.stats.spd / 80) * 100)}%`,
+                          background: `var(--pp-type-${creature.type})`,
+                        }}
+                      />
                     </div>
-                    <span className="stat-val">{pokemon.stats.specialAttack}</span>
-                  </div>
-
-                  <div className="stat-bar-row">
-                    <span className="stat-label">SPD</span>
-                    <div className="stat-bar-track">
-                      <div className="stat-bar-fill" style={{ width: `${Math.min(100, (pokemon.stats.speed / 140) * 100)}%`, background: '#F59E0B' }} />
-                    </div>
-                    <span className="stat-val">{pokemon.stats.speed}</span>
+                    <span className="born-stat-value">{creature.stats.spd}</span>
                   </div>
                 </div>
 
-                <div className="pokemon-card-footer">
-                  <span>Bred by <b>@{pokemon.creatorHandle}</b></span>
-                  <span>⚡ <b>{pokemon.powerScore}</b></span>
+                {/* Footer Provenance: User & X logo */}
+                <div className="born-card-footer">
+                  <div className="born-creator-info">
+                    <span className="born-creator-name">Born from <b>@{creature.creatorHandle}</b></span>
+                    <span className="born-time-dim">{creature.timeAgo}</span>
+                  </div>
+                  <div className="born-x-logo" aria-label="X / Twitter">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                  </div>
                 </div>
               </div>
             );
