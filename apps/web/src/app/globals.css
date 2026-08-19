@@ -1185,8 +1185,8 @@ a {
 
 .hero-stage-aura {
   position: absolute;
-  top: 45%;
-  left: 50%;
+  top: calc(45% + 100px);
+  left: calc(50% + 50px);
   transform: translate(-50%, -50%);
   width: 440px;
   height: 440px;
@@ -1213,6 +1213,7 @@ a {
   height: 440px;
   z-index: 3;
   padding-bottom: 20px;
+  transform: translate(50px, 100px);
 }
 
 .hero-lineup-item {
