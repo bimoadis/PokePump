@@ -3,7 +3,41 @@
 import React from 'react';
 import { IconBolt, IconTrainers, IconSwords, IconChatBubble } from './icons/CustomIcons';
 
+const HERO_CHARACTERS = [
+  {
+    id: 1,
+    src: '/hero-character-1.png',
+    alt: 'PokéPump Character 1',
+    name: 'Volt Mascot',
+    type: 'Electric'
+  },
+  {
+    id: 2,
+    src: '/hero-character-2.png',
+    alt: 'PokéPump Character 2',
+    name: 'Inferno Beast',
+    type: 'Fire'
+  },
+  {
+    id: 3,
+    src: '/hero-character-3.png',
+    alt: 'PokéPump Character 3',
+    name: 'Shadow Phantom',
+    type: 'Ghost'
+  }
+];
+
 export const HeroSection: React.FC = () => {
+  const [activeIdx, setActiveIdx] = React.useState(0);
+
+  // Auto-alternate characters every 3.5 seconds
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIdx((prev) => (prev + 1) % HERO_CHARACTERS.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="hero-section">
       <div className="container">
@@ -82,8 +116,52 @@ export const HeroSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Hero Visual Container */}
-          <div className="hero-visual-wrap" aria-hidden="true" />
+          {/* Right Column: Hero Visual Container with 3 Dynamic Alternating Characters */}
+          <div className="hero-visual-wrap">
+            {/* Ambient Background Aura */}
+            <div className="hero-stage-aura" aria-hidden="true" />
+
+            {/* Alternating Character Stage */}
+            <div className="hero-character-stage">
+              {HERO_CHARACTERS.map((char, index) => {
+                const isActive = index === activeIdx;
+                const isPrev = index === (activeIdx - 1 + HERO_CHARACTERS.length) % HERO_CHARACTERS.length;
+                const isNext = index === (activeIdx + 1) % HERO_CHARACTERS.length;
+
+                let positionClass = 'char-hidden';
+                if (isActive) positionClass = 'char-active';
+                else if (isPrev) positionClass = 'char-left';
+                else if (isNext) positionClass = 'char-right';
+
+                return (
+                  <div
+                    key={char.id}
+                    className={`hero-char-figure ${positionClass}`}
+                    onClick={() => setActiveIdx(index)}
+                  >
+                    <img
+                      src={char.src}
+                      alt={char.alt}
+                      className="hero-char-img"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Interactive Carousel Indicator Dots */}
+            <div className="hero-char-indicators">
+              {HERO_CHARACTERS.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className={`hero-char-dot ${idx === activeIdx ? 'active' : ''}`}
+                  onClick={() => setActiveIdx(idx)}
+                  aria-label={`Show character ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
