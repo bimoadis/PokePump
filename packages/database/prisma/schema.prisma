@@ -49,16 +49,38 @@ enum ActivityType {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  twitterHandle String    @unique
-  twitterId     String?   @unique
+  id            String                @id @default(uuid())
+  twitterHandle String                @unique
+  twitterId     String?               @unique
   avatarUrl     String?
-  role          String    @default("TRAINER")
+  walletAddress String?               @unique
+  role          String                @default("TRAINER")
   pokemons      Pokemon[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  airdrops      AirdropRegistration[]
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
 
   @@index([twitterHandle])
+  @@index([walletAddress])
+}
+
+model AirdropRegistration {
+  id            String   @id @default(uuid())
+  campaign      String   @default("PIKACHU_100K_SPIN")
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  twitterHandle String
+  walletAddress String
+  pokemonId     String?
+  status        String   @default("ELIGIBLE")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([campaign, twitterHandle])
+  @@unique([campaign, walletAddress])
+  @@index([campaign, status])
+  @@index([twitterHandle])
+  @@index([walletAddress])
 }
 
 model Pokemon {

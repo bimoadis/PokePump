@@ -93,6 +93,31 @@ export interface DashboardMetrics {
   totalRepliesPumped: number;
 }
 
+export interface AirdropRegistrationEntity {
+  id: string;
+  campaign: string;
+  userId?: string;
+  twitterHandle: string;
+  walletAddress: string;
+  pokemonId?: string | null;
+  status: 'ELIGIBLE' | 'WON' | 'CLAIMED' | 'REJECTED';
+  createdAt: string;
+}
+
+export interface AirdropRegistrationRequest {
+  twitterHandle: string;
+  walletAddress: string;
+  campaign?: string;
+}
+
+export interface AirdropRegistrationResponse {
+  success: boolean;
+  message: string;
+  entry?: AirdropRegistrationEntity;
+  error?: string;
+  eligiblePokemon?: PokemonEntity;
+}
+
 export interface PokeApiRawStat {
   base_stat: number;
   stat: {
