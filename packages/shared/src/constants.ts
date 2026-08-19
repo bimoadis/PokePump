@@ -1,4 +1,4 @@
-import { PokemonType } from './types.js';
+import { PokemonType } from './types';
 
 export const TYPE_ADVANTAGE_MATRIX: Record<PokemonType, Partial<Record<PokemonType, number>>> = {
   normal: { rock: 0.5, ghost: 0.0, steel: 0.5 },

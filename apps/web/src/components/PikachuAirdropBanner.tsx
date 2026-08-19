@@ -36,7 +36,7 @@ export const PikachuAirdropBanner: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3001/api/airdrop/register', {
+      const response = await fetch('/api/airdrop/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

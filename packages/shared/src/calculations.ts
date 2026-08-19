@@ -1,5 +1,5 @@
-import { PokemonStats, PokemonType, RarityGrade } from './types.js';
-import { TYPE_ADVANTAGE_MATRIX } from './constants.js';
+import { PokemonStats, PokemonType, RarityGrade } from './types';
+import { TYPE_ADVANTAGE_MATRIX } from './constants';
 
 export function calculateBaseStatTotal(stats: PokemonStats): number {
   return stats.hp + stats.attack + stats.defense + stats.specialAttack + stats.specialDefense + stats.speed;
