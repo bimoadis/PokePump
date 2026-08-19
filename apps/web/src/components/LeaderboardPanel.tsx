@@ -44,27 +44,33 @@ export const LeaderboardPanel: React.FC = () => {
               {activeTab === 'trainers' ? (
                 <div className="rank-list">
                   <div className="rank-row top-1">
-                    <span className="rank-badge">1</span>
-                    <div className="avatar-sm" style={{ background: 'var(--type-electric-soft)', color: 'var(--pp-warning)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <IconCrown size={18} color="var(--pp-warning)" />
+                    <span className="rank-badge rank-1">
+                      <IconCrown size={15} color="#D97706" />
+                    </span>
+                    <div className="avatar-sm">
+                      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="Pikachu" />
                     </div>
                     <h5>@volt_trainer</h5>
                     <span className="score-val">14,890 PTS</span>
                   </div>
 
                   <div className="rank-row">
-                    <span className="rank-badge">2</span>
-                    <div className="avatar-sm" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <IconMedalSilver size={18} />
+                    <span className="rank-badge rank-2">
+                      <IconMedalSilver size={15} />
+                    </span>
+                    <div className="avatar-sm">
+                      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" alt="Charizard" />
                     </div>
                     <h5>@cryptomaster</h5>
                     <span className="score-val">12,450 PTS</span>
                   </div>
 
                   <div className="rank-row">
-                    <span className="rank-badge">3</span>
-                    <div className="avatar-sm" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <IconMedalBronze size={18} />
+                    <span className="rank-badge rank-3">
+                      <IconMedalBronze size={15} />
+                    </span>
+                    <div className="avatar-sm">
+                      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png" alt="Gengar" />
                     </div>
                     <h5>@phantom_x</h5>
                     <span className="score-val">10,920 PTS</span>
@@ -72,8 +78,8 @@ export const LeaderboardPanel: React.FC = () => {
 
                   <div className="rank-row">
                     <span className="rank-badge">4</span>
-                    <div className="avatar-sm" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--pp-text-secondary)', fontSize: '12px', fontWeight: 'bold' }}>
-                      4
+                    <div className="avatar-sm">
+                      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png" alt="Mewtwo" />
                     </div>
                     <h5>@psychic_king</h5>
                     <span className="score-val">9,340 PTS</span>
@@ -81,8 +87,8 @@ export const LeaderboardPanel: React.FC = () => {
 
                   <div className="rank-row">
                     <span className="rank-badge">5</span>
-                    <div className="avatar-sm" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--pp-text-secondary)', fontSize: '12px', fontWeight: 'bold' }}>
-                      5
+                    <div className="avatar-sm">
+                      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png" alt="Venusaur" />
                     </div>
                     <h5>@flora_dev</h5>
                     <span className="score-val">8,710 PTS</span>
@@ -91,7 +97,9 @@ export const LeaderboardPanel: React.FC = () => {
               ) : (
                 <div className="rank-list">
                   <div className="rank-row top-1">
-                    <span className="rank-badge">1</span>
+                    <span className="rank-badge rank-1">
+                      <IconCrown size={15} color="#D97706" />
+                    </span>
                     <div className="avatar-sm">
                       <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png" alt="Mewtwo" />
                     </div>
@@ -100,7 +108,9 @@ export const LeaderboardPanel: React.FC = () => {
                   </div>
 
                   <div className="rank-row">
-                    <span className="rank-badge">2</span>
+                    <span className="rank-badge rank-2">
+                      <IconMedalSilver size={15} />
+                    </span>
                     <div className="avatar-sm">
                       <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/384.png" alt="Rayquaza" />
                     </div>
@@ -109,7 +119,9 @@ export const LeaderboardPanel: React.FC = () => {
                   </div>
 
                   <div className="rank-row">
-                    <span className="rank-badge">3</span>
+                    <span className="rank-badge rank-3">
+                      <IconMedalBronze size={15} />
+                    </span>
                     <div className="avatar-sm">
                       <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" alt="Charizard" />
                     </div>
