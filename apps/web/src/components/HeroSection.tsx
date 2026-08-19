@@ -116,50 +116,28 @@ export const HeroSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Hero Visual Container with 3 Dynamic Alternating Characters */}
+          {/* Right Column: Hero Visual Container with 3 Characters Lined Up Side-by-Side */}
           <div className="hero-visual-wrap">
             {/* Ambient Background Aura */}
             <div className="hero-stage-aura" aria-hidden="true" />
 
-            {/* Alternating Character Stage */}
-            <div className="hero-character-stage">
+            {/* Side-by-Side Character Lineup Stage */}
+            <div className="hero-lineup-container">
               {HERO_CHARACTERS.map((char, index) => {
-                const isActive = index === activeIdx;
-                const isPrev = index === (activeIdx - 1 + HERO_CHARACTERS.length) % HERO_CHARACTERS.length;
-                const isNext = index === (activeIdx + 1) % HERO_CHARACTERS.length;
-
-                let positionClass = 'char-hidden';
-                if (isActive) positionClass = 'char-active';
-                else if (isPrev) positionClass = 'char-left';
-                else if (isNext) positionClass = 'char-right';
-
                 return (
                   <div
                     key={char.id}
-                    className={`hero-char-figure ${positionClass}`}
-                    onClick={() => setActiveIdx(index)}
+                    className={`hero-lineup-item item-${index + 1}`}
                   >
                     <img
                       src={char.src}
                       alt={char.alt}
-                      className="hero-char-img"
+                      className="hero-lineup-img"
                     />
+                    <div className="hero-char-shadow" aria-hidden="true" />
                   </div>
                 );
               })}
-            </div>
-
-            {/* Interactive Carousel Indicator Dots */}
-            <div className="hero-char-indicators">
-              {HERO_CHARACTERS.map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  className={`hero-char-dot ${idx === activeIdx ? 'active' : ''}`}
-                  onClick={() => setActiveIdx(idx)}
-                  aria-label={`Show character ${idx + 1}`}
-                />
-              ))}
             </div>
           </div>
         </div>
