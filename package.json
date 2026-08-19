@@ -15,6 +15,7 @@
     "start:web": "npm --workspace=apps/web run start",
     "start:api": "npm --workspace=apps/api run start",
     "build": "npm run build:shared && npm run build:db && npm run build:renderer && npm run build:api && npm run build:web",
+    "build:backend": "npm run build:shared && npm run build:db && npm run build:renderer && npm run build:api",
     "build:shared": "npm --workspace=packages/shared run build",
     "build:db": "npm --workspace=packages/database run build",
     "build:renderer": "npm --workspace=packages/renderer run build",
