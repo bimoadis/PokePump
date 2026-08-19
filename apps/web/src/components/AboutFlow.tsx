@@ -8,7 +8,9 @@ export const AboutFlow: React.FC = () => {
       <div className="container">
         <div className="about-hero-card">
           <div className="about-content-left">
-            <h2 className="about-title">About PokéPump</h2>
+            <h2 className="about-title">
+              About <span className="brand-poke">Poké</span>Pump
+            </h2>
             <p className="about-desc">
               PokéPump turns community interaction into a living Pokémon universe.<br className="desktop-br" />
               Reply to @PokePump on X and you might be the reason<br className="desktop-br" />

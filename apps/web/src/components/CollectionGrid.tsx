@@ -225,7 +225,9 @@ export const CollectionGrid: React.FC = () => {
           {/* Header Row */}
           <div className="collection-header-row">
             <div>
-              <h2 className="collection-main-title">Pokémon Collection</h2>
+              <h2 className="collection-main-title">
+                <span className="brand-poke">Poké</span>mon Collection
+              </h2>
               <p className="collection-main-subtitle">
                 Explore all Pokémon born from the PokéPump community.
               </p>

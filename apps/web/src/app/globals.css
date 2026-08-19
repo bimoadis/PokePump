@@ -473,8 +473,13 @@ a {
   user-select: none;
 }
 
+.brand-poke,
+.highlight-poke {
+  color: #EE3F38 !important; /* Signature Pokémon Vibrant Red */
+}
+
 .brand-logo-text .brand-poke {
-  color: #EE3F38; /* Signature Pokémon Vibrant Red */
+  color: #EE3F38;
   font-weight: 800;
   transition: transform 0.2s ease;
 }

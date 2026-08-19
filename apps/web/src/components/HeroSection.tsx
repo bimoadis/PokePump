@@ -12,7 +12,7 @@ export const HeroSection: React.FC = () => {
           <div className="hero-content">
             <h1>
               Where Every Reply <br />
-              Creates a <span className="accent">Pokémon</span>
+              Creates a <span className="accent"><span className="brand-poke">Poké</span>mon</span>
               <span className="period">.</span>
             </h1>
 
