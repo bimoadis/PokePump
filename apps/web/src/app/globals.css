@@ -466,13 +466,27 @@ a {
 .brand-logo-text {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 21px;
-  letter-spacing: -0.03em;
-  color: #0F0C1B;
+  font-size: 22px;
+  letter-spacing: -0.035em;
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+
+.brand-logo-text .brand-poke {
+  color: #EE3F38; /* Signature Pokémon Vibrant Red */
+  font-weight: 800;
+  transition: transform 0.2s ease;
+}
+
+.brand-logo-text .brand-pump {
+  color: #0D0B18; /* Deep Jet Black */
+  font-weight: 800;
+  transition: transform 0.2s ease;
 }
 
 .brand-logo-text span.brand-red {
-  color: var(--brand-500);
+  color: #EE3F38;
 }
 
 .nav-links {

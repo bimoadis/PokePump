@@ -16,7 +16,7 @@ export const Footer: React.FC = () => {
                 />
               </div>
               <span className="brand-logo-text">
-                POKE<span className="brand-red">PUMP</span>
+                <span className="brand-poke">Poké</span><span className="brand-pump">Pump</span>
               </span>
             </Link>
             <p>
