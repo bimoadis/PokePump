@@ -289,8 +289,8 @@ app.get('/api/airdrop/check/:handle', (req, res) => {
   });
 });
 
-// Twitter / X CRC & Webhook Handler
-app.get('/api/webhook/twitter', (req, res) => {
+// Twitter / X CRC & Webhook Handler (supports both /api/webhook/twitter and /api/webhook/x)
+const handleWebhookCrc = (req: express.Request, res: express.Response) => {
   const crcToken = req.query.crc_token as string;
   if (!crcToken) {
     return res.status(400).json({ error: 'Missing crc_token query parameter' });
@@ -302,12 +302,17 @@ app.get('/api/webhook/twitter', (req, res) => {
   res.status(200).json({
     response_token: `sha256=${hmac}`
   });
-});
+};
 
-app.post('/api/webhook/twitter', (req, res) => {
-  console.log('📩 Incoming Twitter Webhook payload:', req.body);
+const handleWebhookEvent = (req: express.Request, res: express.Response) => {
+  console.log('📩 Incoming X (Twitter) Webhook payload:', req.body);
   res.status(200).json({ status: 'ok', received: true });
-});
+};
+
+app.get('/api/webhook/twitter', handleWebhookCrc);
+app.get('/api/webhook/x', handleWebhookCrc);
+app.post('/api/webhook/twitter', handleWebhookEvent);
+app.post('/api/webhook/x', handleWebhookEvent);
 
 app.listen(PORT, () => {
   console.log(`⚡ PokéPump API running with PokéAPI integration on http://localhost:${PORT}`);
