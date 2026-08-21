@@ -159,11 +159,15 @@ export async function POST(request: NextRequest) {
         continue;
       }
 
-      console.log(`📩 Processing Mention from @${authorHandle} (${tweetId}): "${tweetText}"`);
+      console.log(`📩 Processing Reply/Mention from @${authorHandle} (${tweetId}): "${tweetText}"`);
+
+      // Clean prompt by removing bot @mentions
+      const cleanPrompt = tweetText.replace(/@\w+/gi, '').trim() || tweetText.trim() || 'Summoned via PokéPump Reply';
 
       // 1. Generate / Hatch Pokemon
-      const hatched = await getRandomCuratedPokemon(authorHandle, tweetText);
+      const hatched = await getRandomCuratedPokemon(authorHandle, cleanPrompt);
       hatched.tweetId = tweetId;
+      hatched.replyPrompt = cleanPrompt;
 
       // In-memory store
       pokemonStore.unshift(hatched);
