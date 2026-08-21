@@ -44,10 +44,15 @@ export async function GET(request: NextRequest) {
 // 2. POST Handler for incoming Twitter Account Activity Events (Mentions, Replies, etc.)
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    let body: any = {};
+    try {
+      body = await request.json();
+    } catch {
+      body = {};
+    }
 
     // Handle tweet_create_events (User replies/mentions bot)
-    if (body.tweet_create_events && Array.isArray(body.tweet_create_events)) {
+    if (body && body.tweet_create_events && Array.isArray(body.tweet_create_events)) {
       for (const tweet of body.tweet_create_events) {
         const authorHandle = tweet.user?.screen_name;
         const tweetText = tweet.text;
@@ -62,6 +67,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ status: 'ok', received: true }, { status: 200 });
   } catch (error: any) {
     console.error('Error processing Twitter Webhook Event:', error);
-    return NextResponse.json({ status: 'error', message: error.message }, { status: 500 });
+    return NextResponse.json({ status: 'error', message: error?.message || 'Unknown error' }, { status: 500 });
   }
 }
