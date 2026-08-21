@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import crypto from 'crypto';
 import { PokemonEntity, simulateTurnBasedBattle } from '@pokepump/shared';
 import { generatePokemonCardSvg } from '@pokepump/renderer';
 import { fetchPokemonFromPokeApi, getRandomCuratedPokemon } from './services/pokeapi.service.js';
@@ -286,6 +287,26 @@ app.get('/api/airdrop/check/:handle', (req, res) => {
     ownsPikachu: !!pikachu,
     entry: registration || null
   });
+});
+
+// Twitter / X CRC & Webhook Handler
+app.get('/api/webhook/twitter', (req, res) => {
+  const crcToken = req.query.crc_token as string;
+  if (!crcToken) {
+    return res.status(400).json({ error: 'Missing crc_token query parameter' });
+  }
+
+  const consumerSecret = process.env.X_CONSUMER_SECRET || '';
+  const hmac = crypto.createHmac('sha256', consumerSecret).update(crcToken).digest('base64');
+
+  res.status(200).json({
+    response_token: `sha256=${hmac}`
+  });
+});
+
+app.post('/api/webhook/twitter', (req, res) => {
+  console.log('📩 Incoming Twitter Webhook payload:', req.body);
+  res.status(200).json({ status: 'ok', received: true });
 });
 
 app.listen(PORT, () => {
