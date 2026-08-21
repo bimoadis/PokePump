@@ -161,10 +161,35 @@ export async function POST(request: NextRequest) {
 
       console.log(`📩 Processing Reply/Mention from @${authorHandle} (${tweetId}): "${tweetText}"`);
 
+      const db = getPrisma();
+
+      // 1. Check if user already has a hatched Pokémon (1 Pokémon per X account rule)
+      let existingPokemon: any = null;
+      if (db) {
+        try {
+          existingPokemon = await db.pokemon.findFirst({
+            where: { owner: { twitterHandle: authorHandle.toLowerCase() } }
+          });
+        } catch (checkErr) {
+          console.warn('DB check error:', checkErr);
+        }
+      }
+
+      if (!existingPokemon) {
+        existingPokemon = pokemonStore.find(
+          (p) => p.creatorHandle.toLowerCase().replace(/^@/, '') === authorHandle.toLowerCase()
+        );
+      }
+
+      if (existingPokemon) {
+        console.log(`⚠️ Trainer @${authorHandle} already hatched ${existingPokemon.name} (${existingPokemon.number}). Each X account can only hatch 1 Pokémon!`);
+        continue;
+      }
+
       // Clean prompt by removing bot @mentions
       const cleanPrompt = tweetText.replace(/@\w+/gi, '').trim() || tweetText.trim() || 'Summoned via PokéPump Reply';
 
-      // 1. Generate / Hatch Pokemon
+      // 2. Generate / Hatch Pokemon
       const hatched = await getRandomCuratedPokemon(authorHandle, cleanPrompt);
       hatched.tweetId = tweetId;
       hatched.replyPrompt = cleanPrompt;
@@ -172,8 +197,7 @@ export async function POST(request: NextRequest) {
       // In-memory store
       pokemonStore.unshift(hatched);
 
-      // 2. Persist to Database (PostgreSQL / Prisma)
-      const db = getPrisma();
+      // 3. Persist to Database (PostgreSQL / Prisma)
       if (db) {
         try {
           // Upsert Trainer User

@@ -7,14 +7,10 @@ import {
   calculatePowerScore,
   determineRarityGrade
 } from '@pokepump/shared';
+import { ALL_POKEDEX_CATALOG } from './pokedexCatalog';
 
 const POKEAPI_BASE_URL = 'https://pokeapi.co/api/v2/pokemon';
 const cache = new Map<string, PokemonEntity>();
-
-const CURATED_POKEMON_IDS = [
-  1, 3, 4, 6, 7, 9, 25, 26, 39, 52, 54, 59, 65, 68, 94, 130, 131, 133, 143, 149, 150, 151,
-  196, 197, 212, 248, 249, 250, 257, 282, 384, 448, 479, 493, 658, 700, 778
-];
 
 export async function fetchPokemonFromPokeApi(
   identifier: string | number,
@@ -32,6 +28,11 @@ export async function fetchPokemonFromPokeApi(
       createdAt: new Date().toISOString()
     };
   }
+
+  // Find in deck catalog
+  const catalogItem = ALL_POKEDEX_CATALOG.find(
+    (c) => c.pokedexId === Number(identifier) || c.species.toLowerCase() === key || c.name.toLowerCase() === key
+  );
 
   try {
     const response = await fetch(`${POKEAPI_BASE_URL}/${key}`);
@@ -101,7 +102,30 @@ export async function fetchPokemonFromPokeApi(
 
     return entity;
   } catch (error) {
-    console.error(`Error fetching Pokémon ${identifier} from PokéAPI:`, error);
+    console.error(`Error fetching Pokémon ${identifier} from PokéAPI, fallback to catalog:`, error);
+    if (catalogItem) {
+      return {
+        id: `p-${Date.now()}`,
+        pokedexId: catalogItem.pokedexId,
+        number: catalogItem.number,
+        name: catalogItem.name,
+        species: catalogItem.species,
+        type: catalogItem.type,
+        secondaryType: catalogItem.secondaryType,
+        level: 1,
+        exp: 0,
+        stats: catalogItem.baseStats,
+        powerScore: catalogItem.basePowerScore,
+        rarity: catalogItem.rarity,
+        tweetId: `tw-${Date.now()}`,
+        replyPrompt: replyPrompt || `Hatched from PokéPump Deck #${catalogItem.pokedexId}`,
+        creatorHandle,
+        artworkUrl: catalogItem.artworkUrl,
+        spriteUrl: catalogItem.spriteUrl,
+        createdAt: new Date().toISOString()
+      };
+    }
+
     return {
       id: `p-${Date.now()}`,
       pokedexId: 25,
@@ -124,7 +148,10 @@ export async function fetchPokemonFromPokeApi(
   }
 }
 
+/**
+ * Hatch ONLY a Pokémon that exists in the active Deck (#0001 to #0100)
+ */
 export async function getRandomCuratedPokemon(creatorHandle = 'trainer', prompt?: string): Promise<PokemonEntity> {
-  const randomId = CURATED_POKEMON_IDS[Math.floor(Math.random() * CURATED_POKEMON_IDS.length)];
-  return fetchPokemonFromPokeApi(randomId, creatorHandle, prompt);
+  const randomCatalogItem = ALL_POKEDEX_CATALOG[Math.floor(Math.random() * ALL_POKEDEX_CATALOG.length)];
+  return fetchPokemonFromPokeApi(randomCatalogItem.pokedexId, creatorHandle, prompt);
 }

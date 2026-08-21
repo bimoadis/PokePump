@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PokemonType, RarityGrade } from '@pokepump/shared';
 import { IconSearch } from './icons/CustomIcons';
 
@@ -9,212 +9,97 @@ interface CollectionItem {
   pokedexId: number;
   number: string;
   name: string;
+  species: string;
   type: PokemonType;
   secondaryType?: PokemonType | null;
   level: number;
   powerScore: number;
   rarity: RarityGrade;
   isNew?: boolean;
+  isHatched: boolean;
+  hatchedCount?: number;
+  creatorHandle?: string | null;
   artworkUrl: string;
+  spriteUrl?: string;
+  createdAt?: string | null;
 }
 
-const COLLECTION_DATA: CollectionItem[] = [
-  {
-    id: '1',
-    pokedexId: 4,
-    number: '#0004',
-    name: 'Charmander',
-    type: 'fire',
-    secondaryType: null,
-    level: 5,
-    powerScore: 620,
-    rarity: 'COMMON',
-    isNew: true,
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
-  },
-  {
-    id: '2',
-    pokedexId: 1,
-    number: '#0001',
-    name: 'Bulbasaur',
-    type: 'grass',
-    secondaryType: 'poison',
-    level: 7,
-    powerScore: 640,
-    rarity: 'COMMON',
-    isNew: true,
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
-  },
-  {
-    id: '3',
-    pokedexId: 7,
-    number: '#0007',
-    name: 'Squirtle',
-    type: 'water',
-    secondaryType: null,
-    level: 6,
-    powerScore: 630,
-    rarity: 'COMMON',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png',
-  },
-  {
-    id: '4',
-    pokedexId: 25,
-    number: '#0025',
-    name: 'Pikachu',
-    type: 'electric',
-    secondaryType: null,
-    level: 4,
-    powerScore: 590,
-    rarity: 'RARE',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
-  },
-  {
-    id: '5',
-    pokedexId: 94,
-    number: '#0094',
-    name: 'Gengar',
-    type: 'ghost',
-    secondaryType: 'poison',
-    level: 5,
-    powerScore: 890,
-    rarity: 'EPIC',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png',
-  },
-  {
-    id: '6',
-    pokedexId: 175,
-    number: '#0175',
-    name: 'Togepi',
-    type: 'fairy',
-    secondaryType: null,
-    level: 3,
-    powerScore: 480,
-    rarity: 'RARE',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/175.png',
-  },
-  {
-    id: '7',
-    pokedexId: 74,
-    number: '#0074',
-    name: 'Geodude',
-    type: 'rock',
-    secondaryType: 'ground',
-    level: 6,
-    powerScore: 610,
-    rarity: 'COMMON',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/74.png',
-  },
-  {
-    id: '8',
-    pokedexId: 6,
-    number: '#0006',
-    name: 'Charizard',
-    type: 'fire',
-    secondaryType: 'flying',
-    level: 36,
-    powerScore: 2890,
-    rarity: 'EPIC',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
-  },
-  {
-    id: '9',
-    pokedexId: 9,
-    number: '#0009',
-    name: 'Blastoise',
-    type: 'water',
-    secondaryType: null,
-    level: 36,
-    powerScore: 2780,
-    rarity: 'EPIC',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png',
-  },
-  {
-    id: '10',
-    pokedexId: 150,
-    number: '#0150',
-    name: 'Mewtwo',
-    type: 'psychic',
-    secondaryType: null,
-    level: 70,
-    powerScore: 3950,
-    rarity: 'LEGENDARY',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png',
-  },
-  {
-    id: '11',
-    pokedexId: 448,
-    number: '#0448',
-    name: 'Lucario',
-    type: 'fighting',
-    secondaryType: 'steel',
-    level: 38,
-    powerScore: 2820,
-    rarity: 'EPIC',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png',
-  },
-  {
-    id: '12',
-    pokedexId: 384,
-    number: '#0384',
-    name: 'Rayquaza',
-    type: 'dragon',
-    secondaryType: 'flying',
-    level: 75,
-    powerScore: 3820,
-    rarity: 'LEGENDARY',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png',
-  },
-  {
-    id: '13',
-    pokedexId: 197,
-    number: '#0197',
-    name: 'Umbreon',
-    type: 'dark',
-    secondaryType: null,
-    level: 28,
-    powerScore: 2150,
-    rarity: 'RARE',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png',
-  },
-  {
-    id: '14',
-    pokedexId: 130,
-    number: '#0130',
-    name: 'Gyarados',
-    type: 'water',
-    secondaryType: 'flying',
-    level: 35,
-    powerScore: 2680,
-    rarity: 'EPIC',
-    artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png',
-  }
-];
-
 export const CollectionGrid: React.FC = () => {
+  const [collection, setCollection] = useState<CollectionItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [selectedRarity, setSelectedRarity] = useState('all');
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [selectedLevel, setSelectedLevel] = useState('all');
-  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest' | 'highest_power'>('newest');
+  const [sortOrder, setSortOrder] = useState<'pokedex' | 'highest_power' | 'newest'>('pokedex');
+  const [totalHatched, setTotalHatched] = useState(0);
 
-  const filtered = COLLECTION_DATA.filter((item) => {
+  useEffect(() => {
+    async function fetchCollection() {
+      try {
+        setIsLoading(true);
+        const res = await fetch('/api/pokemon/collection');
+        if (!res.ok) throw new Error('Failed to fetch collection');
+        const data = await res.json();
+        if (data.items) {
+          setCollection(data.items);
+          setTotalHatched(data.totalHatched || 0);
+        }
+      } catch (err) {
+        console.error('Error loading collection:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchCollection();
+  }, []);
+
+  const filtered = collection.filter((item) => {
     const matchesSearch =
       item.name.toLowerCase().includes(search.toLowerCase()) ||
       item.number.toLowerCase().includes(search.toLowerCase()) ||
-      String(item.pokedexId).includes(search);
+      String(item.pokedexId).includes(search) ||
+      item.species?.toLowerCase().includes(search.toLowerCase());
+
     const matchesType =
       selectedType === 'all' || item.type === selectedType || item.secondaryType === selectedType;
+
     const matchesRarity =
       selectedRarity === 'all' || item.rarity.toLowerCase() === selectedRarity.toLowerCase();
+
+    const matchesStatus =
+      selectedStatus === 'all' ||
+      (selectedStatus === 'hatched' && item.isHatched) ||
+      (selectedStatus === 'unhatched' && !item.isHatched);
+
     const matchesLevel =
       selectedLevel === 'all' ||
-      (selectedLevel === '1-10' && item.level <= 10) ||
-      (selectedLevel === '11-30' && item.level > 10 && item.level <= 30) ||
-      (selectedLevel === '31+' && item.level > 30);
+      (!item.isHatched && selectedLevel === 'all') ||
+      (selectedLevel === '1-10' && item.isHatched && item.level <= 10) ||
+      (selectedLevel === '11-30' && item.isHatched && item.level > 10 && item.level <= 30) ||
+      (selectedLevel === '31+' && item.isHatched && item.level > 30);
 
-    return matchesSearch && matchesType && matchesRarity && matchesLevel;
+    return matchesSearch && matchesType && matchesRarity && matchesStatus && matchesLevel;
+  });
+
+  // Apply sorting
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortOrder === 'highest_power') {
+      return b.powerScore - a.powerScore;
+    }
+    if (sortOrder === 'newest') {
+      if (a.isHatched && !b.isHatched) return -1;
+      if (!a.isHatched && b.isHatched) return 1;
+      if (a.isHatched && b.isHatched) {
+        const dateA = new Date(a.createdAt || 0).getTime();
+        const dateB = new Date(b.createdAt || 0).getTime();
+        return dateB - dateA;
+      }
+      return a.pokedexId - b.pokedexId;
+    }
+    return a.pokedexId - b.pokedexId;
   });
 
   return (
@@ -229,17 +114,37 @@ export const CollectionGrid: React.FC = () => {
                 <span className="brand-poke">Poké</span>mon Collection
               </h2>
               <p className="collection-main-subtitle">
-                Explore all Pokémon born from the PokéPump community.
+                Explore all Pokémon in the PokéPump universe. Unhatched species can be summoned by replying on X!
               </p>
             </div>
 
-            <div className="collection-sort-wrap">
+            <div className="collection-sort-wrap" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <div
+                style={{
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  padding: '6px 12px',
+                  borderRadius: 'var(--pp-radius-pill)',
+                  background: 'var(--pp-rarity-new-bg)',
+                  color: 'var(--pp-success)',
+                  border: '1px solid rgba(34, 197, 94, 0.25)',
+                }}
+              >
+                {totalHatched} / {collection.length} Hatched
+              </div>
+
               <button
                 type="button"
                 className="sort-btn-pill"
-                onClick={() => setSortOrder(sortOrder === 'newest' ? 'highest_power' : 'newest')}
+                onClick={() => {
+                  if (sortOrder === 'pokedex') setSortOrder('highest_power');
+                  else if (sortOrder === 'highest_power') setSortOrder('newest');
+                  else setSortOrder('pokedex');
+                }}
               >
-                <span>Sort by: {sortOrder === 'newest' ? 'Newest' : 'Highest Power'}</span>
+                <span>
+                  Sort: {sortOrder === 'pokedex' ? 'Pokédex #' : sortOrder === 'highest_power' ? 'Highest Power' : 'Newest Hatched'}
+                </span>
               </button>
             </div>
           </div>
@@ -250,7 +155,7 @@ export const CollectionGrid: React.FC = () => {
               <input
                 type="text"
                 className="filter-search-field"
-                placeholder="Search Pokémon..."
+                placeholder="Search Pokémon or #..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -258,6 +163,16 @@ export const CollectionGrid: React.FC = () => {
                 <IconSearch size={16} color="var(--pp-text-muted)" />
               </span>
             </div>
+
+            <select
+              className="filter-dropdown-select"
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+            >
+              <option value="all">All Status</option>
+              <option value="hatched">Hatched Only</option>
+              <option value="unhatched">Not Hatched</option>
+            </select>
 
             <select
               className="filter-dropdown-select"
@@ -299,17 +214,6 @@ export const CollectionGrid: React.FC = () => {
 
             <select
               className="filter-dropdown-select"
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-            >
-              <option value="all">All Status</option>
-              <option value="available">Available</option>
-              <option value="in_battle">In Battle</option>
-              <option value="champion">Champion</option>
-            </select>
-
-            <select
-              className="filter-dropdown-select"
               value={selectedLevel}
               onChange={(e) => setSelectedLevel(e.target.value)}
             >
@@ -321,45 +225,82 @@ export const CollectionGrid: React.FC = () => {
           </div>
 
           {/* Cards Grid */}
-          <div className="collection-cards-grid">
-            {filtered.map((item) => (
-              <div key={item.id} className="collection-creature-card">
-                {/* Top Badge: NEW / Type / Rarity */}
-                <div className="creature-card-badge-row">
-                  {item.isNew ? (
-                    <span className="card-badge-pill badge-pill-red">NEW</span>
-                  ) : item.rarity === 'EPIC' || item.rarity === 'LEGENDARY' ? (
-                    <span className={`pp-tag pp-tag--${item.type}`}>
-                      {item.type}
-                    </span>
-                  ) : (
-                    <span className={`pp-tag pp-tag--${item.type}`}>
-                      {item.type}
-                    </span>
-                  )}
-                </div>
+          {isLoading ? (
+            <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--pp-text-muted)' }}>
+              Loading Pokémon Collection...
+            </div>
+          ) : sorted.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--pp-text-muted)' }}>
+              No Pokémon found matching your filter criteria.
+            </div>
+          ) : (
+            <div className="collection-cards-grid">
+              {sorted.map((item) => {
+                const isHatched = item.isHatched;
 
-                {/* Creature Artwork Stage */}
-                <div className="creature-card-art-stage">
-                  <img
-                    src={item.artworkUrl}
-                    alt={item.name}
-                    className="creature-artwork-image"
-                    loading="lazy"
-                  />
-                </div>
+                return (
+                  <div
+                    key={item.id || item.pokedexId}
+                    className={`collection-creature-card ${!isHatched ? 'is-unhatched' : ''}`}
+                    title={!isHatched ? `${item.name} has not been hatched yet. Reply on X to spawn!` : `${item.name} Lv. ${item.level}`}
+                  >
+                    {/* Top Badge Row */}
+                    <div className="creature-card-badge-row">
+                      {isHatched ? (
+                        item.isNew ? (
+                          <span className="card-badge-pill badge-pill-red">NEW</span>
+                        ) : (
+                          <span className={`pp-tag pp-tag--${item.type}`}>
+                            {item.type}
+                          </span>
+                        )
+                      ) : (
+                        <span className="card-badge-pill badge-pill-unhatched">
+                          UNHATCHED
+                        </span>
+                      )}
 
-                {/* Bottom Info Row */}
-                <div className="creature-card-meta-bottom">
-                  <h4 className="creature-name-text">{item.name}</h4>
-                  <div className="creature-sub-row">
-                    <span className="creature-level-label">Lv. {item.level}</span>
-                    <span className="creature-number-dim">{item.number}</span>
+                      {isHatched && item.rarity === 'LEGENDARY' && (
+                        <span className="card-badge-pill badge-pill-red">★ LEGEND</span>
+                      )}
+                    </div>
+
+                    {/* Creature Artwork Stage */}
+                    <div className="creature-card-art-stage">
+                      <img
+                        src={item.artworkUrl}
+                        alt={item.name}
+                        className="creature-artwork-image"
+                        loading="lazy"
+                      />
+
+                      {/* Prominent Centered Label for Unhatched Pokémon */}
+                      {!isHatched && (
+                        <div className="unhatched-center-label">
+                          NOT HATCHED
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Bottom Info Row */}
+                    <div className="creature-card-meta-bottom">
+                      <h4 className="creature-name-text">{item.name}</h4>
+                      <div className="creature-sub-row">
+                        {isHatched ? (
+                          <span className="creature-level-label">Lv. {item.level}</span>
+                        ) : (
+                          <span className="creature-level-label" style={{ color: 'var(--pp-text-muted)', fontSize: '10px' }}>
+                            Unhatched
+                          </span>
+                        )}
+                        <span className="creature-number-dim">{item.number}</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </section>

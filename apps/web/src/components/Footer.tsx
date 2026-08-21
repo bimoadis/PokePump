@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
 
           <div className="footer-links-col">
             <h4>Community</h4>
-            <a href="https://x.com/PokePump" target="_blank" rel="noopener noreferrer">
+            <a href="https://x.com/getPokePump" target="_blank" rel="noopener noreferrer">
               Official X / Twitter
             </a>
             <a href="#leaderboard">Leaderboard</a>

@@ -102,9 +102,29 @@ app.get('/api/pokemon/:id/card.svg', (req, res) => {
 // Hatch Pokémon from PokéAPI via Tweet / Prompt
 app.post('/api/pokemon/hatch', async (req, res) => {
   const { handle = 'anonymous', prompt = 'New reply on X' } = req.body;
-  const pokemon = await getRandomCuratedPokemon(handle.replace('@', ''), prompt);
+  const cleanHandle = handle.replace(/^@/, '').trim().toLowerCase();
+
+  // Enforce 1 X Account = 1 Pokémon rule
+  const existing = pokemonDatabase.find(
+    (p) => p.creatorHandle.toLowerCase().replace(/^@/, '') === cleanHandle
+  );
+
+  if (existing) {
+    return res.status(400).json({
+      success: false,
+      error: `Account @${cleanHandle} has already hatched a Pokémon (${existing.name} #${existing.number}). Each X account can only hatch 1 Pokémon!`,
+      alreadyHatched: true,
+      pokemon: existing,
+    });
+  }
+
+  const pokemon = await getRandomCuratedPokemon(cleanHandle, prompt);
   pokemonDatabase.unshift(pokemon);
-  res.status(201).json(pokemon);
+  res.status(201).json({
+    success: true,
+    message: `Successfully hatched ${pokemon.name}!`,
+    pokemon,
+  });
 });
 
 // Battle Simulation Endpoint

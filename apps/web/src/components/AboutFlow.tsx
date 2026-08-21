@@ -13,7 +13,7 @@ export const AboutFlow: React.FC = () => {
             </h2>
             <p className="about-desc">
               PokéPump turns community interaction into a living Pokémon universe.<br className="desktop-br" />
-              Reply to @PokePump on X and you might be the reason<br className="desktop-br" />
+              Reply to @getPokePump on X and you might be the reason<br className="desktop-br" />
               a new Pokémon is born!
             </p>
 
@@ -39,7 +39,7 @@ export const AboutFlow: React.FC = () => {
                 </div>
                 <h4 className="flow-step-title">Reply</h4>
                 <p className="flow-step-sub">
-                  Reply to<br />@PokePump on X
+                  Reply to<br />@getPokePump on X
                 </p>
               </div>
 

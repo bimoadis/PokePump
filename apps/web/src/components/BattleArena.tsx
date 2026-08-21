@@ -1,9 +1,92 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IconEye, IconChatBubble } from './icons/CustomIcons';
 
+interface BattleFighter {
+  id?: string;
+  name: string;
+  pokedexId?: number;
+  number?: string;
+  level?: number;
+  type?: string;
+  powerScore?: number;
+  artworkUrl?: string;
+  creatorHandle?: string;
+}
+
+interface BattleMatchData {
+  id: string;
+  fighter1: BattleFighter;
+  fighter2: BattleFighter;
+  power1: number;
+  power2: number;
+  status: string;
+  scheduledTime: string;
+  spectatorsCount: number;
+}
+
 export const BattleArena: React.FC = () => {
+  const [battle, setBattle] = useState<BattleMatchData>({
+    id: 'bt-101',
+    fighter1: {
+      name: 'Charizard',
+      level: 36,
+      type: 'fire',
+      powerScore: 2890,
+      artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png',
+      creatorHandle: 'cryptomaster',
+    },
+    fighter2: {
+      name: 'Blastoise',
+      level: 36,
+      type: 'water',
+      powerScore: 2780,
+      artworkUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png',
+      creatorHandle: 'aqua_lord',
+    },
+    power1: 2890,
+    power2: 2780,
+    status: 'LIVE',
+    scheduledTime: 'LIVE NOW',
+    spectatorsCount: 1420,
+  });
+
+  const [cheered, setCheered] = useState(false);
+  const [spectators, setSpectators] = useState(1420);
+
+  useEffect(() => {
+    async function loadBattles() {
+      try {
+        const res = await fetch('/api/battles');
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            setBattle(data[0]);
+            if (data[0].spectatorsCount) {
+              setSpectators(data[0].spectatorsCount);
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load battle data:', err);
+      }
+    }
+
+    loadBattles();
+  }, []);
+
+  const totalPower = (battle.power1 || 1000) + (battle.power2 || 1000);
+  const f1Ratio = Math.round(((battle.power1 || 1000) / totalPower) * 100);
+  const f2Ratio = 100 - f1Ratio;
+
+  const handleCheer = () => {
+    if (!cheered) {
+      setCheered(true);
+      setSpectators((prev) => prev + 1);
+    }
+  };
+
   return (
     <section className="section-wrap" id="battles">
       <div className="container">
@@ -28,48 +111,52 @@ export const BattleArena: React.FC = () => {
 
             <div className="vs-arena-stage">
               <div className="fighter-box">
-                <div className="fighter-art-wrap bg-fire-soft">
+                <div className={`fighter-art-wrap bg-${battle.fighter1?.type || 'fire'}-soft`}>
                   <img
-                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"
-                    alt="Charizard"
+                    src={battle.fighter1?.artworkUrl || 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png'}
+                    alt={battle.fighter1?.name || 'Fighter 1'}
                   />
                 </div>
-                <h4>Charizard</h4>
-                <div className="fighter-sub">Lv. 36 • @cryptomaster</div>
-                <div className="fighter-power" style={{ color: 'var(--type-fire)' }}>
-                  2,890 PWR
+                <h4>{battle.fighter1?.name}</h4>
+                <div className="fighter-sub">Lv. {battle.fighter1?.level || 36} • @{battle.fighter1?.creatorHandle || 'trainer'}</div>
+                <div className="fighter-power" style={{ color: `var(--type-${battle.fighter1?.type || 'fire'})` }}>
+                  {(battle.power1 || 2890).toLocaleString()} PWR
                 </div>
               </div>
 
               <div className="vs-brand-center">VS</div>
 
               <div className="fighter-box">
-                <div className="fighter-art-wrap bg-water-soft">
+                <div className={`fighter-art-wrap bg-${battle.fighter2?.type || 'water'}-soft`}>
                   <img
-                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png"
-                    alt="Blastoise"
+                    src={battle.fighter2?.artworkUrl || 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png'}
+                    alt={battle.fighter2?.name || 'Fighter 2'}
                   />
                 </div>
-                <h4>Blastoise</h4>
-                <div className="fighter-sub">Lv. 36 • @aqua_lord</div>
-                <div className="fighter-power" style={{ color: 'var(--type-water)' }}>
-                  2,780 PWR
+                <h4>{battle.fighter2?.name}</h4>
+                <div className="fighter-sub">Lv. {battle.fighter2?.level || 36} • @{battle.fighter2?.creatorHandle || 'trainer'}</div>
+                <div className="fighter-power" style={{ color: `var(--type-${battle.fighter2?.type || 'water'})` }}>
+                  {(battle.power2 || 2780).toLocaleString()} PWR
                 </div>
               </div>
             </div>
 
             <div className="power-comparison-bar">
-              <div className="bar-fire" style={{ width: '51%' }} />
-              <div className="bar-water" style={{ width: '49%' }} />
+              <div className="bar-fire" style={{ width: `${f1Ratio}%` }} />
+              <div className="bar-water" style={{ width: `${f2Ratio}%` }} />
             </div>
 
             <div className="arena-footer-row">
               <div className="spectator-count" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <IconEye size={16} color="var(--neutral-600)" />
-                <span>1,420 Spectators</span>
+                <span>{spectators.toLocaleString()} Spectators</span>
               </div>
-              <button className="btn btn-primary" style={{ height: '36px', padding: '0 16px', fontSize: '12.5px' }}>
-                <span>Cheer with Reply</span>
+              <button
+                className="btn btn-primary"
+                style={{ height: '36px', padding: '0 16px', fontSize: '12.5px' }}
+                onClick={handleCheer}
+              >
+                <span>{cheered ? 'Cheered! 🎉' : 'Cheer Fighter'}</span>
                 <IconChatBubble size={14} color="#FFFFFF" />
               </button>
             </div>
@@ -162,9 +249,9 @@ export const BattleArena: React.FC = () => {
               </div>
             </div>
 
-            <button className="btn btn-secondary" style={{ width: '100%', marginTop: '16px' }}>
-              View Full Tournament Schedule →
-            </button>
+            <a href="#collection" className="btn btn-secondary" style={{ width: '100%', marginTop: '16px', display: 'flex', justifyContent: 'center' }}>
+              View All Combatants in Collection →
+            </a>
           </div>
         </div>
       </div>

@@ -65,7 +65,7 @@ export const Header: React.FC = () => {
             <li className="mobile-only-action">
               <a
                 className="follow-x-btn"
-                href="https://x.com/PokePump"
+                href="https://x.com/getPokePump"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeMenu}
@@ -81,7 +81,7 @@ export const Header: React.FC = () => {
           <div className="nav-right-actions">
             <a
               className="follow-x-btn desktop-only"
-              href="https://x.com/PokePump"
+              href="https://x.com/getPokePump"
               target="_blank"
               rel="noopener noreferrer"
               id="nav-follow-btn"

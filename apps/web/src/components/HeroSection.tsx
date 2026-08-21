@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IconBolt, IconTrainers, IconSwords, IconChatBubble } from './icons/CustomIcons';
 
 const HERO_CHARACTERS = [
@@ -28,14 +28,27 @@ const HERO_CHARACTERS = [
 ];
 
 export const HeroSection: React.FC = () => {
-  const [activeIdx, setActiveIdx] = React.useState(0);
+  const [stats, setStats] = useState({
+    totalPokemonBorn: 12842,
+    totalTrainers: 8421,
+    totalBattlesHeld: 3215,
+    totalRepliesPumped: 67892,
+  });
 
-  // Auto-alternate characters every 3.5 seconds
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveIdx((prev) => (prev + 1) % HERO_CHARACTERS.length);
-    }, 3500);
-    return () => clearInterval(timer);
+  useEffect(() => {
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/stats');
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data);
+        }
+      } catch (err) {
+        console.error('Failed to load hero stats:', err);
+      }
+    }
+
+    loadStats();
   }, []);
 
   return (
@@ -56,7 +69,7 @@ export const HeroSection: React.FC = () => {
 
             <div className="hero-actions">
               <a
-                href="https://x.com/PokePump"
+                href="https://x.com/getPokePump"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary"
@@ -67,8 +80,8 @@ export const HeroSection: React.FC = () => {
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
-              <a href="#born" className="btn btn-secondary" id="hero-explore-btn">
-                Explore Born Pokémon ↓
+              <a href="#collection" className="btn btn-secondary" id="hero-explore-btn">
+                Explore Collection ↓
               </a>
             </div>
 
@@ -79,7 +92,7 @@ export const HeroSection: React.FC = () => {
                   <IconBolt size={18} color="var(--pp-text-inverse)" />
                 </div>
                 <div className="stat-meta">
-                  <b>12.8K+</b>
+                  <b>{stats.totalPokemonBorn.toLocaleString()}</b>
                   <span>Pokémon Born</span>
                 </div>
               </div>
@@ -89,7 +102,7 @@ export const HeroSection: React.FC = () => {
                   <IconTrainers size={18} color="var(--pp-text-inverse)" />
                 </div>
                 <div className="stat-meta">
-                  <b>8.4K+</b>
+                  <b>{stats.totalTrainers.toLocaleString()}</b>
                   <span>Trainers</span>
                 </div>
               </div>
@@ -99,7 +112,7 @@ export const HeroSection: React.FC = () => {
                   <IconSwords size={18} color="var(--pp-text-inverse)" />
                 </div>
                 <div className="stat-meta">
-                  <b>3.2K+</b>
+                  <b>{stats.totalBattlesHeld.toLocaleString()}</b>
                   <span>Battles</span>
                 </div>
               </div>
@@ -109,7 +122,7 @@ export const HeroSection: React.FC = () => {
                   <IconChatBubble size={18} color="var(--pp-text-inverse)" />
                 </div>
                 <div className="stat-meta">
-                  <b>67.8K+</b>
+                  <b>{stats.totalRepliesPumped.toLocaleString()}</b>
                   <span>Replies</span>
                 </div>
               </div>

@@ -1973,7 +1973,7 @@ a {
   flex-direction: column;
   justify-content: space-between;
   box-shadow: var(--pp-shadow-sm);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease, filter 0.2s ease;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -1985,9 +1985,32 @@ a {
   border-color: var(--pp-border-strong);
 }
 
+/* Unhatched State Styling */
+.collection-creature-card.is-unhatched {
+  background: #FAF9FC;
+  border: 1px dashed #DDD9E8;
+  opacity: 0.85;
+}
+
+.collection-creature-card.is-unhatched:hover {
+  opacity: 1;
+  border-color: var(--pp-red);
+  background: #FFFFFF;
+}
+
+.collection-creature-card.is-unhatched .creature-artwork-image {
+  filter: grayscale(100%) opacity(0.3) contrast(1.1);
+  animation: none;
+}
+
+.collection-creature-card.is-unhatched:hover .creature-artwork-image {
+  filter: grayscale(40%) opacity(0.65) contrast(1.05);
+  transform: scale(1.08);
+}
+
 .creature-card-badge-row {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   min-height: 18px;
 }
@@ -2011,6 +2034,12 @@ a {
   color: var(--pp-text-inverse);
 }
 
+.badge-pill-unhatched {
+  background: rgba(148, 163, 184, 0.18);
+  color: #64748B;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
 .creature-card-art-stage {
   height: 105px;
   display: flex;
@@ -2018,6 +2047,37 @@ a {
   justify-content: center;
   margin: 4px 0 6px;
   position: relative;
+}
+
+/* Centered Not Hatched Label */
+.unhatched-center-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(22, 23, 29, 0.88);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: var(--pp-radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 3;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.collection-creature-card.is-unhatched:hover .unhatched-center-label {
+  background: var(--pp-red);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 14px rgba(228, 41, 47, 0.45);
+  transform: translate(-50%, -50%) scale(1.05);
 }
 
 .creature-artwork-image {
