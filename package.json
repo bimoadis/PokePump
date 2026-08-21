@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "dev": "npm run dev:web",
+    "postinstall": "npm --workspace=packages/database run db:generate",
     "dev:web": "npm --workspace=apps/web run dev",
     "dev:api": "npm --workspace=apps/api run dev",
     "start": "npm --workspace=apps/web run start",

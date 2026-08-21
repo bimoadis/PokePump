@@ -5,12 +5,16 @@ import { pokemonStore } from '@/lib/store';
 import { PrismaClient } from '@prisma/client';
 
 let prisma: PrismaClient | null = null;
-try {
-  if (process.env.DATABASE_URL) {
-    prisma = new PrismaClient();
+function getPrisma(): PrismaClient | null {
+  if (prisma) return prisma;
+  try {
+    if (process.env.DATABASE_URL) {
+      prisma = new PrismaClient();
+    }
+  } catch (e: any) {
+    console.warn('Prisma client init warning in webhook:', e?.message);
   }
-} catch (e) {
-  console.warn('Prisma client init warning in webhook:', e);
+  return prisma;
 }
 
 // 1. GET Handler for X (Twitter) CRC (Challenge-Response Check)
@@ -86,10 +90,11 @@ export async function POST(request: NextRequest) {
         pokemonStore.unshift(hatched);
 
         // 2. Persist to PostgreSQL Database if Prisma is available
-        if (prisma) {
+        const db = getPrisma();
+        if (db) {
           try {
             // Find or create User
-            const dbUser = await prisma.user.upsert({
+            const dbUser = await db.user.upsert({
               where: { twitterHandle: authorHandle.toLowerCase() },
               update: {
                 twitterId: authorId || undefined,
@@ -103,7 +108,7 @@ export async function POST(request: NextRequest) {
             });
 
             // Create Pokemon record
-            await prisma.pokemon.create({
+            await db.pokemon.create({
               data: {
                 id: hatched.id,
                 pokedexId: hatched.pokedexId,
@@ -136,7 +141,7 @@ export async function POST(request: NextRequest) {
             });
 
             // Create Activity Log
-            await prisma.activityLog.create({
+            await db.activityLog.create({
               data: {
                 type: 'born',
                 title: `${hatched.name} Hatched!`,
