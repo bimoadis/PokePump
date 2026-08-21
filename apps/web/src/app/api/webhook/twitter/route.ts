@@ -17,6 +17,14 @@ function getPrisma(): PrismaClient | null {
   return prisma;
 }
 
+interface NormalizedTweetEvent {
+  tweetId: string;
+  authorHandle: string;
+  authorId?: string;
+  avatarUrl?: string;
+  tweetText: string;
+}
+
 // 1. GET Handler for X (Twitter) CRC (Challenge-Response Check)
 export async function GET(request: NextRequest) {
   try {
@@ -56,7 +64,66 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// 2. POST Handler for incoming Twitter Account Activity Events (Mentions, Replies, etc.)
+// Helper: Normalize both X API v2 (post.mention.create) and v1.1 (tweet_create_events) payloads
+function extractEventsFromPayload(body: any): NormalizedTweetEvent[] {
+  const events: NormalizedTweetEvent[] = [];
+  if (!body) return events;
+
+  console.log('📦 Raw Webhook Payload:', JSON.stringify(body));
+
+  // 1. X API v1.1 Legacy format: { tweet_create_events: [...] }
+  if (body.tweet_create_events && Array.isArray(body.tweet_create_events)) {
+    for (const tweet of body.tweet_create_events) {
+      if (tweet && tweet.id_str) {
+        events.push({
+          tweetId: tweet.id_str,
+          authorHandle: tweet.user?.screen_name || 'trainer',
+          authorId: tweet.user?.id_str,
+          avatarUrl: tweet.user?.profile_image_url_https,
+          tweetText: tweet.text || ''
+        });
+      }
+    }
+  }
+
+  // 2. X API v2 format: { event: "post.mention.create", data: { id, text, author_id }, includes: { users: [...] } }
+  if (body.data) {
+    const dataItems = Array.isArray(body.data) ? body.data : [body.data];
+    const usersList: any[] = body.includes?.users || [];
+    const usersMap = new Map<string, any>();
+    for (const u of usersList) {
+      if (u.id) usersMap.set(u.id, u);
+    }
+
+    for (const item of dataItems) {
+      if (item && item.id) {
+        const userObj = item.author_id ? usersMap.get(item.author_id) : null;
+        events.push({
+          tweetId: String(item.id),
+          authorHandle: userObj?.username || userObj?.screen_name || 'trainer',
+          authorId: item.author_id || userObj?.id,
+          avatarUrl: userObj?.profile_image_url || userObj?.profile_image_url_https,
+          tweetText: item.text || ''
+        });
+      }
+    }
+  }
+
+  // 3. Fallback direct object format
+  if (events.length === 0 && body.text && (body.id || body.id_str)) {
+    events.push({
+      tweetId: String(body.id || body.id_str),
+      authorHandle: body.user?.screen_name || body.author_id || 'trainer',
+      authorId: body.user?.id_str || body.author_id,
+      avatarUrl: body.user?.profile_image_url_https || body.profile_image_url,
+      tweetText: body.text || ''
+    });
+  }
+
+  return events;
+}
+
+// 2. POST Handler for incoming Twitter / X Events
 export async function POST(request: NextRequest) {
   try {
     let body: any = {};
@@ -66,103 +133,99 @@ export async function POST(request: NextRequest) {
       body = {};
     }
 
-    // Handle tweet_create_events (User replies/mentions bot)
-    if (body && body.tweet_create_events && Array.isArray(body.tweet_create_events)) {
-      for (const tweet of body.tweet_create_events) {
-        const authorHandle = tweet.user?.screen_name;
-        const authorId = tweet.user?.id_str;
-        const tweetText = tweet.text || '';
-        const tweetId = tweet.id_str;
+    const events = extractEventsFromPayload(body);
+    const botUsername = (process.env.X_BOT_USERNAME || '@getPokePump').replace('@', '').toLowerCase();
 
-        // Skip bot's own tweets to prevent infinite loop
-        const botUsername = (process.env.X_BOT_USERNAME || '@getPokePump').replace('@', '').toLowerCase();
-        if (authorHandle && authorHandle.toLowerCase() === botUsername) {
-          continue;
-        }
+    for (const event of events) {
+      const { authorHandle, authorId, avatarUrl, tweetText, tweetId } = event;
 
-        console.log(`📩 Incoming Tweet from @${authorHandle} (${tweetId}): ${tweetText}`);
+      // Skip bot's own tweets to prevent loops
+      if (authorHandle && authorHandle.toLowerCase() === botUsername) {
+        continue;
+      }
 
-        // 1. Generate / Hatch Pokemon for this user
-        const hatched = await getRandomCuratedPokemon(authorHandle, tweetText);
-        hatched.tweetId = tweetId;
-        
-        // Add to in-memory store
-        pokemonStore.unshift(hatched);
+      console.log(`📩 Processing Mention from @${authorHandle} (${tweetId}): "${tweetText}"`);
 
-        // 2. Persist to PostgreSQL Database if Prisma is available
-        const db = getPrisma();
-        if (db) {
-          try {
-            // Find or create User
-            const dbUser = await db.user.upsert({
-              where: { twitterHandle: authorHandle.toLowerCase() },
-              update: {
-                twitterId: authorId || undefined,
-                avatarUrl: tweet.user?.profile_image_url_https || undefined
-              },
-              create: {
-                twitterHandle: authorHandle.toLowerCase(),
-                twitterId: authorId || undefined,
-                avatarUrl: tweet.user?.profile_image_url_https || undefined
+      // 1. Generate / Hatch Pokemon
+      const hatched = await getRandomCuratedPokemon(authorHandle, tweetText);
+      hatched.tweetId = tweetId;
+
+      // In-memory store
+      pokemonStore.unshift(hatched);
+
+      // 2. Persist to Database (PostgreSQL / Prisma)
+      const db = getPrisma();
+      if (db) {
+        try {
+          // Upsert Trainer User
+          const dbUser = await db.user.upsert({
+            where: { twitterHandle: authorHandle.toLowerCase() },
+            update: {
+              twitterId: authorId || undefined,
+              avatarUrl: avatarUrl || undefined
+            },
+            create: {
+              twitterHandle: authorHandle.toLowerCase(),
+              twitterId: authorId || undefined,
+              avatarUrl: avatarUrl || undefined
+            }
+          });
+
+          // Create Pokemon Record
+          await db.pokemon.create({
+            data: {
+              id: hatched.id,
+              pokedexId: hatched.pokedexId,
+              number: hatched.number,
+              name: hatched.name,
+              species: hatched.species,
+              type: hatched.type as any,
+              secondaryType: hatched.secondaryType ? (hatched.secondaryType as any) : null,
+              level: hatched.level,
+              exp: hatched.exp,
+              hp: hatched.stats.hp,
+              attack: hatched.stats.attack,
+              defense: hatched.stats.defense,
+              specialAttack: hatched.stats.specialAttack,
+              specialDefense: hatched.stats.specialDefense,
+              speed: hatched.stats.speed,
+              powerScore: hatched.powerScore,
+              rarity: hatched.rarity as any,
+              tweetId: tweetId,
+              replyPrompt: tweetText,
+              artworkUrl: hatched.artworkUrl,
+              spriteUrl: hatched.spriteUrl,
+              showdownUrl: hatched.showdownUrl,
+              cryUrl: hatched.cryUrl,
+              height: hatched.height,
+              weight: hatched.weight,
+              baseExperience: hatched.baseExperience,
+              ownerId: dbUser.id
+            }
+          });
+
+          // Create Activity Log
+          await db.activityLog.create({
+            data: {
+              type: 'born',
+              title: `${hatched.name} Hatched!`,
+              description: `@${authorHandle} spawned a Level ${hatched.level} ${hatched.name} (Power: ${hatched.powerScore})`,
+              metadata: {
+                pokemonId: hatched.id,
+                tweetId,
+                handle: authorHandle
               }
-            });
+            }
+          });
 
-            // Create Pokemon record
-            await db.pokemon.create({
-              data: {
-                id: hatched.id,
-                pokedexId: hatched.pokedexId,
-                number: hatched.number,
-                name: hatched.name,
-                species: hatched.species,
-                type: hatched.type as any,
-                secondaryType: hatched.secondaryType ? (hatched.secondaryType as any) : null,
-                level: hatched.level,
-                exp: hatched.exp,
-                hp: hatched.stats.hp,
-                attack: hatched.stats.attack,
-                defense: hatched.stats.defense,
-                specialAttack: hatched.stats.specialAttack,
-                specialDefense: hatched.stats.specialDefense,
-                speed: hatched.stats.speed,
-                powerScore: hatched.powerScore,
-                rarity: hatched.rarity as any,
-                tweetId: tweetId,
-                replyPrompt: tweetText,
-                artworkUrl: hatched.artworkUrl,
-                spriteUrl: hatched.spriteUrl,
-                showdownUrl: hatched.showdownUrl,
-                cryUrl: hatched.cryUrl,
-                height: hatched.height,
-                weight: hatched.weight,
-                baseExperience: hatched.baseExperience,
-                ownerId: dbUser.id
-              }
-            });
-
-            // Create Activity Log
-            await db.activityLog.create({
-              data: {
-                type: 'born',
-                title: `${hatched.name} Hatched!`,
-                description: `@${authorHandle} spawned a Level ${hatched.level} ${hatched.name} (Power: ${hatched.powerScore})`,
-                metadata: {
-                  pokemonId: hatched.id,
-                  tweetId,
-                  handle: authorHandle
-                }
-              }
-            });
-
-            console.log(`✅ Successfully saved @${authorHandle}'s ${hatched.name} to Database!`);
-          } catch (dbError: any) {
-            console.error('Error saving webhook Pokemon to Database:', dbError.message);
-          }
+          console.log(`✅ Successfully saved @${authorHandle}'s ${hatched.name} to Database!`);
+        } catch (dbError: any) {
+          console.error('Error saving webhook Pokemon to Database:', dbError.message);
         }
       }
     }
 
-    return NextResponse.json({ status: 'ok', received: true }, { status: 200 });
+    return NextResponse.json({ status: 'ok', received: true, processed: events.length }, { status: 200 });
   } catch (error: any) {
     console.error('Error processing Twitter Webhook Event:', error);
     return NextResponse.json({ status: 'error', message: error?.message || 'Unknown error' }, { status: 500 });
