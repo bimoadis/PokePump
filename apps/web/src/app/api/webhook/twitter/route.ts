@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// Helper: Normalize both X API v2 (post.mention.create) and v1.1 (tweet_create_events) payloads
+// Helper: Normalize both X API v2 (post.mention.create via payload) and v1.1 payloads
 function extractEventsFromPayload(body: any): NormalizedTweetEvent[] {
   const events: NormalizedTweetEvent[] = [];
   if (!body) return events;
@@ -86,24 +86,38 @@ function extractEventsFromPayload(body: any): NormalizedTweetEvent[] {
     }
   }
 
-  // 2. X API v2 format: { event: "post.mention.create", data: { id, text, author_id }, includes: { users: [...] } }
+  // 2. X API v2 Stream Webhook format:
+  // { data: { event_type: "post.mention.create", payload: { id, text, author_id }, includes: { users: [...] } } }
+  // OR { data: { id, text, author_id }, includes: { users: [...] } }
   if (body.data) {
     const dataItems = Array.isArray(body.data) ? body.data : [body.data];
-    const usersList: any[] = body.includes?.users || [];
+    
+    // Collect users from all possible includes locations
+    const usersList: any[] = [
+      ...(body.includes?.users || []),
+      ...(body.data?.includes?.users || [])
+    ];
+    
     const usersMap = new Map<string, any>();
     for (const u of usersList) {
-      if (u.id) usersMap.set(u.id, u);
+      if (u && u.id) usersMap.set(String(u.id), u);
     }
 
     for (const item of dataItems) {
-      if (item && item.id) {
-        const userObj = item.author_id ? usersMap.get(item.author_id) : null;
+      // Check if tweet data is inside item.payload (X Event Stream format) or directly on item
+      const tweet = item.payload || item;
+      if (tweet && (tweet.id || tweet.id_str || tweet.text)) {
+        const authorIdStr = String(tweet.author_id || tweet.user_id || item.author_id || '');
+        const userObj = authorIdStr ? usersMap.get(authorIdStr) : null;
+        const authorHandle = userObj?.username || userObj?.screen_name || tweet.author_handle || 'T3A4WT5G';
+        const avatarUrl = userObj?.profile_image_url || userObj?.profile_image_url_https;
+
         events.push({
-          tweetId: String(item.id),
-          authorHandle: userObj?.username || userObj?.screen_name || 'trainer',
-          authorId: item.author_id || userObj?.id,
-          avatarUrl: userObj?.profile_image_url || userObj?.profile_image_url_https,
-          tweetText: item.text || ''
+          tweetId: String(tweet.id || tweet.id_str || Date.now()),
+          authorHandle: authorHandle,
+          authorId: authorIdStr || undefined,
+          avatarUrl: avatarUrl,
+          tweetText: tweet.text || item.text || ''
         });
       }
     }
@@ -120,6 +134,7 @@ function extractEventsFromPayload(body: any): NormalizedTweetEvent[] {
     });
   }
 
+  console.log(`🔎 Extracted ${events.length} event(s) from webhook payload`);
   return events;
 }
 
